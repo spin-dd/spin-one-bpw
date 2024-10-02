@@ -4,11 +4,29 @@ require("dotenv").config({
   path: `.env.${process.env.NODE_ENV}`,
 })
 
+// const { createProxyMiddleware } = require('http-proxy-middleware')
+
+const contentfulConfig = {
+  spaceId: process.env.CONTENTFUL_SPACE_ID,
+  accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
+  environment: process.env.CONTENTFUL_ENVIRONMENT || "master",
+  enableTags: true,
+  pageLimit: 50,
+}
+
+const { spaceId, accessToken } = contentfulConfig
+
+if (!spaceId || !accessToken) {
+  throw new Error(
+    "Contentful spaceId and the access token need to be provided."
+  )
+}
+
 module.exports = {
   siteMetadata: {
     siteUrl: "https://gatsbycontentfulhomepage.gatsbyjs.io/",
-    title: "Gatsby Contentful Homepage Starter",
-    author: `Gatsby`,
+    title: "SPIN-ONE",
+    author: `spin-dd`,
     description: "A Gatsby Starter for building homepages with Contentful",
   },
   plugins: [
