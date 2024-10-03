@@ -1,34 +1,21 @@
 import React from "react"
 import { graphql } from "gatsby"
+import { Template } from "../components/page"
 
-import { parseHtmlToReact, prepareForParse } from "../utils"
-import { Layout } from "../components/layout"
-
-export const Page = ({ data, pageContext }) => {
-  const { htmlBody, htmlScript, componentData } = prepareForParse({
-    template: data.contentfulTemplate,
-    data,
-    pageContext,
-  })
-
-  return (
-    <Layout
-      body={parseHtmlToReact(htmlBody, componentData)}
-      script={parseHtmlToReact(htmlScript, componentData)}
-    />
-  )
-}
+const Page = ({ data, pageContext }) => (
+  <Template data={data} pageContext={pageContext} />
+)
+export default Page
 
 export const query = graphql`
   query (
     $pagePath: String!
-    $locale: String!
     # $slug: String
     $spaceId: String
   ) {
     contentfulTemplate: contentfulPage(
       pagePath: { eq: $pagePath }
-      node_locale: { eq: $locale }
+      node_locale: { eq: "ja" }
       spaceId: { eq: $spaceId }
     ) {
       contentful_id
@@ -50,5 +37,6 @@ export const query = graphql`
         }
       }
     }
+    ...AllContentfulEntryFragment
   }
 `

@@ -9,3 +9,4 @@ const React = require("react")
 export const wrapRootElement = ({ element, props }) => (
   <React.StrictMode {...props}>{element}</React.StrictMode>
 )
+

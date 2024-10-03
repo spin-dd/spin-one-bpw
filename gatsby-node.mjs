@@ -53,7 +53,7 @@ const generatePages = async ({ graphql, actions }) => {
 
   const pages = result.data.allContentfulPage.nodes
   if (pages && pages.length > 0) {
-    const component = path.resolve("./src/pages/page.js")
+    const component = path.resolve("./src/templates/page.js")
     pages.forEach((page) => {
       const body = page.body.raw ?? ""
       if (body === "") {

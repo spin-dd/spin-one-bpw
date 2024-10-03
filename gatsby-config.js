@@ -27,11 +27,12 @@ module.exports = {
     siteUrl: "https://gatsbycontentfulhomepage.gatsbyjs.io/",
     title: "SPIN-ONE",
     author: `spin-dd`,
-    description: "A Gatsby Starter for building homepages with Contentful",
+    description: "SPIN-ONE for building homepages with Contentful",
   },
   plugins: [
     {
       resolve: "gatsby-source-contentful",
+      options: contentfulConfig,
       options: {
         downloadLocal: true,
         spaceId: process.env.CONTENTFUL_SPACE_ID,
