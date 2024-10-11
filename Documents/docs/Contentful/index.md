@@ -24,10 +24,16 @@
 
 ## 送信するデータを作成
 
+送信する情報を指定のディレクトリに置く
+
+## TODOディレクトリに置き方決める
+
 - Media情報を作成
 - Content情報を作成
 
 ## データの登録
+
+用意したデータをContentfulに登録します。
 
 - Mediaを登録 <https://github.com/spin-dd/spin-one/issues/14>
 - COntentの登録 <https://github.com/spin-dd/spin-one/issues/13>
