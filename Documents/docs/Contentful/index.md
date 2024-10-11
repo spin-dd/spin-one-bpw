@@ -12,8 +12,6 @@
 ※コマンドラインで登録する場合に下記のファイルが必要になります。
 
 - ContentModelの定義
-- Mediaの定義
-- Content定義
 
 ## JSONファイルの反映
 
@@ -23,5 +21,13 @@
 - CLIインストール `npm install -g contentful-cli`
 - env.{develop|production} ファイルを作成
 - Content Modelを登録 <https://github.com/spin-dd/spin-one/issues/5>
+
+## 送信するデータを作成
+
+- Media情報を作成
+- Content情報を作成
+
+## データの登録
+
 - Mediaを登録 <https://github.com/spin-dd/spin-one/issues/14>
 - COntentの登録 <https://github.com/spin-dd/spin-one/issues/13>
