@@ -20,12 +20,13 @@ pythonインストール後`pip install mkdocs`で利用できます。
 
 以下の順番に行います。
 
-- SPINONEのプロジェクトを初期化 
-- [Contenfulの準備](./Contentful/index.md)
+- SPINONEのプロジェクトを初期化
 - [Gatsbyの準備](./Gatsby/index.md)
-- [DNS設定](./DNS/index.md)
+- [Contenfulの準備](./Contentful/index.md)
 - [Netlifyの設定](./netlify/index.md)
+- [DNS設定](./DNS/index.md)
 - [Googleの設定](./Google/index.md)
+- リリース
 
 ## Contenfulの準備
 
