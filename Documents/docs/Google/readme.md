@@ -1,5 +1,7 @@
 # Google関連の設定
 
+<https://github.com/spin-dd/spin-one/issues/8>
+
 - [タグマネージャー](https://tagmanager.google.com/#/home)の設定
 - [Search Console](https://search.google.com/search-console/about?hl=ja) によるサイトマップ登録
 

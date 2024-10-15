@@ -6,6 +6,7 @@
 - Page
 - Component
 - Element
+- Image
 - Templete
 - Information
 
@@ -67,7 +68,7 @@
 - `name`: Short text
   - Contentful 内の識別子
 - `moduleName`: Short text
-  - Image 固定
+  - 任意の文字列
 - `props`: JSON object
   - width、height を指定することで Contentful の機能でリサイズする
   - 未指定時はオリジナルサイズを取得する

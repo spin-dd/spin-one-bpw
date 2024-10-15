@@ -21,6 +21,8 @@ contentfulの情報などを記載します。
 
 - `$ gatsby develop`の実行
 
+※ [Contentfulにmodel情報が登録](../Contentful/readme.md)を行っていない場合はビルド時にエラーとなります。
+
 <http://localhost:8000/{contentfulのpagaPath}>で確認が行えます。
 
 ## 開発手法
@@ -38,5 +40,7 @@ contentfulの情報などを記載します。
     - パスをわけることで複数の theme を採用できる。（使用するか未定）
 
 ## CSS
+
+<https://github.com/spin-dd/spin-one/issues/7>
 
 - [tailwind](https://tailwindcss.com/)を採用

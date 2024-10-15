@@ -11,7 +11,7 @@
 
 ※コマンドラインで登録する場合に下記のファイルが必要になります。
 
-- ContentModelの定義
+- [ContentModelの定義](./ContentModel/readme.md)
 
 ## JSONファイルの反映
 

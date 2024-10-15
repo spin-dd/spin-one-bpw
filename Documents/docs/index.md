@@ -13,45 +13,61 @@ pythonインストール後`pip install mkdocs`で利用できます。
 
 ## Quick start
 
-以下のコマンドでプロジェクトをクローンしてパッケージインストールを行えます。
-`gatsby new testSpinOne git@github.com:spin-dd/spin-one.git`
+## Gatsbyの環境作成
+
+クイックスタートガイドに従う
+<https://www.gatsbyjs.com/docs/quick-start/>
+
+- Nodejsのインストール（2024/10時点では20.17.0）
+- Gatsby Cliのダウンロード `npm install -g gatsby-cli`
+- githubの登録
+- vscodeをインストール
+
+## レポジトリのダウンロードとパッケージインストール
+
+ローカル開発・コマンドラインを実行できるようにします。
+
+- `gatsby new {任意のディレクトリ名} git@github.com:spin-dd/spin-one.git`
 
 ## 開発ワークフロー
 
 以下の順番に行います。
 
 - SPINONEのプロジェクトを初期化
-- [Gatsbyの準備](./Gatsby/index.md)
-- [Contenfulの準備](./Contentful/index.md)
-- [Netlifyの設定](./netlify/index.md)
-- [DNS設定](./DNS/index.md)
-- [Googleの設定](./Google/index.md)
+- [Gatsbyの準備](./Gatsby/readme.md)
+- [Contenfulの準備](./Contentful/readme.md)
+- [Netlifyの設定](./netlify/readme.md)
+- [DNS設定](./DNS/readme.md)
+- [Googleの設定](./Google/readme.md)
 - リリース
-
-## Contenfulの準備
-
-Contentfulの準備を行います。
-[Contentfulの設定](./Contentful/index.md)
-
-- Contentfulの情報設定
-- Jsonファイルの定義
-- データ登録
 
 ## 開発セットアップ
 
 - PCセットアップ
 - ローカル環境の作成
 
-## DNSサーバー設定
+## Contenfulの準備
 
-- ドメインの取得
-- SSLの設定
+Contentfulの準備を行います。
+[Contentfulの設定](./Contentful/readme.md)
+
+- Contentfulの情報設定
+- Jsonファイルの定義
+- データ登録
+
+※Contentfulにデータを登録を行うことでローカルビルドが行えます。
 
 ## netlifyの設定
 
 - netlifyに登録
-- サイト情報を登録する
+- レポジトリ情報を登録する
 - contentfulにwebhookを登録する
+
+## DNSサーバー設定
+
+- ドメインの取得
+- SSLの設定
+- netlifyにカスタムドメイン登録
 
 ## Google関連を設定する
 
