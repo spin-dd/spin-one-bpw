@@ -1,9 +1,9 @@
 site_name: SPIN ONE
 nav:
-  - Home: index.md
-  - Contentful: Contentful/index.md
-  - Gatsby: Gatsby/index.md
-  - DNS: DNS/index.md
-  - netlify: netlify/index.md
-  - Google: Google/index.md
+  - Home: readme.md
+  - Contentful: Contentful/readme.md
+  - Gatsby: Gatsby/readme.md
+  - DNS: DNS/readme.md
+  - netlify: netlify/readme.md
+  - Google: Google/readme.md
 theme: readthedocs
