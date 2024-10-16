@@ -2,6 +2,7 @@
 
 ## 仕様
 
+<https://github.com/spin-dd/spin-one/issues/17>
 <https://github.com/spin-dd/spin-one/issues/18>
 
 ### UIについて
