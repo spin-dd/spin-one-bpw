@@ -42,11 +42,14 @@ Gatsbyの環境作成をしてレポジトリのダウンロードとパッケ�
 - [DNS設定](./DNS/readme.md)
 - [Googleの設定](./Google/readme.md)
 - リリース
+- 上記の後に修正があれば
 
-## 開発セットアップ
+## プロジェクトの初期化
 
 - PCセットアップ
 - ローカル環境の作成
+
+## Gatsbyの準備
 
 ## Contenfulの準備
 
@@ -65,13 +68,13 @@ Contentfulの準備を行います。
 - レポジトリ情報を登録する
 - contentfulにwebhookを登録する
 
-## DNSサーバー設定
+## DNS設定
 
 - ドメインの取得
 - SSLの設定
 - netlifyにカスタムドメイン登録
 
-## Google関連を設定する
+## Google設定する
 
 - タグマネージャー
 - サーチコンソールの設定
