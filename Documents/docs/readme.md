@@ -1,4 +1,4 @@
-# SPIN-ONE開発ガイド
+# SPIN-ONE 開発ガイド
 
 以下の組み合わせでホームページを作成
 
@@ -9,21 +9,21 @@
 ## ドキュメントについて
 
 [mkdocs](https://mkdocs-origin.readthedocs.io/en/latest/)で作成しています。
-pythonインストール後`pip install mkdocs`で利用できます。
+python インストール後`pip install mkdocs`で利用できます。
 
 ## 開発準備
 
-Gatsbyの環境作成をしてレポジトリのダウンロードとパッケージインストールを行い、開発ワークフローの準備をします。
+Gatsby の環境作成をしてレポジトリのダウンロードとパッケージインストールを行い、開発ワークフローの準備をします。
 
-### Gatsbyの環境作成
+### Gatsby の環境作成
 
 クイックスタートガイドに従う
 <https://www.gatsbyjs.com/docs/quick-start/>
 
-- Nodejsのインストール（2024/10時点では20.17.0）
-- Gatsby Cliのダウンロード `npm install -g gatsby-cli`
-- githubの登録
-- vscodeをインストール
+- Nodejs のインストール（2024/10 時点では 20.17.0）
+- Gatsby Cli のダウンロード `npm install -g gatsby-cli`
+- github の登録
+- vscode をインストール
 
 ### レポジトリのダウンロードとパッケージインストール
 
@@ -35,46 +35,46 @@ Gatsbyの環境作成をしてレポジトリのダウンロードとパッケ�
 
 以下の順番に行います。
 
-- SPINONEのプロジェクトを初期化
-- [Gatsbyの準備](./Gatsby/readme.md)
-- [Contenfulの準備](./Contentful/readme.md)
-- [Netlifyの設定](./netlify/readme.md)
-- [DNS設定](./DNS/readme.md)
-- [Googleの設定](./Google/readme.md)
+- [SPINONE のプロジェクトを初期化](./github/readme.md)
+- [Gatsby の準備](./Gatsby/readme.md)
+- [Contenful の準備](./Contentful/readme.md)
+- [Netlify の設定](./netlify/readme.md)
+- [DNS 設定](./DNS/readme.md)
+- [Google の設定](./Google/readme.md)
 - リリース
 - 上記の後に修正があれば
 
 ## プロジェクトの初期化
 
-- PCセットアップ
+- PC セットアップ
 - ローカル環境の作成
 
-## Gatsbyの準備
+## Gatsby の準備
 
-## Contenfulの準備
+## Contenful の準備
 
-Contentfulの準備を行います。
-[Contentfulの設定](./Contentful/readme.md)
+Contentful の準備を行います。
+[Contentful の設定](./Contentful/readme.md)
 
-- Contentfulの情報設定
-- Jsonファイルの定義
+- Contentful の情報設定
+- Json ファイルの定義
 - データ登録
 
-※Contentfulにデータを登録を行うことでローカルビルドが行えます。
+※Contentful にデータを登録を行うことでローカルビルドが行えます。
 
-## netlifyの設定
+## netlify の設定
 
-- netlifyに登録
+- netlify に登録
 - レポジトリ情報を登録する
-- contentfulにwebhookを登録する
+- contentful に webhook を登録する
 
-## DNS設定
+## DNS 設定
 
 - ドメインの取得
-- SSLの設定
-- netlifyにカスタムドメイン登録
+- SSL の設定
+- netlify にカスタムドメイン登録
 
-## Google設定する
+## Google 設定する
 
 - タグマネージャー
 - サーチコンソールの設定
