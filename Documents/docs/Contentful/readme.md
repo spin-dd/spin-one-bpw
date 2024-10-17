@@ -7,13 +7,14 @@
 - `Enviroment ID`を取得
 - アクセストークン作成
 
-## Jsonファイルの定義
+## JsonファイルのModel情報を定義
 
+利用するmodel情報を定義します。
 ※コマンドラインで登録する場合に下記のファイルが必要になります。
 
 - [ContentModelの定義](./ContentModel/readme.md)
 
-## JSONファイルの反映
+## JSONファイルのModel情報を反映
 
 下記の順番で行います。
 ※コマンドラインで行う場合はCLIインストールと`.env`ファイルが必要になります。
@@ -28,8 +29,8 @@
 
 ## TODOディレクトリに置き方決める
 
-- Media情報を作成
-- Content情報を作成
+- [Media情報を作成](../Media/readme.md)
+- [Content情報を作成](../Content/readme.md) 
 
 ## データの登録
 
