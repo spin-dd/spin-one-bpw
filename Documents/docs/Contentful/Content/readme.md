@@ -1,6 +1,6 @@
 # CONTENT
 
-コマンドで contentful の`Content`の登録を行います。
+コマンドで content フォルダの html ファイルを contentful のスペースの`Content`に登録を行います。
 前提として ContentModel と Media 情報をスペースに登録しておく必要があります。
 
 <https://github.com/spin-dd/spin-one/issues/13>

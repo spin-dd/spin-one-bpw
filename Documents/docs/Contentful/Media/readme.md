@@ -1,8 +1,10 @@
-# Mediaの登録
+# Media の登録
+
+Media フォルダに画像を配置し、コマンド実行で contentful にアップロードします。
 
 ## イメージファイルの登録
 
-.jpg.pngファイル等の画像ファイルをcontentfulのMediaに登録します。
+.jpg.png ファイル等の画像ファイルを contentful の Media に登録します。
 
 画像ファイルを下記ディレクトリに配置します。
 contentful > Media

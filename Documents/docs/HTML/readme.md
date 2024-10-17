@@ -13,10 +13,10 @@
 
 手順
 
-1. 分解する HTML を対象のディレクトリに配置(spin-one > html)
-2. 対象のディレクトリを指定した分解プログラムを実行
-3. 分解結果のディレクトリを作成(spin-one > contentful)
-4. `contentful`ディレクトリに以下のフォルダを作成
+分解する HTML を対象のディレクトリに配置(spin-one > html)
+対象のディレクトリを指定した分解プログラムを実行
+分解結果のディレクトリを作成(spin-one > contentful)
+`contentful`ディレクトリに以下のフォルダを作成
 
 - Component
 - Element
@@ -25,6 +25,6 @@
 - Templete
 - Information
 
-5. 各フォルダに html ファイルを分解ルールに基づいて配置
+各フォルダに html ファイルを分解ルールに基づいて配置
 
-Contentful
+### todo:HTML のルールの詳細と産婦恵右を作成する

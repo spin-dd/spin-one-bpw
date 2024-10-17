@@ -1,27 +1,16 @@
-# Gatsbyでローカル開発を行う
+# Gatsby でローカル開発を行う
 
-## 開発セットアップ
-
-クイックスタートガイドに従う
-<https://www.gatsbyjs.com/docs/quick-start/>
-
-- Nodejsのインストール（2024/10時点では20.17.0）
-- Gatsby Cliのダウンロード `npm install -g gatsby-cli`
-- githubの登録
-- vscodeをインストール
+- 開発手法に従って開発を行います。
+- CSS は tailwind を利用します。
 
 ## ローカルビルド
 
-- レポジトリのクローンとパッケージインストール
-
-`gatsby new testSpinOne git@github.com:spin-dd/spin-one.git`
-
-- envファイルの設定
-contentfulの情報などを記載します。
+- [.env ファイルの設定](./envfile.md)
+  contentful の情報などを記載します。
 
 - `$ gatsby develop`の実行
 
-※ [Contentfulにmodel情報が登録](../Contentful/readme.md)を行っていない場合はビルド時にエラーとなります。
+※ [Contentful に model 情報が登録](../Contentful/readme.md)を行っていない場合はビルド時にエラーとなります。
 
 <http://localhost:8000/{contentfulのpagaPath}>で確認が行えます。
 
@@ -44,3 +33,10 @@ contentfulの情報などを記載します。
 <https://github.com/spin-dd/spin-one/issues/7>
 
 - [tailwind](https://tailwindcss.com/)を採用
+
+## 標準コンポーネント
+
+`src > component`に作成します。
+[component の一覧](./Component/readme.md)
+
+### todo:component の方式を決める
