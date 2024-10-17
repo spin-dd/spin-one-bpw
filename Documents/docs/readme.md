@@ -13,7 +13,9 @@ pythonインストール後`pip install mkdocs`で利用できます。
 
 ## Quick start
 
-## Gatsbyの環境作成
+Gatsbyの環境作成をしてレポジトリのダウンロードとパッケージインストールを行い、開発ワークフローの準備をします。
+
+### Gatsbyの環境作成
 
 クイックスタートガイドに従う
 <https://www.gatsbyjs.com/docs/quick-start/>
@@ -23,7 +25,7 @@ pythonインストール後`pip install mkdocs`で利用できます。
 - githubの登録
 - vscodeをインストール
 
-## レポジトリのダウンロードとパッケージインストール
+### レポジトリのダウンロードとパッケージインストール
 
 ローカル開発・コマンドラインを実行できるようにします。
 
