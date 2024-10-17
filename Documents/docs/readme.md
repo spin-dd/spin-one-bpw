@@ -6,11 +6,6 @@
 - [Contentful](https://www.contentful.com/)
 - [netlify](https://www.netlify.com/)
 
-## ドキュメントについて
-
-[mkdocs](https://mkdocs-origin.readthedocs.io/en/latest/)で作成しています。
-python インストール後`pip install mkdocs`で利用できます。
-
 ## 開発準備
 
 Gatsby の環境作成をしてレポジトリのダウンロードとパッケージインストールを行い、開発ワークフローの準備をします。
@@ -36,20 +31,19 @@ Gatsby の環境作成をしてレポジトリのダウンロードとパッケ�
 以下の順番に行います。
 
 - [SPINONE のプロジェクトを初期化](./github/readme.md)
-- [Gatsby の準備](./Gatsby/readme.md)
 - [Contenful の準備](./Contentful/readme.md)
+- [Gatsby でローカル開発を行う](./Gatsby/readme.md)
 - [Netlify の設定](./netlify/readme.md)
 - [DNS 設定](./DNS/readme.md)
 - [Google の設定](./Google/readme.md)
 - リリース
-- 上記の後に修正があれば
+
+上記の後に修正があればcontentfulデータなどを変更します。
 
 ## プロジェクトの初期化
 
 - 新規レポジトリの作成
 - ローカルの spin-one を push する
-
-## Gatsby の準備
 
 ## Contenful の準備
 
@@ -61,6 +55,11 @@ Contentful の準備を行います。
 - データ登録
 
 ※Contentful にデータを登録を行うことでローカルビルドが行えます。
+
+## Gatsbyでローカル開発を行う
+
+- ローカルビルドのやり方
+- 開発ルール
 
 ## netlify の設定
 
@@ -78,3 +77,8 @@ Contentful の準備を行います。
 
 - タグマネージャー
 - サーチコンソールの設定
+
+## ドキュメントについて
+
+[mkdocs](https://mkdocs-origin.readthedocs.io/en/latest/)で作成しています。
+python インストール後`pip install mkdocs`で利用できます。
