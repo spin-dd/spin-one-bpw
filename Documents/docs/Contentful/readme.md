@@ -7,6 +7,11 @@
 - `Enviroment ID`を取得
 - アクセストークン作成
 
+## ユーザー情報を取得
+
+コマンド実行時にcontentfulにアクセスするため
+[envファイル](../Gatsby/envfile.md)に記載したcontentfulの情報を取得する
+
 ## JsonファイルのModel情報を定義
 
 利用するmodel情報を定義します。
