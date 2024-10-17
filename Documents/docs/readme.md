@@ -11,7 +11,7 @@
 [mkdocs](https://mkdocs-origin.readthedocs.io/en/latest/)で作成しています。
 pythonインストール後`pip install mkdocs`で利用できます。
 
-## Quick start
+## 開発準備
 
 Gatsbyの環境作成をしてレポジトリのダウンロードとパッケージインストールを行い、開発ワークフローの準備をします。
 
