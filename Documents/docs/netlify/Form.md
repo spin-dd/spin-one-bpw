@@ -4,8 +4,6 @@
 <https://github.com/spin-dd/spin-one/issues/18>
 
 メールアドレスを netlify に登録します。
-指定がなければ標準 UI を利用します。カスタムが必要な場合は別途対応を行います。
-開発ルールに基づいた html を利用します。
 
 ## UI について
 
@@ -21,10 +19,22 @@
 
 ## 開発ルール
 
-`data-netlify="true"`と`form`タグの属性に記載,下記のように実装
+form`タグの属性指定
+
+- name を属性を指定
+- `data-netlify="true"`とする
+- `method="POST"`とする
+- action 属性に送信完了ページを作成
 
 ```html
-<form name="contact" method="POST" action={完了ページ} data-netlify="true">
+<form name="contact" method="POST" action='./success' data-netlify="true">
     <>{内容}</>
 </form>
 ```
+
+## 送信完了ページ
+
+- `action`属性にページの URL を指定する
+- URL をフォーム画面の URL 末尾に'/success'をつける
+- 文言表示「送信に成功しました。」
+- 「TOP に戻る」ボタンを表示
