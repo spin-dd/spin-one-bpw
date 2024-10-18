@@ -1,5 +1,7 @@
 # HTML ファイルを contentful に登録
 
+コマンドを実行して以下を行います。
+
 - html で使用するアセットを登録
 - html を page 登録
 

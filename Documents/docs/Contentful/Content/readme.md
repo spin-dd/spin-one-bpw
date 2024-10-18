@@ -1,5 +1,7 @@
 # CONTENT
 
+[登録の流れ](../Import/readme.md)
+
 コマンドで content フォルダの html ファイルを contentful のスペースの`Content`に登録を行います。
 前提として ContentModel と Media 情報をスペースに登録しておく必要があります。
 
