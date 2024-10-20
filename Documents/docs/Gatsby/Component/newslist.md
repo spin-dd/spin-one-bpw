@@ -29,6 +29,8 @@ Gatsby プロジェクト上で Html ファイルに`data-component="infomation-
 
 ## 機能
 
+以下の機能を持ちます。
+
 - 一覧表示機能
 - 絞込検索機能
 - 表示件数の指定
