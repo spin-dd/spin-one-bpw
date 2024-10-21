@@ -1,6 +1,7 @@
 # Media の登録
 
 Media フォルダに画像を配置し、コマンド実行で contentful にアップロードします。
+[登録の流れ](../Import/readme.md)
 
 ## イメージファイルの登録
 

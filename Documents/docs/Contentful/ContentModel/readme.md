@@ -3,6 +3,7 @@
 <https://github.com/spin-dd/spin-one/issues/5>
 <https://github.com/spin-dd/spin-one/issues/23>
 
+[登録するモデル](./JsonFiles.md)
 [JSON ファイル](./sample.json)に記載した model の情報を指定した contentful の space に登録します。
 
 ## env ファイルの設定

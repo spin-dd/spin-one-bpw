@@ -103,3 +103,29 @@
   - 主に jQuery 依存処理実行用の拡張フィールド（※利用は非推奨）
 - `context`: JSON Object
   - 未使用（拡張用）
+
+## Information
+
+- `slug`: Short text
+
+  - url 末尾
+  - gatsby 内からテンプレートを一意に参照するために利用
+
+- `label`: Short text
+
+  - ページの区分
+
+- `title`: Short text
+
+  - ページの表題
+
+- `body`: Rich text
+
+  - ページの内容
+
+- `publishDate`: Date & time
+
+  - ページの内容
+
+- `thumbnail`: Reference
+  - サムネイル画像をアップロード

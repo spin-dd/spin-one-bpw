@@ -28,22 +28,21 @@ Contentful のスペースと enviroment を指定して、以下の情報を登
 ## JSON ファイルの Model 情報を反映
 
 下記の順番で行います。
-※コマンドラインで行う場合は CLI インストールと`.env`ファイルが必要になります。
 
-- CLI インストール `npm install -g contentful-cli`
 - env.{develop|production} ファイルを作成
 - Content Model を登録 <https://github.com/spin-dd/spin-one/issues/5>
 
 ## 送信するデータを作成
 
 送信する情報を指定のディレクトリに置く
+[データ送信の仕様](./Import/readme.md)
 
-## TODO ディレクトリに置き方決める
+### ディレクトリに置き方
 
 - [Media 情報を作成](../Media/readme.md)
 - [Content 情報を作成](../Content/readme.md)
 
-## データの登録
+### データの登録
 
 用意したデータを Contentful に登録します。
 
