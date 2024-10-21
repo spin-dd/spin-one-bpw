@@ -7,6 +7,7 @@
 [github](https://github.com/)上にプロジェクトを新規作成します。
 
 github のダッシュボードから[New](https://github.com/new)ボタンをクリックして新規レポジトリ画面に遷移します。
+
 ![alt text](image-2.png)
 
 `Initialize this repository with a README`の部分をチェックせずに`Create repository`を行います。
@@ -19,6 +20,7 @@ github のダッシュボードから[New](https://github.com/new)ボタンを�
 で作成したディレクトリに遷移します。
 
 新規作成レポジトリの remote URL を確認します。(https/ssh どちらでも可)
+
 ![alt text](image-1.png)
 ![alt text](image.png)
 
