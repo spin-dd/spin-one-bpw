@@ -13,10 +13,10 @@ Contentful のスペースと enviroment を指定して、以下の情報を登
 - `Enviroment ID`を取得
 - アクセストークン作成
 
-## ユーザー情報を取得
+## ユーザー情報を設定
 
 コマンド実行時に contentful にアクセスするため
-[env ファイル](../Gatsby/envfile.md)に記載した contentful の情報を取得する
+[env ファイル](../Gatsby/envfile.md)に記載した contentful の情報を設定する
 
 ## Json ファイルの Model 情報を定義
 
