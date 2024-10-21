@@ -6,11 +6,6 @@
 - [Contentful](https://www.contentful.com/)
 - [netlify](https://www.netlify.com/)
 
-## ドキュメントについて
-
-[mkdocs](https://mkdocs-origin.readthedocs.io/en/latest/)で作成しています。
-python インストール後`pip install mkdocs`で利用できます。
-
 ## 開発準備
 
 Gatsby の環境作成をしてレポジトリのダウンロードとパッケージインストールを行い、開発ワークフローの準備をします。
@@ -36,8 +31,8 @@ Gatsby の環境作成をしてレポジトリのダウンロードとパッケ�
 以下の順番に行います。
 
 - [SPINONE のプロジェクトを初期化](./github/readme.md)
-- [Gatsby の準備](./Gatsby/readme.md)
 - [Contenful の準備](./Contentful/readme.md)
+- [Gatsby でローカル開発を行う](./Gatsby/readme.md)
 - [Netlify の設定](./netlify/readme.md)
 - [DNS 設定](./DNS/readme.md)
 - [Google の設定](./Google/readme.md)
