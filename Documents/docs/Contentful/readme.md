@@ -28,9 +28,7 @@ Contentful のスペースと enviroment を指定して、以下の情報を登
 ## JSON ファイルの Model 情報を反映
 
 下記の順番で行います。
-※コマンドラインで行う場合は CLI インストールと`.env`ファイルが必要になります。
 
-- CLI インストール `npm install -g contentful-cli`
 - env.{develop|production} ファイルを作成
 - Content Model を登録 <https://github.com/spin-dd/spin-one/issues/5>
 
