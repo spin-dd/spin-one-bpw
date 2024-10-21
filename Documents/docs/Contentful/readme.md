@@ -18,21 +18,19 @@ Contentful のスペースと enviroment を指定して、以下の情報を登
 コマンド実行時に contentful にアクセスするため
 [env ファイル](../Gatsby/envfile.md)に記載した contentful の情報を設定する
 
-## Json ファイルの Model 情報を定義
+## Model 情報を定義された Json ファイルを 情報を登録
 
-利用する model 情報を定義します。
-※コマンドラインで登録する場合に下記のファイルが必要になります。
+標準ファイルを事前に用意しています。
+これをコマンドで反映できます。
 
 - [ContentModel の定義](./ContentModel/readme.md)
 
-## JSON ファイルの Model 情報を反映
+ model 情報を定義します。
+※コマンドラインで登録する場合に下記のファイルが必要になります。
 
-下記の順番で行います。
-
-- env.{develop|production} ファイルを作成
 - Content Model を登録 <https://github.com/spin-dd/spin-one/issues/5>
 
-## 送信するデータを作成
+## データを登録
 
 送信する情報を指定のディレクトリに置く
 [データ送信の仕様](./Import/readme.md)
