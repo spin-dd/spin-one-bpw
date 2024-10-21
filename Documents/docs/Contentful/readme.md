@@ -20,29 +20,20 @@ Contentful のスペースと enviroment を指定して、以下の情報を登
 
 ## Model 情報を定義された Json ファイルを 情報を登録
 
-標準ファイルを事前に用意しています。
-これをコマンドで反映できます。
+SPIN-ONE では標準の [model ファイル](../../../data/contentful/contentmodel.json)を事前に用意しています。
+
+コマンド実行時に env ファイルに設定した情報を`SpaceID`と`Enviroment ID`model ファイルを書き換え、contentmodel 情報の登録を行います。
 
 - [ContentModel の定義](./ContentModel/readme.md)
 
- model 情報を定義します。
-※コマンドラインで登録する場合に下記のファイルが必要になります。
-
 - Content Model を登録 <https://github.com/spin-dd/spin-one/issues/5>
+
+contentmodel をカスタムする場合は model ファイルの修正を行ってください
 
 ## データを登録
 
-送信する情報を指定のディレクトリに置く
-[データ送信の仕様](./Import/readme.md)
-
-### ディレクトリに置き方
-
-- [Media 情報を作成](../Media/readme.md)
-- [Content 情報を作成](../Content/readme.md)
-
-### データの登録
-
-用意したデータを Contentful に登録します。
+登録する html を指定のディレクトリ`spin-one/html`に置きます。
+[データ登録の仕様](./Import/readme.md)
 
 - Media を登録 <https://github.com/spin-dd/spin-one/issues/14>
-- COntent の登録 <https://github.com/spin-dd/spin-one/issues/13>
+- Content の登録 <https://github.com/spin-dd/spin-one/issues/13>
