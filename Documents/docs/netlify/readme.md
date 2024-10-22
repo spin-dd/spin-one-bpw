@@ -32,6 +32,10 @@ github と netlify の連携が自動的に行われます。
 - [DNS の設定](../DNS/readme.md)設定を行います。
 - netlify 画面からカスタムドメインの設定を行います。
 
+## SSL 設定
+
+### todo:調べる
+
 ## Google 関連を設定する
 
 Google 関連の設定を行います。
