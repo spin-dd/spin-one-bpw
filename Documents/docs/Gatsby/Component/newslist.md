@@ -22,7 +22,7 @@ Gatsby プロジェクト上で Html ファイルに`data-component="infomation-
 ## props のパラーメタ
 
 | key | 必須 |初期値 | 内容 |
-| --- | =|------ | ---- |
+| --- | --|------ | ---- |
 |label|〇||information の表示 label を絞り込む|
 |item_limit|×|10|ページごとに表示する件数|
 |canPaging|×|false|ページングが必要な場合利用|
