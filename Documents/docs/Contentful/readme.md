@@ -37,3 +37,20 @@ contentmodel をカスタムする場合は model ファイルの修正を行っ
 
 - Media を登録 <https://github.com/spin-dd/spin-one/issues/14>
 - Content の登録 <https://github.com/spin-dd/spin-one/issues/13>
+
+## データを更新
+
+既に登録済のデータ情報を更新します。
+更新する html を指定のディレクトリ`spin-one/html`に置きます。
+[データ登録の仕様](./Import/readme.md)
+
+## データの一括削除
+
+コマンド実行で env ファイルに指定した Space の Enviroment のデータ情報を全て削除します。
+
+- コマンド実行時に削除確認を行います。
+  「{eniroment 名}に登録したデータを全て削除します。よろしいでしょうか。(y/n)」
+
+- 「y」を入力してエンターを押したら削除を実行します。
+
+- 「n」を入力してエンターを押したらコマンドを終了します。
