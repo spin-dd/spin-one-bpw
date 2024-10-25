@@ -48,10 +48,7 @@ Gatsby プロジェクト上で Html ファイルに`data-component="infomation-
 ### 絞込検索機能
 
 - ラベルで絞り込み
-- `title`を部分一致で絞り込み
-- `publishDate`の年ごと
-- `publishDate`の年月ごと
-
+- 
 ### ページング機能
 
 - `canPaging==true`のときページングが可能になります。
@@ -66,4 +63,4 @@ Gatsby プロジェクト上で Html ファイルに`data-component="infomation-
 
 - URL`{ニュースページurl}/{slug}`の`{slug}`を参照して information を検索する
 - `title`,`publishDate`,`body`を画面で表示する
-- 一覧に戻る
+- 戻るボタン → ブラウザバックする
