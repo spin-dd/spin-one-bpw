@@ -42,14 +42,20 @@
 ## html を page として登録
 
 - 上記で書き換えを行った後にディレクトリごとに HTML を Contful に PAGE として登録します。
-
+- 対象ディレクトリ`/HTML`のディレクトリごとに HTMLファイルを を Contful に PAGE として登録します。
 contentful のパラメータは以下のようにします。
 
 | key      | 登録内容                                         |
 | -------- | ------------------------------------------------ |
-| pagePath | html を格納している、ディレクトリを"/"として登録 |
+| pagePath | pagePathの定義に従う |
 | head     | html の`<head>`タグの内容                        |
 | body     | html の`<body>`タグの内容                        |
+
+### pagePathの定義
+
+{ファイルのディレクトリのパス}+{ファイル名から`.html`を除いたもの}
+ファイルのディレクトリのパス：htmlファイルのディレクトリパスのうち`/spin-one/HTML`以降のディレクトリのパスを登録 `/spin-one/HTML/news/company_news.html`であれば`/news/`として登録
+ファイル名から`.html`を除いたもの: `company_news.html`であれば`company_news`とする 例外として`index.html`は`""`とする
 
 ## 登録した html を gatsby で表示する
 
