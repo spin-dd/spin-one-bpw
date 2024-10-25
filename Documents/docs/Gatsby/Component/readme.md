@@ -7,3 +7,4 @@
 | ------------------ | ----------------------------------- | ----------------------------------------------- |
 | form.js            | `<form>`の標準形                    | <https://github.com/spin-dd/spin-one/issues/18> |
 | informationList.js | [ニュース一覧の標準形](newslist.md) | <https://github.com/spin-dd/spin-one/issues/26> |
+| Image.js | [イメージファイル表示](./) | <https://github.com/spin-dd/spin-one/issues/42> |
