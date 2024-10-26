@@ -1,6 +1,6 @@
 # Contentful 準備
 
-Contentful のスペースと enviroment を指定して、以下の情報を登録できます。
+Contentful のスペースと environment を指定して、以下の情報を登録できます。
 
 - model
 - media
@@ -10,7 +10,7 @@ Contentful のスペースと enviroment を指定して、以下の情報を登
 
 - [contentful](https://www.contentful.com/)にアカウント登録
 - SpaceID の取得
-- `Enviroment ID`を取得
+- `Environment ID`を取得
 - アクセストークン作成
 
 ## ユーザー情報を設定
@@ -22,13 +22,13 @@ Contentful のスペースと enviroment を指定して、以下の情報を登
 
 SPIN-ONE では標準の [model ファイル](../../../data/contentful/contentmodel.json)を事前に用意しています。
 
-コマンド実行時に env ファイルに設定した情報を`SpaceID`と`Enviroment ID`model ファイルを書き換え、contentmodel 情報の登録を行います。
+コマンド実行時に env ファイルに設定した情報を`SpaceID`と`Environment ID`model ファイルを書き換え、Content model 情報の登録を行います。
 
 - [ContentModel の定義](./ContentModel/readme.md)
 
 - Content Model を登録 <https://github.com/spin-dd/spin-one/issues/5>
 
-contentmodel をカスタムする場合は model ファイルの修正を行ってください
+Content model をカスタムする場合は model ファイルの修正を行ってください
 
 ## データを登録
 
@@ -46,10 +46,10 @@ contentmodel をカスタムする場合は model ファイルの修正を行っ
 
 ## データの一括削除
 
-コマンド実行で env ファイルに指定した Space の Enviroment のデータ情報を全て削除します。
+コマンド実行で env ファイルに指定した Space の Environment のデータ情報を全て削除します。
 
 - コマンド実行時に削除確認を行います。
-  「{eniroment 名}に登録したデータを全て削除します。よろしいでしょうか。(y/n)」
+  「{environment 名}に登録したデータを全て削除します。よろしいでしょうか。(y/n)」
 
 - 「y」を入力してエンターを押したら削除を実行します。
 

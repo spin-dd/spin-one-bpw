@@ -7,4 +7,4 @@ Contentfulなどで利用する変数を設定します。
 |CONTENTFUL_SPACE_ID|スペースIDを入力|
 |CONTENTFUL_ACCESS_TOKEN|CMAアクセストークンを入力|
 |CONTENTFUL_MANAGEMENT_TOKEN|Content Delivery API - access token|
-|ENVIROMENT_ID|Environment IDを入力(未入力ならmasterとする)|
+|ENVIRONMENT_ID|Environment IDを入力(未入力ならmasterとする)|

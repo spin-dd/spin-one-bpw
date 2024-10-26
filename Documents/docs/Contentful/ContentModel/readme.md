@@ -15,7 +15,7 @@
 | CONTENTFUL_SPACE_ID         | スペース ID を入力                              |
 | CONTENTFUL_ACCESS_TOKEN     | CMA アクセストークンを入力                      |
 | CONTENTFUL_MANAGEMENT_TOKEN | Content Delivery API - access token             |
-| ENVIROMENT_ID               | Environment ID を入力(未入力なら master とする) |
+| ENVIRONMENT_ID              | Environment ID を入力(未入力なら master とする) |
 
 ## ContentModel の登録内容
 
@@ -23,12 +23,12 @@ content type に以下の情報を登録します。
 
 - sys
 
-space/environmen の情報を登録します。
+space/environment の情報を登録します。
 
 | key         | 必須 | 備考                                                |
 | ----------- | ---- | --------------------------------------------------- |
 | space       | 〇   | env ファイルから CONTENTFUL_SPACE_ID を取得します。 |
-| environment | 〇   | env ファイルから ENVIROMENT_ID を取得します。       |
+| environment | 〇   | env ファイルから ENVIRONMENT_ID を取得します。      |
 
 - contentTypes
 
