@@ -17,7 +17,7 @@ Contentful のスペースと environment を指定して、以下の情報を�
 
 ## Model 情報を定義された Json ファイルを 情報を登録
 
-SPIN-ONE では標準の [model ファイル](../../../data/contentful/contentmodel.json)を事前に用意しています。
+SPIN-ONE では標準の [model ファイル](../../../data/contentful/content-model.json)を事前に用意しています。
 
 コマンド実行時に env ファイルに設定した情報を`SpaceID`と`Environment ID`model ファイルを書き換え、Content model 情報の登録を行います。
 
