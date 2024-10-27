@@ -6,31 +6,23 @@ Contentful のスペースと environment を指定して、以下の情報を�
 - media
 - content
 
-## Contentful の情報設定
+## Contentful セットアップ
 
-- [contentful](https://www.contentful.com/)にアカウント登録
+- [contentful](https://www.contentful.com/)にアカウント登録します
+- Contentful Web UI から Environment settings > Locales で `Japanese (ja)` をデフォルトに設定します
 
 ## ユーザー情報を設定
 
-コマンド実行時に contentful にアクセスするため
-[env ファイル](../Gatsby/envfile.md)に記載した contentful の情報を設定する
+コマンド実行の準備として、[env ファイル](../Gatsby/envfile.md)で指定された環境変数を .env ファイルに設定します。
 
-## Model 情報を定義された Json ファイルを 情報を登録
+## Content model の設定
 
-SPIN-ONE では標準の [model ファイル](../../../data/contentful/content-model.json)を事前に用意しています。
-
-コマンド実行時に env ファイルに設定した情報を`SpaceID`と`Environment ID`model ファイルを書き換え、Content model 情報の登録を行います。
-
-- [ContentModel の定義](./ContentModel/readme.md)
-
-- Content Model を登録
+以下のコマンドを実行して SPIN ONE 標準の Content model を Contentful に登録します。
 
 ```shell
 # .env ファイルに設定した情報から指定の Environment を作成
 npm run contentful-setup
 ```
-
-Content model をカスタムする場合は model ファイルの修正を行ってください
 
 ## データを登録
 
