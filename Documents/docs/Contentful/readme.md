@@ -9,9 +9,6 @@ Contentful のスペースと environment を指定して、以下の情報を�
 ## Contentful の情報設定
 
 - [contentful](https://www.contentful.com/)にアカウント登録
-- SpaceID の取得
-- `Environment ID`を取得
-- アクセストークン作成
 
 ## ユーザー情報を設定
 
@@ -26,7 +23,12 @@ SPIN-ONE では標準の [model ファイル](../../../data/contentful/contentmo
 
 - [ContentModel の定義](./ContentModel/readme.md)
 
-- Content Model を登録 <https://github.com/spin-dd/spin-one/issues/5>
+- Content Model を登録
+
+```shell
+# .env ファイルに設定した情報から指定の Environment を作成
+npm run contentful-setup
+```
 
 Content model をカスタムする場合は model ファイルの修正を行ってください
 
