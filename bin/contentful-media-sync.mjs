@@ -3,6 +3,7 @@ import path from "path"
 import { createHash } from "crypto"
 import { parse } from "node-html-parser"
 import { default as contentfulManagement } from "contentful-management"
+import mime from "mime"
 import "dotenv/config"
 
 const client = contentfulManagement.createClient({
@@ -45,13 +46,17 @@ async function createAsset(imageInfo, directory) {
     .finally(() => fd.close())
     .catch((error) => console.error({ error }))
 
+  const contentType = mime.getType(fileName)
+  if (!contentType) {
+    throw new Error(`MIMEタイプが取得できませんでした: ${fileName}`)
+  }
+
   // アセットデータ
   const rawData = {
     fields: {
       file: {
         ja: {
-          // TODO: 適切なMIMEタイプに変更
-          contentType: "image/png",
+          contentType,
           fileName,
           uploadFrom: {
             sys: {
