@@ -13,6 +13,7 @@
     "gatsby-provision": "gatsby-provision-contentful --contentful-data-path='./scripts/data.json' --space-id=$CONTENTFUL_SPACE_ID --management-token=$CONTENTFUL_MANAGEMENT_TOKEN",
     "setup": "node ./scripts/setup.js",
     "contentful-setup": "./bin/contentful-setup.sh",
+    "contentful-media-sync": "node ./bin/contentful-media-sync.mjs",
     "export-content": "contentful space export --space-id=$SPACE_ID --management-token=$MANAGEMENT_TOKEN --export-dir=scripts --content-file=data.json"
   },
   "dependencies": {
@@ -48,12 +49,15 @@
   },
   "devDependencies": {
     "chalk": "4",
+    "contentful": "^11.2.0",
     "contentful-cli": "^3.3.14",
     "contentful-import": "^8.3.2",
+    "contentful-management": "^11.35.1",
     "gatsby-provision-contentful": "^0.0.5",
     "husky": "^7.0.4",
     "inquirer": "^8.2.0",
     "lint-staged": "^12.3.5",
+    "node-html-parser": "^6.1.13",
     "prettier": "2.5.1",
     "yargs-parser": "^21.0.0"
   }
