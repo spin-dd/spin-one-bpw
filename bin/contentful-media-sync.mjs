@@ -1,10 +1,10 @@
-import fs from "fs/promises"
-import path from "path"
-import { createHash } from "crypto"
-import { parse } from "node-html-parser"
-import { default as contentfulManagement } from "contentful-management"
-import mime from "mime"
-import "dotenv/config"
+import fs from 'fs/promises'
+import path from 'path'
+import { createHash } from 'crypto'
+import { parse } from 'node-html-parser'
+import { default as contentfulManagement } from 'contentful-management'
+import mime from 'mime'
+import 'dotenv/config'
 
 const client = contentfulManagement.createClient({
   accessToken: process.env.CONTENTFUL_MANAGEMENT_TOKEN,
@@ -20,14 +20,14 @@ async function createAsset(imageInfo, directory) {
   const fileName = path.basename(imageInfo.src)
   const relativePath = path.relative(directory, imageInfo.src)
   // directoryからの相対パスをハッシュ化してアセットのIDとして使用する
-  const assetId = createHash("sha256").update(relativePath).digest("hex")
+  const assetId = createHash('sha256').update(relativePath).digest('hex')
 
   // 登録済みか確認
   const assets = await environment
     .getAssets({
-      "sys.id": assetId,
+      'sys.id': assetId,
       // ハッシュを指定して画像ファイルの更新を検知する
-      "fields.description": imageInfo.hash,
+      'fields.description': imageInfo.hash,
     })
     .catch((error) => console.error({ error }))
   if (assets.items.length > 0) {
@@ -38,7 +38,7 @@ async function createAsset(imageInfo, directory) {
   }
 
   // 画像をアップロード
-  const fd = await fs.open(imageInfo.src, "r")
+  const fd = await fs.open(imageInfo.src, 'r')
   const upload = await environment
     .createUpload({
       file: await fd.readFile(),
@@ -60,8 +60,8 @@ async function createAsset(imageInfo, directory) {
           fileName,
           uploadFrom: {
             sys: {
-              type: "Link",
-              linkType: "Upload",
+              type: 'Link',
+              linkType: 'Upload',
               id: upload.sys.id,
             },
           },
@@ -116,7 +116,7 @@ async function findHtmlFiles(directory) {
       const fullPath = path.join(dir, dirent.name)
       if (dirent.isDirectory()) {
         await walk(fullPath)
-      } else if (path.extname(fullPath) === ".html") {
+      } else if (path.extname(fullPath) === '.html') {
         htmlFiles.push(fullPath)
       }
     }
@@ -133,18 +133,18 @@ async function processHtmlFiles(htmlFiles, directory) {
   const imageInfoMap = new Map()
 
   for await (const htmlFile of htmlFiles) {
-    const content = await fs.readFile(htmlFile, "utf8")
+    const content = await fs.readFile(htmlFile, 'utf8')
     const root = parse(content)
-    const images = root.querySelectorAll("img")
+    const images = root.querySelectorAll('img')
 
     // 各imgタグの処理
     for (const img of images) {
-      const src = img.getAttribute("src")
+      const src = img.getAttribute('src')
       const absoluteSrc = path.resolve(path.dirname(htmlFile), src)
 
       // 画像ファイルのコンテンツを取得してハッシュ化
       const imageContent = await fs.readFile(absoluteSrc)
-      const hash = createHash("sha256").update(imageContent).digest("hex")
+      const hash = createHash('sha256').update(imageContent).digest('hex')
       const imageInfo = { src: absoluteSrc, hash }
 
       // アセット登録
@@ -162,7 +162,7 @@ async function processHtmlFiles(htmlFiles, directory) {
         .catch((error) => console.error({ error }))
 
       // Pageモデルの登録がないためこの段階ではContentfulの配信URLに置換する仮実装
-      img.setAttribute("src", fileUrl)
+      img.setAttribute('src', fileUrl)
     }
     // 動作確認のため、出力（ファイル更新は行わない）
     console.log(root.toString())
@@ -173,7 +173,7 @@ async function processHtmlFiles(htmlFiles, directory) {
 const directory = process.argv[2]
 
 if (!directory) {
-  console.error("ディレクトリを指定してください。")
+  console.error('ディレクトリを指定してください。')
   process.exit(1)
 }
 
