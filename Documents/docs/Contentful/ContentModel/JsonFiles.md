@@ -6,7 +6,7 @@
 <https://app.contentful.com/spaces/8h71zrqfbfma/content_types/campusnews/preview>
 
 - contentTypes
-ContntModelの情報
+Content modelの情報
 
 - entries
 登録データの情報
