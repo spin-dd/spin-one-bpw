@@ -7,5 +7,11 @@ import eslintConfigPrettier from 'eslint-config-prettier'
 export default tsEslint.config(
   eslint.configs.recommended,
   ...tsEslint.configs.recommended,
-  eslintConfigPrettier
+  eslintConfigPrettier,
+  {
+    rules: {
+      'no-undef': 'off',
+    },
+    files: ['**/*.ts', '**/*.mjs'],
+  }
 )

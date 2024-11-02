@@ -19,6 +19,7 @@
     "clean": "gatsby clean",
     "lint": "run-s -c lint:*",
     "lint:es": "eslint .",
+    "lint:ts": "tsc --noEmit",
     "lint:prettier": "prettier --check .",
     "lint-fix": "run-s lint-fix:*",
     "lint-fix:es": "npm run lint:es -- --fix",
