@@ -24,8 +24,8 @@
     "lint-fix": "run-s lint-fix:*",
     "lint-fix:es": "npm run lint:es -- --fix",
     "lint-fix:prettier": "npm run lint:prettier -- --write",
-    "contentful-setup": "./bin/contentful-setup.sh",
-    "contentful-media-sync": "node ./bin/contentful-media-sync.mjs"
+    "contentful-setup": "./scripts/contentful-setup.sh",
+    "contentful-media-sync": "node ./scripts/contentful-media-sync.mjs"
   },
   "dependencies": {
     "contentful": "11.2.0"
