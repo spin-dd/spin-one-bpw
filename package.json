@@ -1,8 +1,15 @@
 {
-  "name": "spin-one",
-  "version": "1.0.0",
-  "engines": {
-    "node": ">=18.0.0"
+  "name": "@spin-dd/spin-one",
+  "version": "0.0.1",
+  "author": "K.K. SPIN D&D <dev@spin-dd.com>",
+  "bugs": {
+    "url": "https://github.com/spin-dd/spin-one/issues"
+  },
+  "license": "UNLICENSED",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/spin-dd/spin-one.git"
   },
   "scripts": {
     "start": "gatsby develop",
@@ -10,56 +17,19 @@
     "build": "gatsby build",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
-    "gatsby-provision": "gatsby-provision-contentful --contentful-data-path='./scripts/data.json' --space-id=$CONTENTFUL_SPACE_ID --management-token=$CONTENTFUL_MANAGEMENT_TOKEN",
-    "setup": "node ./scripts/setup.js",
     "contentful-setup": "./bin/contentful-setup.sh",
-    "contentful-media-sync": "node ./bin/contentful-media-sync.mjs",
-    "export-content": "contentful space export --space-id=$SPACE_ID --management-token=$MANAGEMENT_TOKEN --export-dir=scripts --content-file=data.json"
+    "contentful-media-sync": "node ./bin/contentful-media-sync.mjs"
   },
   "dependencies": {
-    "@contentful/rich-text-html-renderer": "^15.11.1",
-    "@fontsource/dm-mono": "^4.5.9",
-    "@fontsource/dm-sans": "^4.5.8",
-    "@typescript-eslint/eslint-plugin": "^5.60.1",
-    "@typescript-eslint/parser": "^5.60.1",
-    "@vanilla-extract/babel-plugin": "^1.2.0",
-    "@vanilla-extract/css": "^1.9.0",
-    "@vanilla-extract/css-utils": "^0.1.2",
-    "@vanilla-extract/webpack-plugin": "^2.1.12",
-    "dotenv": "^16.4.5",
-    "esm": "^3.2.25",
-    "gatsby": "^5.13.7",
-    "gatsby-plugin-image": "^3.13.1",
-    "gatsby-plugin-manifest": "^5.0.0",
-    "gatsby-plugin-remove-console": "^0.0.2",
-    "gatsby-plugin-sass": "^6.13.1",
-    "gatsby-plugin-sharp": "^5.13.1",
-    "gatsby-plugin-vanilla-extract": "^4.0.1",
-    "gatsby-source-contentful": "^8.13.2",
-    "gatsby-source-filesystem": "^5.0.0",
-    "gatsby-transformer-sharp": "^5.0.0",
-    "html-to-react": "^1.7.0",
-    "http-proxy-middleware": "^3.0.2",
-    "is-absolute-url": "^4.0.1",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0",
-    "react-feather": "^2.0.9",
-    "sharp": "^0.32.6",
-    "swiper": "^11.1.14"
+    "contentful": "11.2.0",
+    "gatsby": "5.13.7"
   },
   "devDependencies": {
-    "chalk": "4",
-    "contentful": "^11.2.0",
-    "contentful-cli": "^3.3.14",
-    "contentful-import": "^8.3.2",
-    "contentful-management": "^11.35.1",
-    "gatsby-provision-contentful": "^0.0.5",
-    "husky": "^7.0.4",
-    "inquirer": "^8.2.0",
-    "lint-staged": "^12.3.5",
-    "mime": "^4.0.4",
-    "node-html-parser": "^6.1.13",
-    "prettier": "2.5.1",
-    "yargs-parser": "^21.0.0"
+    "dotenv": "16.4.5",
+    "contentful-cli": "3.3.14",
+    "contentful-management": "11.35.1",
+    "mime": "4.0.4",
+    "node-html-parser": "6.1.13",
+    "prettier": "2.5.1"
   }
 }
