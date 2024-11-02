@@ -17,6 +17,8 @@
     "build": "gatsby build",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
+    "lint": "eslint .",
+    "lint-fix": "eslint . --fix",
     "contentful-setup": "./bin/contentful-setup.sh",
     "contentful-media-sync": "node ./bin/contentful-media-sync.mjs"
   },
@@ -24,12 +26,18 @@
     "contentful": "11.2.0"
   },
   "devDependencies": {
+    "@eslint/js": "9.14.0",
+    "@types/eslint__js": "8.42.3",
     "contentful-cli": "3.3.14",
     "contentful-management": "11.35.1",
     "dotenv": "16.4.5",
+    "eslint": "8.57.1",
+    "eslint-plugin-typescript": "0.14.0",
     "mime": "4.0.4",
     "node-html-parser": "6.1.13",
-    "prettier": "2.5.1"
+    "prettier": "2.5.1",
+    "typescript": "5.6.3",
+    "typescript-eslint": "8.12.2"
   },
   "peerDependencies": {
     "gatsby": "5.13.7",
