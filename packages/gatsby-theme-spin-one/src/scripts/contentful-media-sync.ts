@@ -2,8 +2,7 @@
 
 import { createHash } from 'crypto';
 import { parse } from 'node-html-parser';
-import { default as contentfulManagement } from 'contentful-management';
-import mime from 'mime';
+import contentfulManagement from 'contentful-management';
 import fs from 'fs/promises';
 import path from 'path';
 import { config } from 'dotenv';
@@ -59,6 +58,7 @@ async function main() {
       return assets.items[0].sys.id;
     }
 
+    const { default: mime } = await import('mime');
     const contentType = mime.getType(fileName);
     if (!contentType) {
       console.error(`ファイルタイプが不明です。アセット登録をスキップします: ${relativePath}`);

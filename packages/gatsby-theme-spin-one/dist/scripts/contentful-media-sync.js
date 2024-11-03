@@ -4,7 +4,6 @@
 var crypto = require('crypto');
 var nodeHtmlParser = require('node-html-parser');
 var contentfulManagement = require('contentful-management');
-var mime = require('mime');
 var fs = require('fs/promises');
 var path = require('path');
 var dotenv = require('dotenv');
@@ -46,6 +45,7 @@ async function main() {
             console.info(`更新がありませんでしたのでスキップします: ${relativePath} with hash: ${imageInfo.hash}`);
             return assets.items[0].sys.id;
         }
+        const { default: mime } = await import('mime');
         const contentType = mime.getType(fileName);
         if (!contentType) {
             console.error(`ファイルタイプが不明です。アセット登録をスキップします: ${relativePath}`);
@@ -145,7 +145,7 @@ async function main() {
                 }
                 const fileUrl = await environment
                     .getAsset(imageInfoMap.get(key).assetId)
-                    .then((asset) => asset.fields.file['en-'].url)
+                    .then((asset) => asset.fields.file.ja.url)
                     .catch((error) => {
                     console.error({ error });
                     return src;
