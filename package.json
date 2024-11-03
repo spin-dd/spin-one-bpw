@@ -4,6 +4,7 @@
     "packages/*"
   ],
   "scripts": {
+    "build:theme": "npm run build -w packages/gatsby-theme-spin-one",
     "lint": "npm run lint --workspaces --if-present",
     "lint-fix": "npm run lint-fix --workspaces --if-present"
   },

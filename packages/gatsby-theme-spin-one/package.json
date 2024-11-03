@@ -16,7 +16,8 @@
     "dist"
   ],
   "bin": {
-    "contentful-setup": "./dist/scripts/contentful-setup.js"
+    "contentful-setup": "./dist/scripts/contentful-setup.js",
+    "contentful-media-sync": "./dist/scripts/contentful-media-sync.js"
   },
   "scripts": {
     "lint": "run-s -c lint:*",
