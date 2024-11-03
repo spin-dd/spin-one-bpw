@@ -1,18 +1,16 @@
 #!/usr/bin/env node
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const crypto_1 = require("crypto");
-const node_html_parser_1 = require("node-html-parser");
-const contentful_management_1 = __importDefault(require("contentful-management"));
-const mime_1 = __importDefault(require("mime"));
-const promises_1 = __importDefault(require("fs/promises"));
-const path_1 = __importDefault(require("path"));
-const dotenv_1 = require("dotenv");
+'use strict';
+
+var crypto = require('crypto');
+var nodeHtmlParser = require('node-html-parser');
+var contentfulManagement = require('contentful-management');
+var mime = require('mime');
+var fs = require('fs/promises');
+var path = require('path');
+var dotenv = require('dotenv');
+
 // envファイルに設定した情報を読み込む
-(0, dotenv_1.config)();
+dotenv.config();
 const spaceId = process.env.CONTENTFUL_SPACE_ID;
 const managementToken = process.env.CONTENTFUL_MANAGEMENT_TOKEN;
 const environmentId = process.env.CONTENTFUL_ENVIRONMENT_ID;
@@ -20,7 +18,7 @@ if (!spaceId || !managementToken || !environmentId) {
     console.error('Contentfulの設定が不足しています。');
     process.exit(1);
 }
-const client = contentful_management_1.default.createClient({
+const client = contentfulManagement.createClient({
     accessToken: managementToken,
 });
 async function main() {
@@ -29,10 +27,10 @@ async function main() {
     // Contentful に画像をアップロードし、アセットを作成する関数
     async function createAsset(imageInfo, directory) {
         // 対象画像ファイル
-        const fileName = path_1.default.basename(imageInfo.src);
-        const relativePath = path_1.default.relative(directory, imageInfo.src);
+        const fileName = path.basename(imageInfo.src);
+        const relativePath = path.relative(directory, imageInfo.src);
         // directoryからの相対パスをハッシュ化してアセットのIDとして使用する
-        const assetId = (0, crypto_1.createHash)('sha256').update(relativePath).digest('hex');
+        const assetId = crypto.createHash('sha256').update(relativePath).digest('hex');
         // 登録済みか確認
         const assets = await environment
             .getAssets({
@@ -48,13 +46,13 @@ async function main() {
             console.info(`更新がありませんでしたのでスキップします: ${relativePath} with hash: ${imageInfo.hash}`);
             return assets.items[0].sys.id;
         }
-        const contentType = mime_1.default.getType(fileName);
+        const contentType = mime.getType(fileName);
         if (!contentType) {
             console.error(`ファイルタイプが不明です。アセット登録をスキップします: ${relativePath}`);
             return undefined;
         }
         // 画像をアップロード
-        const fd = await promises_1.default.open(imageInfo.src, 'r');
+        const fd = await fs.open(imageInfo.src, 'r');
         const upload = await environment
             .createUpload({
             file: await fd.readFile(),
@@ -103,13 +101,13 @@ async function main() {
     async function findHtmlFiles(directory) {
         const htmlFiles = [];
         const walk = async (dir) => {
-            const dirents = await promises_1.default.readdir(dir, { withFileTypes: true });
+            const dirents = await fs.readdir(dir, { withFileTypes: true });
             for await (const dirent of dirents) {
-                const fullPath = path_1.default.join(dir, dirent.name);
+                const fullPath = path.join(dir, dirent.name);
                 if (dirent.isDirectory()) {
                     await walk(fullPath);
                 }
-                else if (path_1.default.extname(fullPath) === '.html') {
+                else if (path.extname(fullPath) === '.html') {
                     htmlFiles.push(fullPath);
                 }
             }
@@ -123,8 +121,8 @@ async function main() {
         // 画像のコンテンツのハッシュと画像情報の対応表
         const imageInfoMap = new Map();
         for await (const htmlFile of htmlFiles) {
-            const content = await promises_1.default.readFile(htmlFile, 'utf-8');
-            const root = (0, node_html_parser_1.parse)(content);
+            const content = await fs.readFile(htmlFile, 'utf-8');
+            const root = nodeHtmlParser.parse(content);
             const images = root.querySelectorAll('img');
             // 各imgタグの処理
             for (const img of images) {
@@ -132,10 +130,10 @@ async function main() {
                 if (!src) {
                     continue;
                 }
-                const absoluteSrc = path_1.default.resolve(path_1.default.dirname(htmlFile), src);
+                const absoluteSrc = path.resolve(path.dirname(htmlFile), src);
                 // 画像ファイルのコンテンツを取得してハッシュ化
-                const imageContent = await promises_1.default.readFile(absoluteSrc);
-                const hash = (0, crypto_1.createHash)('sha256').update(imageContent).digest('hex');
+                const imageContent = await fs.readFile(absoluteSrc);
+                const hash = crypto.createHash('sha256').update(imageContent).digest('hex');
                 const imageInfo = { src: absoluteSrc, hash };
                 // アセット登録
                 const key = `${absoluteSrc}:${hash}`;

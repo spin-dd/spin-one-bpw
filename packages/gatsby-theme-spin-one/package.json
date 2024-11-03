@@ -27,7 +27,7 @@
     "lint-fix": "run-s lint-fix:*",
     "lint-fix:es": "npm run lint:es -- --fix",
     "lint-fix:prettier": "npm run lint:prettier -- --write",
-    "build": "tsc"
+    "build": "rollup -c rollup.config.ts --configPlugin typescript"
   },
   "dependencies": {
     "contentful": "11.2.0",

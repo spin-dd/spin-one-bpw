@@ -4,6 +4,9 @@ import { config } from 'dotenv';
 import { createClient } from 'contentful-management';
 import contentfulImport from 'contentful-import';
 
+// SPIN ONE標準Content Model
+import content from '../data/contentful/content-model.json';
+
 // envファイルに設定した情報を読み込む
 config();
 
@@ -32,14 +35,12 @@ async function setupContentful() {
     console.log(`Environment created: ${environmentId}`);
 
     // SPIN ONE標準Content Modelをインポート
-    import('../data/contentful/content-model.json').then(async (content) => {
-      await contentfulImport({
-        spaceId,
-        environmentId,
-        managementToken,
-        content,
-        contentModelOnly: true,
-      });
+    await contentfulImport({
+      spaceId,
+      environmentId,
+      managementToken,
+      content,
+      contentModelOnly: true,
     });
     console.log('Content model imported successfully');
   } catch (error) {
