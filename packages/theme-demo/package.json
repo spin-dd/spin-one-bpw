@@ -5,6 +5,9 @@
   "author": "K.K. SPIN D&D <dev@spin-dd.com>",
   "license": "UNLICENSED",
   "scripts": {
+    "init": "run-s -c init:*",
+    "init:contentful-setup": "npx contentful-setup",
+    "init:contentful-media-sync": "npx contentful-media-sync data",
     "develop": "gatsby develop",
     "build": "gatsby build",
     "serve": "gatsby serve",
