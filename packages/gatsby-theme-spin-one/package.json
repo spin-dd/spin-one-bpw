@@ -12,9 +12,11 @@
     "directory": "packages/gatsby-theme-spin-one"
   },
   "main": "dist/gatsby-node.js",
+  "files": [
+    "dist"
+  ],
   "bin": {
-    "contentful-setup": "./scripts/contentful-setup.sh",
-    "contentful-media-sync": "./scripts/contentful-media-sync.mjs"
+    "contentful-setup": "./dist/scripts/contentful-setup.js"
   },
   "scripts": {
     "lint": "run-s -c lint:*",
@@ -27,11 +29,12 @@
     "build": "tsc"
   },
   "dependencies": {
-    "contentful": "11.2.0"
+    "contentful": "11.2.0",
+    "contentful-import": "9.4.64",
+    "contentful-management": "11.35.1"
   },
   "devDependencies": {
     "contentful-cli": "3.4.5",
-    "contentful-management": "11.35.1",
     "dotenv": "16.4.5",
     "mime": "4.0.4",
     "node-html-parser": "6.1.13"
