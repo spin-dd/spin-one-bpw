@@ -1,0 +1,23 @@
+{
+  "name": "@spin-one/spin-one-demo",
+  "private": true,
+  "version": "0.0.1",
+  "author": "K.K. SPIN D&D <dev@spin-dd.com>",
+  "license": "UNLICENSED",
+  "scripts": {
+    "develop": "gatsby develop",
+    "build": "gatsby build",
+    "serve": "gatsby serve",
+    "clean": "gatsby clean"
+  },
+  "dependencies": {
+    "gatsby": "5.13.7",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "20.11.19",
+    "@types/react": "18.2.55",
+    "@types/react-dom": "18.2.19"
+  }
+}
