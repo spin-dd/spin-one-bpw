@@ -35,10 +35,15 @@
     "contentful-management": "11.35.1"
   },
   "devDependencies": {
+    "@rollup/plugin-commonjs": "28.0.1",
+    "@rollup/plugin-json": "6.1.0",
+    "@rollup/plugin-node-resolve": "15.3.0",
+    "@rollup/plugin-typescript": "12.1.0",
     "contentful-cli": "3.4.5",
     "dotenv": "16.4.5",
     "mime": "4.0.4",
-    "node-html-parser": "6.1.13"
+    "node-html-parser": "6.1.13",
+    "rollup": "4.24.3"
   },
   "peerDependencies": {
     "gatsby": "^5.13.7",

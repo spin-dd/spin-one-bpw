@@ -4,6 +4,7 @@
     "packages/*"
   ],
   "scripts": {
+    "clean": "rm -rf node_modules package-lock.json",
     "build:theme": "npm run build -w packages/gatsby-theme-spin-one",
     "lint": "npm run lint --workspaces --if-present",
     "lint-fix": "npm run lint-fix --workspaces --if-present"
