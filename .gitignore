@@ -37,7 +37,6 @@ build/Release
 node_modules
 .cache
 public
-dist
 .DS_Store
 
 # Doc
