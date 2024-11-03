@@ -1,54 +1,10 @@
 {
-  "name": "@spin-dd/spin-one",
-  "version": "0.0.1",
-  "author": "K.K. SPIN D&D <dev@spin-dd.com>",
-  "bugs": {
-    "url": "https://github.com/spin-dd/spin-one/issues"
-  },
-  "license": "UNLICENSED",
   "private": true,
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/spin-dd/spin-one.git"
-  },
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
-    "start": "gatsby develop",
-    "develop": "gatsby develop",
-    "build": "gatsby build",
-    "serve": "gatsby serve",
-    "clean": "gatsby clean",
-    "lint": "run-s -c lint:*",
-    "lint:es": "eslint .",
-    "lint:ts": "tsc --noEmit",
-    "lint:prettier": "prettier --check .",
-    "lint-fix": "run-s lint-fix:*",
-    "lint-fix:es": "npm run lint:es -- --fix",
-    "lint-fix:prettier": "npm run lint:prettier -- --write",
-    "contentful-setup": "./scripts/contentful-setup.sh",
-    "contentful-media-sync": "node ./scripts/contentful-media-sync.mjs"
-  },
-  "dependencies": {
-    "contentful": "11.2.0"
-  },
-  "devDependencies": {
-    "@eslint/js": "9.14.0",
-    "@types/eslint__js": "8.42.3",
-    "contentful-cli": "3.3.14",
-    "contentful-management": "11.35.1",
-    "dotenv": "16.4.5",
-    "eslint": "8.57.1",
-    "eslint-config-prettier": "9.1.0",
-    "eslint-plugin-typescript": "0.14.0",
-    "mime": "4.0.4",
-    "node-html-parser": "6.1.13",
-    "npm-run-all": "4.1.5",
-    "prettier": "2.5.1",
-    "typescript": "5.6.3",
-    "typescript-eslint": "8.12.2"
-  },
-  "peerDependencies": {
-    "gatsby": "5.13.7",
-    "react": "18.3.1",
-    "react-dom": "18.3.1"
+    "lint": "npm run lint --workspaces --if-present",
+    "lint-fix": "npm run lint-fix --workspaces --if-present"
   }
 }
