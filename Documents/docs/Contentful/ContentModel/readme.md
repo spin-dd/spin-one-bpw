@@ -13,8 +13,8 @@
 | 変数名                      | 入力内容                                    |
 | --------------------------- | ------------------------------------------- |
 | CONTENTFUL_SPACE_ID         | スペース ID を入力                          |
-| CONTENTFUL_ACCESS_TOKEN     | CMA アクセストークンを入力                  |
-| CONTENTFUL_MANAGEMENT_TOKEN | Content Delivery API - access token         |
+| CONTENTFUL_MANAGEMENT_TOKEN | Content Management API - access token       |
+| CONTENTFUL_DELIVERY_TOKEN   | Content Delivery API - access token         |
 | CONTENTFUL_ENVIRONMENT_ID   | Environment ID を入力（デフォルト：master） |
 
 ## ContentModel の登録内容

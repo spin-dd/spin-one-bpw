@@ -33,7 +33,7 @@ bower_components
 build/Release
 
 .env*
-!.env.EXAMPLE
+!.env.example
 node_modules
 .cache
 public

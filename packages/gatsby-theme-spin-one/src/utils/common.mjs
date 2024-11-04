@@ -19,7 +19,7 @@ export const getContentfulAllLocales = async () => {
   const client = contentful.createClient({
     space: process.env.CONTENTFUL_SPACE_ID,
     environment: process.env.CONTENTFUL_ENVIRONMENT_ID,
-    accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
+    accessToken: process.env.CONTENTFUL_DELIVERY_TOKEN,
   })
   return await client
     .getSpace()
