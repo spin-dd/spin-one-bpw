@@ -41,3 +41,7 @@ public
 
 # Doc
 Documents/site
+
+
+# Graphql Typegen
+gatsby-types.d.ts
