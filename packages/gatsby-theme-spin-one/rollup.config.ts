@@ -6,9 +6,8 @@ import type { RollupOptions } from 'rollup';
 
 const config: RollupOptions = {
   input: {
-    'gatsby-node': 'src/gatsby-node.ts',
-    'scripts/contentful-setup': 'src/scripts/contentful-setup.ts',
-    'scripts/contentful-media-sync': 'src/scripts/contentful-media-sync.ts',
+    'scripts/contentful-setup': 'scripts/contentful-setup.ts',
+    'scripts/contentful-media-sync': 'scripts/contentful-media-sync.ts',
   },
   output: [
     {

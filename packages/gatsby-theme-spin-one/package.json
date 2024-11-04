@@ -12,9 +12,6 @@
     "directory": "packages/gatsby-theme-spin-one"
   },
   "main": "dist/gatsby-node.js",
-  "files": [
-    "dist"
-  ],
   "bin": {
     "contentful-setup": "./dist/scripts/contentful-setup.js",
     "contentful-media-sync": "./dist/scripts/contentful-media-sync.js"
