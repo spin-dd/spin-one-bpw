@@ -1,32 +1,30 @@
-import React, { useEffect } from "react"
-import { useLocation } from "@reach/router"
-import { useScript } from "../hooks/useScript"
-import NotFound from "./404"
+import React, { useEffect } from 'react';
+import { useLocation } from '@reach/router';
+import { useScript } from '../hooks/useScript';
+import NotFound from './404';
 
 export function Layout({ body, script }) {
   // https://paulie.dev/posts/2022/10/react-hydration-error-425-text-content-does-not-match-server-rendered-html/
-  const [isHydrated, setIsHydrated] = React.useState(false)
-  React.useEffect(() => setIsHydrated(true), [])
-  useScript(isHydrated ? script : [])
+  const [isHydrated, setIsHydrated] = React.useState(false);
+  React.useEffect(() => setIsHydrated(true), []);
+  useScript(isHydrated ? script : []);
 
-  const { hash } = useLocation()
+  const { hash } = useLocation();
 
   useEffect(() => {
     if (isHydrated && hash) {
-      const id = decodeURI(hash.slice(1))
+      const id = decodeURI(hash.slice(1));
       if (id) {
-        const element = document.getElementById(id)
+        const element = document.getElementById(id);
         if (element) {
-          element.scrollIntoView()
+          element.scrollIntoView();
         }
       }
     }
-  }, [isHydrated, hash])
-
-  console.log("body", body)
+  }, [isHydrated, hash]);
 
   if (!body) {
-    return <NotFound />
+    return <NotFound />;
   }
-  return isHydrated && <>{body}</>
+  return isHydrated && <>{body}</>;
 }

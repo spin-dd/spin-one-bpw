@@ -1,18 +1,17 @@
-import React from "react"
+import React from 'react';
+import { parseHtmlToReact, prepareForParse } from '../utils';
+import { Layout } from './Layout';
 
-import { parseHtmlToReact, prepareForParse } from "../utils"
-import { Layout } from "./layout"
+export { Head } from './Head';
 
-export const Template = ({ data, pageContext }) => {
+export const Page = ({ data, pageContext }) => {
   const { htmlBody, htmlScript, componentData } = prepareForParse({
-    template: data?.contentfulTemplate,
+    template: data.contentfulTemplate,
     data,
     pageContext,
-  })
+  });
+
   return (
-    <Layout
-      body={parseHtmlToReact(htmlBody, componentData)}
-      script={parseHtmlToReact(htmlScript, componentData)}
-    />
-  )
-}
+    <Layout body={parseHtmlToReact(htmlBody, componentData)} script={parseHtmlToReact(htmlScript, componentData)} />
+  );
+};

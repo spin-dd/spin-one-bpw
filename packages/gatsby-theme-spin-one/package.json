@@ -12,6 +12,15 @@
     "directory": "packages/gatsby-theme-spin-one"
   },
   "main": "dist/gatsby-node.js",
+  "files": [
+    "dist",
+    "src",
+    "gatsby-browser.js",
+    "gatsby-config.js",
+    "gatsby-node.mjs",
+    "gatsby-ssr.js",
+    "README.md"
+  ],
   "bin": {
     "contentful-setup": "./dist/scripts/contentful-setup.js",
     "contentful-media-sync": "./dist/scripts/contentful-media-sync.js"
@@ -27,9 +36,17 @@
     "build": "rollup -c rollup.config.ts --configPlugin typescript"
   },
   "dependencies": {
+    "bootstrap": "5.3.3",
     "contentful": "11.2.0",
     "contentful-import": "9.4.64",
     "contentful-management": "11.35.1",
+    "gatsby-plugin-google-tagmanager": "5.13.1",
+    "gatsby-plugin-image": "3.13.1",
+    "gatsby-plugin-sass": "6.13.1",
+    "gatsby-plugin-sitemap": "6.13.1",
+    "gatsby-source-contentful": "8.13.2",
+    "gatsby-transformer-remark": "6.13.1",
+    "html-to-react": "1.7.0",
     "react-bootstrap": "2.10.5"
   },
   "devDependencies": {

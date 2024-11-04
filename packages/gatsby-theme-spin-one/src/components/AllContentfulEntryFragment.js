@@ -1,10 +1,8 @@
-import { graphql } from 'gatsby'
+import { graphql } from 'gatsby';
 
 export const query = graphql`
   fragment AllContentfulEntryFragment on Query {
-    allContentfulComponent(
-      filter: { node_locale: { eq: "ja" }, spaceId: { eq: $spaceId } }
-    ) {
+    allContentfulComponent(filter: { node_locale: { eq: $locale }, spaceId: { eq: $spaceId } }) {
       nodes {
         contentful_id
         __typename
@@ -20,9 +18,7 @@ export const query = graphql`
         }
       }
     }
-    allContentfulImage(
-      filter: { node_locale: { eq: "ja" }, spaceId: { eq: $spaceId } }
-    ) {
+    allContentfulImage(filter: { node_locale: { eq: $locale }, spaceId: { eq: $spaceId } }) {
       nodes {
         contentful_id
         __typename
@@ -38,9 +34,7 @@ export const query = graphql`
         }
       }
     }
-    allContentfulElement(
-      filter: { node_locale: { eq: "ja" }, spaceId: { eq: $spaceId } }
-    ) {
+    allContentfulElement(filter: { node_locale: { eq: $locale }, spaceId: { eq: $spaceId } }) {
       nodes {
         contentful_id
         __typename
@@ -48,6 +42,17 @@ export const query = graphql`
         body {
           raw
         }
+      }
+    }
+    allContentfulInformation(
+      sort: { publishDate: DESC }
+      filter: { node_locale: { eq: $locale }, spaceId: { eq: $spaceId } }
+    ) {
+      nodes {
+        contentful_id
+        __typename
+        node_locale
+        ...ContentfulInformationFieldsFragment
       }
     }
   }
@@ -68,4 +73,45 @@ export const query = graphql`
       }
     }
   }
-`
+
+  fragment ContentfulInformationFieldsFragment on ContentfulInformation {
+    slug
+    label
+    title
+    body {
+      childMarkdownRemark {
+        html
+        excerpt(truncate: true, pruneLength: 100)
+      }
+    }
+    thumbnail {
+      body {
+        gatsbyImageData
+      }
+    }
+    publishDate: publishDate(formatString: "YYYY-MM-DD")
+    publishYear: publishDate(formatString: "YYYY")
+    publishMonth: publishDate(formatString: "MM")
+    publishDay: publishDate(formatString: "DD")
+    displayDate: publishDate(formatString: "YYYY年MM月DD日")
+    displayDateEn: publishDate(formatString: "MM-DD-YYYY")
+    displayMonth: publishDate(formatString: "MMM")
+  }
+
+  fragment ContentfulTemplateFieldsFragment on ContentfulTemplate {
+    head {
+      raw
+    }
+    body {
+      raw
+    }
+    script {
+      raw
+    }
+    context {
+      internal {
+        content
+      }
+    }
+  }
+`;

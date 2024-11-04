@@ -1,5 +1,4 @@
-require('bootstrap/scss/bootstrap.scss')
-require('swiper/css/bundle')
+require('bootstrap/dist/css/bootstrap.min.css')
 
 const React = require('react')
 
