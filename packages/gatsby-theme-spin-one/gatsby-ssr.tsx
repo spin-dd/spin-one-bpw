@@ -1,5 +1,6 @@
-const React = require('react')
-const { SSRProvider } = require('react-bootstrap')
+import React from 'react';
+import type { GatsbySSR } from 'gatsby';
+import { SSRProvider } from 'react-bootstrap';
 
 /**
  * react-helmet-async 内の script は非同期で読み込まれるため、
@@ -8,10 +9,7 @@ const { SSRProvider } = require('react-bootstrap')
  * これに対応するため jQuery 関連は SSR で定義し、読み込ませる
  */
 const HeadComponents = [
-  <script
-    key="ssr-jquery"
-    src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"
-  />,
+  <script key="ssr-jquery" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" />,
   <script key="ssr-jquery_inview" src="/js/jquery.inview.min.js" />,
   <script
     key="ssr-jquery_scrollify"
@@ -19,14 +17,14 @@ const HeadComponents = [
     integrity="sha512-UyX8JsMsNRW1cYl8BoxpcamonpwU2y7mSTsN0Z52plp7oKo1u92Xqfpv6lOlTyH3yiMXK+gU1jw0DVCsPTfKew=="
     crossOrigin="anonymous"
   ></script>,
-]
+];
 
-exports.onRenderBody = ({ setHeadComponents }) => {
-  setHeadComponents(HeadComponents)
-}
+export const onRenderBody: GatsbySSR['onRenderBody'] = ({ setHeadComponents }) => {
+  setHeadComponents(HeadComponents);
+};
 
-exports.wrapRootElement = ({ element, props }) => (
-  <React.StrictMode {...props}>
+export const wrapRootElement: GatsbySSR['wrapRootElement'] = ({ element }) => (
+  <React.StrictMode>
     <SSRProvider>{element}</SSRProvider>
   </React.StrictMode>
-)
+);

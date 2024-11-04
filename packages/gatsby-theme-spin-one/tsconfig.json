@@ -2,6 +2,7 @@
   "compilerOptions": {
     "target": "ESNext",
     "moduleResolution": "Bundler",
+    "jsx": "react",
     "outDir": "dist",
     "strict": true,
     "esModuleInterop": true,
