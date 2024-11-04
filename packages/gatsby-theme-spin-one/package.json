@@ -32,7 +32,8 @@
   "dependencies": {
     "contentful": "11.2.0",
     "contentful-import": "9.4.64",
-    "contentful-management": "11.35.1"
+    "contentful-management": "11.35.1",
+    "react-bootstrap": "2.10.5"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "28.0.1",
@@ -41,6 +42,7 @@
     "@rollup/plugin-typescript": "12.1.0",
     "contentful-cli": "3.4.5",
     "dotenv": "16.4.5",
+    "http-proxy-middleware": "3.0.3",
     "mime": "4.0.4",
     "node-html-parser": "6.1.13",
     "rollup": "4.24.3"
