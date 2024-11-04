@@ -6,12 +6,7 @@ const config: GatsbyConfig = {
     siteUrl: `https://one.spin-dd.com`,
   },
   graphqlTypegen: true,
-  plugins: [
-    {
-      resolve: "@spin-dd/gatsby-theme-spin-one",
-      options: {},
-    },
-  ],
+  plugins: ["@spin-dd/gatsby-theme-spin-one"],
 };
 
 export default config;

@@ -16,10 +16,8 @@ if (!spaceId || !accessToken) {
 }
 
 const config: GatsbyConfig = {
-  graphqlTypegen: {
-    generateOnBuild: true,
-  },
   plugins: [
+    'gatsby-plugin-typescript',
     {
       resolve: 'gatsby-source-contentful',
       options: contentfulConfig,
