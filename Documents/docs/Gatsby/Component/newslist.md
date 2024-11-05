@@ -41,14 +41,18 @@ Gatsby プロジェクト上で Html ファイルに`data-component="infomation-
 
 - information モデルに登録した content を graphql で取得します。
 - `label`ごとに絞り込みを行うことができます。
-- 一覧に`title`,`publishDate`,`thumbnail`を記事見出しに表示できます。
+- 一覧に`title`を記事見出しに表示できます。
+- 一覧表示はリストで表示します。
 - 記事見出しをクリックすると画面遷移「記事の詳細」(./{slug})に遷移します。
 - `canPaging==true`であればページングができる
 
 ### 絞込検索機能
 
 - ラベルで絞り込み
-- 
+
+ラベル情報を`string[]`で指定してcomponentに渡します。
+propsの
+
 ### ページング機能
 
 - `canPaging==true`のときページングが可能になります。
@@ -58,9 +62,3 @@ Gatsby プロジェクト上で Html ファイルに`data-component="infomation-
 
 - `item_limit`の数字に応じた件数を表示します。
 - 指定なしの場合は 10 件表示します。
-
-## 記事の詳細画面
-
-- URL`{ニュースページurl}/{slug}`の`{slug}`を参照して information を検索する
-- `title`,`publishDate`,`body`を画面で表示する
-- 戻るボタン → ブラウザバックする

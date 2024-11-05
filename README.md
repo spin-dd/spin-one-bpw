@@ -1,4 +1,4 @@
-# SPIN ONE
+# SPIN-ONE
 
 以下の組み合わせでホームページを作成
 
@@ -9,7 +9,7 @@
 ## Quick start
 
 以下のコマンドでプロジェクトをクローンしてパッケージインストールを行えます。
-`gatsby new testSpinOne git@github.com:spin-dd/spin-one.git`
+`gatsby new {新規レポジトリ名} git@github.com:spin-dd/spin-one.git`
 
 ## Gatsby
 

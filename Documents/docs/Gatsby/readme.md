@@ -6,7 +6,7 @@
 ## ローカルビルド
 
 - [.env ファイルの設定](./envfile.md)
-  contentful の情報などを記載します。
+  `packages\theme-demo\.env`ファイルにcontentful の情報などを記載します。
 
 - `$ gatsby develop`の実行
 
