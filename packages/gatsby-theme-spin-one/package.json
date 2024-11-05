@@ -11,14 +11,12 @@
     "url": "git+https://github.com/spin-dd/spin-one.git",
     "directory": "packages/gatsby-theme-spin-one"
   },
-  "main": "index.js",
+  "type": "module",
+  "main": "gatsby-node.js",
   "files": [
     "dist",
-    "src",
-    "gatsby-browser.js",
-    "gatsby-config.js",
-    "gatsby-node.mjs",
-    "gatsby-ssr.js",
+    "src/**/*.js",
+    "/*.js",
     "README.md"
   ],
   "bin": {
@@ -33,7 +31,9 @@
     "lint-fix": "run-s lint-fix:*",
     "lint-fix:es": "npm run lint:es -- --fix",
     "lint-fix:prettier": "npm run lint:prettier -- --write",
-    "build": "rollup -c rollup.config.ts --configPlugin typescript"
+    "build": "run-s -c build:*",
+    "build:gatsby-theme": "tsc --project tsconfig.theme.json",
+    "build:scripts": "rollup -c rollup.config.ts --configPlugin typescript"
   },
   "dependencies": {
     "bootstrap": "5.3.3",

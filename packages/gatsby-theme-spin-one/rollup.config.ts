@@ -6,12 +6,13 @@ import type { RollupOptions } from 'rollup';
 
 const config: RollupOptions = {
   input: {
-    'scripts/contentful-setup': 'scripts/contentful-setup.ts',
-    'scripts/contentful-media-sync': 'scripts/contentful-media-sync.ts',
+    // for scripts
+    'dist/scripts/contentful-setup': 'scripts/contentful-setup.ts',
+    'dist/scripts/contentful-media-sync': 'scripts/contentful-media-sync.ts',
   },
   output: [
     {
-      dir: 'dist',
+      dir: '.',
       format: 'cjs',
       entryFileNames: '[name].js',
     },

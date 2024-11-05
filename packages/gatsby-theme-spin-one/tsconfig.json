@@ -1,12 +1,13 @@
 {
   "compilerOptions": {
     "target": "ESNext",
+    "module": "ESNext",
     "moduleResolution": "Bundler",
     "jsx": "react",
-    "outDir": "dist",
     "strict": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true
-  }
+  },
+  "include": ["scripts/**/*.ts", "rollup.config.ts"]
 }

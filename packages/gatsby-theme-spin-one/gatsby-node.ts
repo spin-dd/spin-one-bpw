@@ -4,19 +4,21 @@ import type { GatsbyNode } from 'gatsby';
 export const createPages: GatsbyNode['createPages'] = async ({ graphql, actions }) => {
   const { createPage } = actions;
 
-  const result = await graphql<Queries.ContentfulPageConnection>(`
+  const result = await graphql<{ allContentfulPage: Queries.ContentfulPageConnection }>(`
     {
-      nodes {
-        contentful_id
-        __typename
-        pagePath
-        node_locale
-        body {
-          raw
-        }
-        context {
-          internal {
-            content
+      allContentfulPage {
+        nodes {
+          contentful_id
+          __typename
+          pagePath
+          node_locale
+          body {
+            raw
+          }
+          context {
+            internal {
+              content
+            }
           }
         }
       }
@@ -27,9 +29,9 @@ export const createPages: GatsbyNode['createPages'] = async ({ graphql, actions 
     throw result.errors;
   }
 
-  const pages = result.data?.nodes ?? [];
+  const pages = result.data?.allContentfulPage?.nodes ?? [];
   if (pages.length > 0) {
-    const component = path.resolve('./src/templates/page.tsx');
+    const component = path.resolve('./src/templates/page.js');
     pages.forEach((page) => {
       const body = page.body?.raw ?? '';
       if (page.pagePath === null || body === '') {
