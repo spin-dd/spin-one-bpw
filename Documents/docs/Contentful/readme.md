@@ -17,7 +17,8 @@ Contentful のスペースと environment を指定して、以下の情報を�
 
 ## Content model の設定
 
-以下のコマンドを実行して SPIN ONE 標準の Content model を Contentful に登録します。
+以下のコマンドを実行して SPIN-ONE 標準の Content model を Contentful に登録します。
+<https://github.com/spin-dd/spin-one/pull/44>
 
 ```shell
 # .env ファイルに設定した情報から指定の Environment を作成
@@ -26,8 +27,15 @@ npm run contentful-setup
 
 ## データを登録
 
-登録する html を指定のディレクトリ`spin-one/html`に置きます。
+登録する html を指定のディレクトリ`packages/{package}/data/html`に置きます。
 [データ登録の仕様](./Import/readme.md)
+
+アセットをMediaに登録
+<https://github.com/spin-dd/spin-one/pull/45>
+
+```shell
+npm run contentful-media-sync {ディレクトリのパス}
+```
 
 - Media を登録 <https://github.com/spin-dd/spin-one/issues/14>
 - Content の登録 <https://github.com/spin-dd/spin-one/issues/13>
