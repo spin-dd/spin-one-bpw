@@ -1,14 +1,12 @@
 # CONTENT MODEL
 
-<https://github.com/spin-dd/spin-one/issues/5>
-<https://github.com/spin-dd/spin-one/issues/23>
+<https://github.com/spin-dd/spin-one/pull/44>
 
-[登録するモデル](./JsonFiles.md)
-[JSON ファイル](../../../../packages/gatsby-theme-spin-one/data/contentful/content-model.json)に記載した model の情報を指定した contentful の space に登録します。
+[JSON ファイル](/packages/gatsby-theme-spin-one/data/contentful/content-model.json)に記載した model の情報を指定した contentful の space に登録します。
 
 ## env ファイルの設定
 
-登録するために下記の情報を [.envファイル](../../Gatsby/envfile.md)から取得します。
+登録するための情報を [.envファイル](../../Gatsby/envfile.md)から取得します。
 
 ## ContentModel の登録内容
 

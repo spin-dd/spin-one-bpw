@@ -10,6 +10,10 @@
 
 - `$ gatsby develop`の実行
 
+※リポジトリルートにて
+`cd packages/{実行したいプロジェクト}`
+`npm run develop`
+
 ※ [Contentful に model 情報が登録](../Contentful/readme.md)を行っていない場合はビルド時にエラーとなります。
 
 <http://localhost:8000/{contentfulのpagaPath}>で確認が行えます。
