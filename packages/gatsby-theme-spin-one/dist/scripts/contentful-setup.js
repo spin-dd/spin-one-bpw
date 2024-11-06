@@ -7,53 +7,6 @@ var contentfulImport = require('contentful-import');
 
 var contentTypes = [
 	{
-		sys: {
-			space: {
-				sys: {
-					type: "Link",
-					linkType: "Space",
-					id: "8h71zrqfbfma"
-				}
-			},
-			id: "element",
-			type: "ContentType",
-			createdAt: "2024-09-09T09:49:37.688Z",
-			updatedAt: "2024-09-10T09:50:20.526Z",
-			environment: {
-				sys: {
-					id: "sample",
-					type: "Link",
-					linkType: "Environment"
-				}
-			},
-			publishedVersion: 43,
-			publishedAt: "2024-09-10T09:50:20.526Z",
-			firstPublishedAt: "2024-09-09T09:49:38.759Z",
-			createdBy: {
-				sys: {
-					type: "Link",
-					linkType: "User",
-					id: "2lm3sz3KBqEAt3dHQghfWk"
-				}
-			},
-			updatedBy: {
-				sys: {
-					type: "Link",
-					linkType: "User",
-					id: "2lm3sz3KBqEAt3dHQghfWk"
-				}
-			},
-			publishedCounter: 22,
-			version: 44,
-			publishedBy: {
-				sys: {
-					type: "Link",
-					linkType: "User",
-					id: "2lm3sz3KBqEAt3dHQghfWk"
-				}
-			},
-			urn: "crn:contentful:::content:spaces/8h71zrqfbfma/environments/sample/content_types/element"
-		},
 		displayField: "name",
 		name: "Element",
 		description: "",
@@ -101,53 +54,6 @@ var contentTypes = [
 		]
 	},
 	{
-		sys: {
-			space: {
-				sys: {
-					type: "Link",
-					linkType: "Space",
-					id: "8h71zrqfbfma"
-				}
-			},
-			id: "component",
-			type: "ContentType",
-			createdAt: "2024-09-09T09:49:37.689Z",
-			updatedAt: "2024-09-10T09:50:19.965Z",
-			environment: {
-				sys: {
-					id: "sample",
-					type: "Link",
-					linkType: "Environment"
-				}
-			},
-			publishedVersion: 43,
-			publishedAt: "2024-09-10T09:50:19.965Z",
-			firstPublishedAt: "2024-09-09T09:49:39.956Z",
-			createdBy: {
-				sys: {
-					type: "Link",
-					linkType: "User",
-					id: "2lm3sz3KBqEAt3dHQghfWk"
-				}
-			},
-			updatedBy: {
-				sys: {
-					type: "Link",
-					linkType: "User",
-					id: "2lm3sz3KBqEAt3dHQghfWk"
-				}
-			},
-			publishedCounter: 22,
-			version: 44,
-			publishedBy: {
-				sys: {
-					type: "Link",
-					linkType: "User",
-					id: "2lm3sz3KBqEAt3dHQghfWk"
-				}
-			},
-			urn: "crn:contentful:::content:spaces/8h71zrqfbfma/environments/sample/content_types/component"
-		},
 		displayField: "name",
 		name: "Component",
 		description: "",
@@ -228,53 +134,6 @@ var contentTypes = [
 		]
 	},
 	{
-		sys: {
-			space: {
-				sys: {
-					type: "Link",
-					linkType: "Space",
-					id: "8h71zrqfbfma"
-				}
-			},
-			id: "image",
-			type: "ContentType",
-			createdAt: "2024-09-09T09:49:37.723Z",
-			updatedAt: "2024-09-10T09:50:21.055Z",
-			environment: {
-				sys: {
-					id: "sample",
-					type: "Link",
-					linkType: "Environment"
-				}
-			},
-			publishedVersion: 43,
-			publishedAt: "2024-09-10T09:50:21.055Z",
-			firstPublishedAt: "2024-09-09T09:49:39.402Z",
-			createdBy: {
-				sys: {
-					type: "Link",
-					linkType: "User",
-					id: "2lm3sz3KBqEAt3dHQghfWk"
-				}
-			},
-			updatedBy: {
-				sys: {
-					type: "Link",
-					linkType: "User",
-					id: "2lm3sz3KBqEAt3dHQghfWk"
-				}
-			},
-			publishedCounter: 22,
-			version: 44,
-			publishedBy: {
-				sys: {
-					type: "Link",
-					linkType: "User",
-					id: "2lm3sz3KBqEAt3dHQghfWk"
-				}
-			},
-			urn: "crn:contentful:::content:spaces/8h71zrqfbfma/environments/sample/content_types/image"
-		},
 		displayField: "name",
 		name: "Image",
 		description: "",
@@ -340,53 +199,6 @@ var contentTypes = [
 		]
 	},
 	{
-		sys: {
-			space: {
-				sys: {
-					type: "Link",
-					linkType: "Space",
-					id: "8h71zrqfbfma"
-				}
-			},
-			id: "template",
-			type: "ContentType",
-			createdAt: "2024-09-09T09:49:37.727Z",
-			updatedAt: "2024-09-10T09:50:21.574Z",
-			environment: {
-				sys: {
-					id: "sample",
-					type: "Link",
-					linkType: "Environment"
-				}
-			},
-			publishedVersion: 43,
-			publishedAt: "2024-09-10T09:50:21.574Z",
-			firstPublishedAt: "2024-09-09T09:49:41.154Z",
-			createdBy: {
-				sys: {
-					type: "Link",
-					linkType: "User",
-					id: "2lm3sz3KBqEAt3dHQghfWk"
-				}
-			},
-			updatedBy: {
-				sys: {
-					type: "Link",
-					linkType: "User",
-					id: "2lm3sz3KBqEAt3dHQghfWk"
-				}
-			},
-			publishedCounter: 22,
-			version: 44,
-			publishedBy: {
-				sys: {
-					type: "Link",
-					linkType: "User",
-					id: "2lm3sz3KBqEAt3dHQghfWk"
-				}
-			},
-			urn: "crn:contentful:::content:spaces/8h71zrqfbfma/environments/sample/content_types/template"
-		},
 		displayField: "name",
 		name: "Template",
 		description: "",
@@ -516,53 +328,6 @@ var contentTypes = [
 		]
 	},
 	{
-		sys: {
-			space: {
-				sys: {
-					type: "Link",
-					linkType: "Space",
-					id: "8h71zrqfbfma"
-				}
-			},
-			id: "page",
-			type: "ContentType",
-			createdAt: "2024-09-10T08:55:29.913Z",
-			updatedAt: "2024-09-16T10:32:39.841Z",
-			environment: {
-				sys: {
-					id: "sample",
-					type: "Link",
-					linkType: "Environment"
-				}
-			},
-			publishedVersion: 3,
-			publishedAt: "2024-09-16T10:32:39.841Z",
-			firstPublishedAt: "2024-09-10T08:55:30.498Z",
-			createdBy: {
-				sys: {
-					type: "Link",
-					linkType: "User",
-					id: "2lm3sz3KBqEAt3dHQghfWk"
-				}
-			},
-			updatedBy: {
-				sys: {
-					type: "Link",
-					linkType: "User",
-					id: "37oT30ZZM6eRQwRsLjxSZh"
-				}
-			},
-			publishedCounter: 2,
-			version: 4,
-			publishedBy: {
-				sys: {
-					type: "Link",
-					linkType: "User",
-					id: "37oT30ZZM6eRQwRsLjxSZh"
-				}
-			},
-			urn: "crn:contentful:::content:spaces/8h71zrqfbfma/environments/sample/content_types/page"
-		},
 		displayField: "pagePath",
 		name: "Page",
 		description: "",
@@ -739,53 +504,6 @@ var contentTypes = [
 		]
 	},
 	{
-		sys: {
-			space: {
-				sys: {
-					type: "Link",
-					linkType: "Space",
-					id: "8h71zrqfbfma"
-				}
-			},
-			id: "information",
-			type: "ContentType",
-			createdAt: "2024-09-10T09:46:24.688Z",
-			updatedAt: "2024-09-10T09:50:19.422Z",
-			environment: {
-				sys: {
-					id: "sample",
-					type: "Link",
-					linkType: "Environment"
-				}
-			},
-			publishedVersion: 5,
-			publishedAt: "2024-09-10T09:50:19.422Z",
-			firstPublishedAt: "2024-09-10T09:46:28.642Z",
-			createdBy: {
-				sys: {
-					type: "Link",
-					linkType: "User",
-					id: "2lm3sz3KBqEAt3dHQghfWk"
-				}
-			},
-			updatedBy: {
-				sys: {
-					type: "Link",
-					linkType: "User",
-					id: "2lm3sz3KBqEAt3dHQghfWk"
-				}
-			},
-			publishedCounter: 3,
-			version: 6,
-			publishedBy: {
-				sys: {
-					type: "Link",
-					linkType: "User",
-					id: "2lm3sz3KBqEAt3dHQghfWk"
-				}
-			},
-			urn: "crn:contentful:::content:spaces/8h71zrqfbfma/environments/sample/content_types/information"
-		},
 		displayField: "slug",
 		name: "Information",
 		description: "",
@@ -876,48 +594,6 @@ var contentTypes = [
 ];
 var editorInterfaces = [
 	{
-		sys: {
-			id: "default",
-			type: "EditorInterface",
-			space: {
-				sys: {
-					id: "8h71zrqfbfma",
-					type: "Link",
-					linkType: "Space"
-				}
-			},
-			version: 44,
-			createdAt: "2024-09-09T09:49:39.002Z",
-			createdBy: {
-				sys: {
-					id: "2lm3sz3KBqEAt3dHQghfWk",
-					type: "Link",
-					linkType: "User"
-				}
-			},
-			updatedAt: "2024-09-10T09:50:26.139Z",
-			updatedBy: {
-				sys: {
-					id: "2lm3sz3KBqEAt3dHQghfWk",
-					type: "Link",
-					linkType: "User"
-				}
-			},
-			contentType: {
-				sys: {
-					id: "element",
-					type: "Link",
-					linkType: "ContentType"
-				}
-			},
-			environment: {
-				sys: {
-					id: "sample",
-					type: "Link",
-					linkType: "Environment"
-				}
-			}
-		},
 		controls: [
 			{
 				fieldId: "name",
@@ -932,48 +608,6 @@ var editorInterfaces = [
 		]
 	},
 	{
-		sys: {
-			id: "default",
-			type: "EditorInterface",
-			space: {
-				sys: {
-					id: "8h71zrqfbfma",
-					type: "Link",
-					linkType: "Space"
-				}
-			},
-			version: 44,
-			createdAt: "2024-09-09T09:49:40.160Z",
-			createdBy: {
-				sys: {
-					id: "2lm3sz3KBqEAt3dHQghfWk",
-					type: "Link",
-					linkType: "User"
-				}
-			},
-			updatedAt: "2024-09-10T09:50:25.462Z",
-			updatedBy: {
-				sys: {
-					id: "2lm3sz3KBqEAt3dHQghfWk",
-					type: "Link",
-					linkType: "User"
-				}
-			},
-			contentType: {
-				sys: {
-					id: "component",
-					type: "Link",
-					linkType: "ContentType"
-				}
-			},
-			environment: {
-				sys: {
-					id: "sample",
-					type: "Link",
-					linkType: "Environment"
-				}
-			}
-		},
 		controls: [
 			{
 				fieldId: "name",
@@ -1001,48 +635,6 @@ var editorInterfaces = [
 		]
 	},
 	{
-		sys: {
-			id: "default",
-			type: "EditorInterface",
-			space: {
-				sys: {
-					id: "8h71zrqfbfma",
-					type: "Link",
-					linkType: "Space"
-				}
-			},
-			version: 44,
-			createdAt: "2024-09-09T09:49:39.583Z",
-			createdBy: {
-				sys: {
-					id: "2lm3sz3KBqEAt3dHQghfWk",
-					type: "Link",
-					linkType: "User"
-				}
-			},
-			updatedAt: "2024-09-10T09:50:26.142Z",
-			updatedBy: {
-				sys: {
-					id: "2lm3sz3KBqEAt3dHQghfWk",
-					type: "Link",
-					linkType: "User"
-				}
-			},
-			contentType: {
-				sys: {
-					id: "image",
-					type: "Link",
-					linkType: "ContentType"
-				}
-			},
-			environment: {
-				sys: {
-					id: "sample",
-					type: "Link",
-					linkType: "Environment"
-				}
-			}
-		},
 		controls: [
 			{
 				fieldId: "name",
@@ -1070,48 +662,6 @@ var editorInterfaces = [
 		]
 	},
 	{
-		sys: {
-			id: "default",
-			type: "EditorInterface",
-			space: {
-				sys: {
-					id: "8h71zrqfbfma",
-					type: "Link",
-					linkType: "Space"
-				}
-			},
-			version: 44,
-			createdAt: "2024-09-09T09:49:41.364Z",
-			createdBy: {
-				sys: {
-					id: "2lm3sz3KBqEAt3dHQghfWk",
-					type: "Link",
-					linkType: "User"
-				}
-			},
-			updatedAt: "2024-09-10T09:50:25.462Z",
-			updatedBy: {
-				sys: {
-					id: "2lm3sz3KBqEAt3dHQghfWk",
-					type: "Link",
-					linkType: "User"
-				}
-			},
-			contentType: {
-				sys: {
-					id: "template",
-					type: "Link",
-					linkType: "ContentType"
-				}
-			},
-			environment: {
-				sys: {
-					id: "sample",
-					type: "Link",
-					linkType: "Environment"
-				}
-			}
-		},
 		controls: [
 			{
 				fieldId: "name",
@@ -1147,48 +697,6 @@ var editorInterfaces = [
 		]
 	},
 	{
-		sys: {
-			id: "default",
-			type: "EditorInterface",
-			space: {
-				sys: {
-					id: "8h71zrqfbfma",
-					type: "Link",
-					linkType: "Space"
-				}
-			},
-			version: 4,
-			createdAt: "2024-09-10T08:55:30.765Z",
-			createdBy: {
-				sys: {
-					id: "2lm3sz3KBqEAt3dHQghfWk",
-					type: "Link",
-					linkType: "User"
-				}
-			},
-			updatedAt: "2024-09-16T10:32:40.527Z",
-			updatedBy: {
-				sys: {
-					id: "37oT30ZZM6eRQwRsLjxSZh",
-					type: "Link",
-					linkType: "User"
-				}
-			},
-			contentType: {
-				sys: {
-					id: "page",
-					type: "Link",
-					linkType: "ContentType"
-				}
-			},
-			environment: {
-				sys: {
-					id: "sample",
-					type: "Link",
-					linkType: "Environment"
-				}
-			}
-		},
 		controls: [
 			{
 				fieldId: "pagePath",
@@ -1218,48 +726,6 @@ var editorInterfaces = [
 		]
 	},
 	{
-		sys: {
-			id: "default",
-			type: "EditorInterface",
-			space: {
-				sys: {
-					id: "8h71zrqfbfma",
-					type: "Link",
-					linkType: "Space"
-				}
-			},
-			version: 6,
-			createdAt: "2024-09-10T09:46:28.832Z",
-			createdBy: {
-				sys: {
-					id: "2lm3sz3KBqEAt3dHQghfWk",
-					type: "Link",
-					linkType: "User"
-				}
-			},
-			updatedAt: "2024-09-10T09:50:26.139Z",
-			updatedBy: {
-				sys: {
-					id: "2lm3sz3KBqEAt3dHQghfWk",
-					type: "Link",
-					linkType: "User"
-				}
-			},
-			contentType: {
-				sys: {
-					id: "information",
-					type: "Link",
-					linkType: "ContentType"
-				}
-			},
-			environment: {
-				sys: {
-					id: "sample",
-					type: "Link",
-					linkType: "Environment"
-				}
-			}
-		},
 		controls: [
 			{
 				fieldId: "slug",
@@ -1306,43 +772,7 @@ var locales = [
 		"default": false,
 		contentManagementApi: true,
 		contentDeliveryApi: true,
-		optional: true,
-		sys: {
-			type: "Locale",
-			id: "5PmCrVN49ynsWAQ7Hhlv6m",
-			version: 1,
-			space: {
-				sys: {
-					type: "Link",
-					linkType: "Space",
-					id: "8h71zrqfbfma"
-				}
-			},
-			environment: {
-				sys: {
-					type: "Link",
-					linkType: "Environment",
-					id: "sample",
-					uuid: "3c5dc592-69d2-4f7c-95c0-68ffdf4f74a0"
-				}
-			},
-			createdBy: {
-				sys: {
-					type: "Link",
-					linkType: "User",
-					id: "37oT30ZZM6eRQwRsLjxSZh"
-				}
-			},
-			createdAt: "2024-09-16T06:56:46Z",
-			updatedBy: {
-				sys: {
-					type: "Link",
-					linkType: "User",
-					id: "37oT30ZZM6eRQwRsLjxSZh"
-				}
-			},
-			updatedAt: "2024-09-16T06:56:46Z"
-		}
+		optional: true
 	},
 	{
 		name: "Japanese",
@@ -1351,43 +781,7 @@ var locales = [
 		"default": true,
 		contentManagementApi: true,
 		contentDeliveryApi: true,
-		optional: false,
-		sys: {
-			type: "Locale",
-			id: "2QLUK2ptSk9yrtsDOfV02d",
-			version: 1,
-			space: {
-				sys: {
-					type: "Link",
-					linkType: "Space",
-					id: "8h71zrqfbfma"
-				}
-			},
-			environment: {
-				sys: {
-					type: "Link",
-					linkType: "Environment",
-					id: "sample",
-					uuid: "3c5dc592-69d2-4f7c-95c0-68ffdf4f74a0"
-				}
-			},
-			createdBy: {
-				sys: {
-					type: "Link",
-					linkType: "User",
-					id: "37oT30ZZM6eRQwRsLjxSZh"
-				}
-			},
-			createdAt: "2024-09-16T06:56:46Z",
-			updatedBy: {
-				sys: {
-					type: "Link",
-					linkType: "User",
-					id: "37oT30ZZM6eRQwRsLjxSZh"
-				}
-			},
-			updatedAt: "2024-09-16T06:56:46Z"
-		}
+		optional: false
 	}
 ];
 var content = {
@@ -1413,6 +807,12 @@ async function setupContentful() {
         const space = await client.getSpace(spaceId);
         // スペースを使用
         console.log(`Using space: ${spaceId}`);
+        // 環境の存在確認
+        const environments = await space.getEnvironments();
+        if (environments.items.some((env) => env.sys.id === environmentId)) {
+            console.log(`Environment already exists: ${environmentId}`);
+            return;
+        }
         // 環境を作成
         await space.createEnvironmentWithId(environmentId, { name: environmentId });
         console.log(`Environment created: ${environmentId}`);

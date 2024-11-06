@@ -30,6 +30,13 @@ async function setupContentful() {
     // スペースを使用
     console.log(`Using space: ${spaceId}`);
 
+    // 環境の存在確認
+    const environments = await space.getEnvironments();
+    if (environments.items.some((env) => env.sys.id === environmentId)) {
+      console.log(`Environment already exists: ${environmentId}`);
+      return;
+    }
+
     // 環境を作成
     await space.createEnvironmentWithId(environmentId, { name: environmentId });
     console.log(`Environment created: ${environmentId}`);
