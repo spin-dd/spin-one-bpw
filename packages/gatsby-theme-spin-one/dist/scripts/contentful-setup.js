@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 'use strict';
 
-var dotenv = require('dotenv');
 var contentfulManagement = require('contentful-management');
 var contentfulImport = require('contentful-import');
+var dotenv = require('dotenv');
 
 var contentTypes = [
 	{
@@ -790,13 +790,16 @@ var content = {
 	locales: locales
 };
 
-// envファイルに設定した情報を読み込む
 dotenv.config();
 const spaceId = process.env.CONTENTFUL_SPACE_ID;
 const managementToken = process.env.CONTENTFUL_MANAGEMENT_TOKEN;
 const environmentId = process.env.CONTENTFUL_ENVIRONMENT_ID;
+console.log('Setting up Contentful with the following config:');
+console.log('Space ID:', spaceId);
+console.log('Environment ID:', environmentId);
+console.log('CMA Token:', managementToken.slice(0, -5).replace(/./g, '*') + managementToken.slice(-5));
 if (!spaceId || !managementToken || !environmentId) {
-    console.error('Contentfulの設定が不足しています。');
+    console.error('Missing required environment variables');
     process.exit(1);
 }
 const client = contentfulManagement.createClient({
@@ -805,7 +808,6 @@ const client = contentfulManagement.createClient({
 async function setupContentful() {
     try {
         const space = await client.getSpace(spaceId);
-        // スペースを使用
         console.log(`Using space: ${spaceId}`);
         // 環境の存在確認
         const environments = await space.getEnvironments();
@@ -813,10 +815,11 @@ async function setupContentful() {
             console.log(`Environment already exists: ${environmentId}`);
             return;
         }
-        // 環境を作成
+        // 環境を作成し、再度取得して存在を確認
         await space.createEnvironmentWithId(environmentId, { name: environmentId });
-        console.log(`Environment created: ${environmentId}`);
-        // SPIN ONE標準Content Modelをインポート
+        const createdEnvironment = await space.getEnvironment(environmentId);
+        console.log(`Environment created: ${createdEnvironment.sys.id}`);
+        // SPIN-ONE標準Content Modelをインポート
         await contentfulImport({
             spaceId,
             environmentId,
@@ -824,7 +827,6 @@ async function setupContentful() {
             content,
             contentModelOnly: true,
         });
-        console.log('Content model imported successfully');
     }
     catch (error) {
         console.error('Error setting up Contentful:', error);
