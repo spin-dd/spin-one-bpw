@@ -37,6 +37,10 @@ const processingInstructions = (data) => [
       return customModuleNameFromNode(node) ==="Image"
     },
     processNode: function(node) {
+      if (!data) {
+        // 多言語対応：対応言語の body がない場合
+        return null
+      }
       const entryId = entryIdFromNode(node)
       const entry = data.allContentfulImage.nodes.find((entry) => entry.contentful_id === entryId)
       const body = entry.body
