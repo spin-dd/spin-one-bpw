@@ -1,12 +1,13 @@
 import React from "react"
 import { Parser, ProcessNodeDefinitions } from "html-to-react"
+import { entryIdFromNode,customModuleNameFromNode,imageEntryToImage } from "./utils"
 
 const isValidNode = () => true
 
 const processNodeDefinitions = new ProcessNodeDefinitions()
 
 // node には rich text をプレ処理した text をパースしたものが格納されている
-const processingInstructions = [
+const processingInstructions = (data) => [
   {
     shouldProcessNode: function (node) {
       return node.attribs && node.attribs.id === "preprocessed-first"
@@ -30,6 +31,21 @@ const processingInstructions = [
         "Second"
       )
     },
+  },  
+  {
+    shouldProcessNode: function (node){
+      return customModuleNameFromNode(node) ==="Image"
+    },
+    processNode: function(node) {
+      const entryId = entryIdFromNode(node)
+      const entry = data.allContentfulImage.nodes.find((entry) => entry.contentful_id === entryId)
+      const body = entry.body
+      if (body === null) {
+        // 多言語対応：対応言語の body がない場合
+        return null
+      }
+      return imageEntryToImage(entry)
+    },
   },
   {
     shouldProcessNode: function (node) {
@@ -45,6 +61,6 @@ export const parseHtmlToReact = (html, data) => {
   return htmlToReactParser.parseWithInstructions(
     html,
     isValidNode,
-    processingInstructions
+    processingInstructions(data)
   )
 }
