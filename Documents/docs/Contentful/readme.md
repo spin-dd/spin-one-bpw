@@ -17,34 +17,41 @@ Contentful のスペースと environment を指定して、以下の情報を�
 
 ## Content model の設定
 
-以下のコマンドを実行して SPIN-ONE 標準の Content model を Contentful に登録します。
+コマンドを実行して SPIN-ONE 標準の Content model を Contentful に登録します。
+
 <https://github.com/spin-dd/spin-one/pull/44>
 
 ```shell
 # .env ファイルに設定した情報から指定の Environment を作成
-npm run contentful-setup
+npx contentful-setup 
 ```
+
+[contentful-setup.js](</packages/gatsby-theme-spin-one/dist/scripts/contentful-setup.js>)を実行し、ます。
 
 ## データを登録
 
-登録する html を指定のディレクトリ`packages/{package}/data/html`に置きます。
+登録するhtml・画像ファイルを指定のディレクトリ`/packages/{プロジェクト}/data/`に置きます。
+
 [データ登録の仕様](./Import/readme.md)
 
-アセットをMediaに登録
+- アセットをMediaに登録
 <https://github.com/spin-dd/spin-one/pull/45>
 
 ```shell
-npm run contentful-media-sync {ディレクトリのパス}
+npx contentful-media-sync
 ```
 
-- Media を登録 <https://github.com/spin-dd/spin-one/issues/14>
-- Content の登録 <https://github.com/spin-dd/spin-one/issues/13>
+[contentful-media-sync.js](/packages/gatsby-theme-spin-one/dist/scripts/contentful-media-sync.js)を実行します。
+
+実行後にContentfulに
+Mediaに画像ファイル、Contentにhtmlファイルが登録されます。
+
+[サンプルhtml](/packages/theme-demo/data/sample-asset/index.html)のように置くことで実行できます
 
 ## データを更新
 
 既に登録済のデータ情報を更新します。
-更新する html を指定のディレクトリ`spin-one/html`に置きます。
-[データ登録の仕様](./Import/readme.md)
+更新する html を指定のディレクトリ`/packages/{プロジェクト}/data/`に置きます。
 
 ## データの一括削除
 

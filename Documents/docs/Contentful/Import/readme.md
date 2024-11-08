@@ -11,7 +11,7 @@
 - アップロード済のファイルであれば保持している contentful の url 情報に html を書き換える。
 - 登録がない場合、アセットファイルを`contentful > Media`にアップロードを行う
 - html ファイル内の アセットタグをアップロードファイルを表示するコンポーネントに書き換える
-- `/data/contentful`フォルダにアップロードした際のパラメータ情報をファイルに保存する。
+- `/data/`フォルダにアップロードした際のパラメータ情報をファイルに保存する。
 
 ### 対象となるアセットタグ
 
@@ -43,7 +43,7 @@
 ## html を page として登録
 
 - 上記で書き換えを行った後にディレクトリごとに HTML を Contful に PAGE として登録します。
-- 対象ディレクトリ`/HTML`のディレクトリごとに HTMLファイルを を Contful に PAGE として登録します。
+- 対象ディレクトリ`/data`のディレクトリごとに HTMLファイルを を Contful に PAGE として登録します。
 contentful のパラメータは以下のようにします。
 
 | key      | 登録内容                                         |
@@ -55,8 +55,8 @@ contentful のパラメータは以下のようにします。
 ### pagePathの定義
 
 {ファイルのディレクトリのパス}+{ファイル名から`.html`を除いたもの}
-ファイルのディレクトリのパス：htmlファイルのディレクトリパスのうち`/spin-one/HTML`以降のディレクトリのパスを登録 `/spin-one/HTML/news/company_news.html`であれば`/news/`として登録
 ファイル名から`.html`を除いたもの: `company_news.html`であれば`company_news`とする 例外として`index.html`は`""`とする
+ファイルのディレクトリのパス：htmlファイルのディレクトリパスのうち`/data/`以降のディレクトリのパスを登録 `/data/news/company_news.html`であれば`/news/company_news`として登録
 
 ## 登録した html を gatsby で表示する
 
