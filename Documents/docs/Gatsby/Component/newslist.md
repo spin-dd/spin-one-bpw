@@ -27,6 +27,21 @@ Gatsby プロジェクト上で Html ファイルに`data-component="infomation-
 |item_limit|×|5|ページごとに表示する件数|
 |canPaging|×|false|ページングが必要な場合`true`とする|
 
+## 画面イメージ
+
+Figmaでイメージを作成
+<https://www.figma.com/design/k6ilowgOY6vlTV7bzZAznV/SPIN-ONE?node-id=0-1&t=6rMjAs9Rr0qsRZrX-1>
+
+- ページングなし
+- 5件の表示
+
+![alt text](image.png)
+
+- ページングあり
+- 5件の表示
+
+![alt text](image-1.png)
+
 ## 機能
 
 以下の機能を持ちます。
@@ -66,18 +81,3 @@ propsのパラメータに依存します。
 - 初期ページ以外で「前へ」ボタンを表示する。クリックすると前の{item_limit}件を表示
 - 現在のページ/総ページ の合計を表示
 - 総ページは{合計/item_limit}で計算する
-
-## 画面イメージ
-
-Figmaでイメージを作成
-<https://www.figma.com/design/k6ilowgOY6vlTV7bzZAznV/SPIN-ONE?node-id=0-1&t=6rMjAs9Rr0qsRZrX-1>
-
-- ページングなし
-- 5件の表示
-
-![alt text](image.png)
-
-- ページングあり
-- 5件の表示
-
-![alt text](image-1.png)
