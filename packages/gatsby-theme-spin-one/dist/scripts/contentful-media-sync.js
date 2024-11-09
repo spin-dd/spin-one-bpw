@@ -4,15 +4,19 @@
 var crypto = require('crypto');
 var nodeHtmlParser = require('node-html-parser');
 var contentfulManagement = require('contentful-management');
+var mime = require('mime');
 var fs = require('fs/promises');
 var path = require('path');
 var dotenv = require('dotenv');
 
-// envファイルに設定した情報を読み込む
 dotenv.config();
 const spaceId = process.env.CONTENTFUL_SPACE_ID;
 const managementToken = process.env.CONTENTFUL_MANAGEMENT_TOKEN;
 const environmentId = process.env.CONTENTFUL_ENVIRONMENT_ID;
+console.log('Sync media with the following config:');
+console.log('Space ID:', spaceId);
+console.log('Environment ID:', environmentId);
+console.log('CMA Token:', managementToken.slice(0, -5).replace(/./g, '*') + managementToken.slice(-5));
 if (!spaceId || !managementToken || !environmentId) {
     console.error('Contentfulの設定が不足しています。');
     process.exit(1);
@@ -23,6 +27,7 @@ const client = contentfulManagement.createClient({
 async function main() {
     const space = await client.getSpace(spaceId);
     const environment = await space.getEnvironment(environmentId);
+    const mime$1 = new mime.Mime();
     // Contentful に画像をアップロードし、アセットを作成する関数
     async function createAsset(imageInfo, directory) {
         // 対象画像ファイル
@@ -45,8 +50,7 @@ async function main() {
             console.info(`更新がありませんでしたのでスキップします: ${relativePath} with hash: ${imageInfo.hash}`);
             return assets.items[0].sys.id;
         }
-        const { default: mime } = await import('mime');
-        const contentType = mime.getType(fileName);
+        const contentType = mime$1.getType(fileName);
         if (!contentType) {
             console.error(`ファイルタイプが不明です。アセット登録をスキップします: ${relativePath}`);
             return undefined;
