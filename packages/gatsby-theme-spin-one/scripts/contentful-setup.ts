@@ -31,17 +31,56 @@ async function setupContentful() {
     const space = await client.getSpace(spaceId);
     console.log(`Using space: ${spaceId}`);
 
-    // 環境の存在確認
+    // environmentの存在確認
     const environments = await space.getEnvironments();
     if (environments.items.some((env) => env.sys.id === environmentId)) {
       console.log(`Environment already exists: ${environmentId}`);
       return;
     }
 
-    // 環境を作成し、再度取得して存在を確認
+    // environmentを作成
     await space.createEnvironmentWithId(environmentId, { name: environmentId });
-    const createdEnvironment = await space.getEnvironment(environmentId);
-    console.log(`Environment created: ${createdEnvironment.sys.id}`);
+    console.log(`Environment created: ${environmentId}`);
+
+    // environmentの処理が完了するまで待機
+    // @see https://www.contentful.com/developers/docs/tutorials/general/continuous-integration-with-circleci/
+    console.log('Waiting for environment processing...');
+    const DELAY = 1000;
+    const MAX_NUMBER_OF_TRIES = 5;
+    let count = 0;
+
+    let environment = await space.getEnvironment(environmentId);
+    while (count < MAX_NUMBER_OF_TRIES) {
+      environment = await space.getEnvironment(environmentId);
+
+      const status = environment.sys.status.sys.id;
+      if (status === 'ready' || status === 'failed') {
+        if (status === 'ready') {
+          console.log(`Successfully processed new environment (${environmentId})`);
+        } else {
+          console.log('Environment creation failed');
+        }
+        break;
+      }
+
+      await new Promise((resolve) => setTimeout(resolve, DELAY));
+      count++;
+    }
+
+    // デフォルトlocaleをjaに変更
+    const defaultLocaleCode = 'ja';
+    const locales = await environment.getLocales();
+    const defaultLocale = locales.items.find((locale) => locale.default);
+    if (!defaultLocale) {
+      console.error('Default locale not found');
+      throw new Error('Default locale not found');
+    }
+
+    if (defaultLocale && defaultLocale.code !== defaultLocaleCode) {
+      defaultLocale.code = defaultLocaleCode;
+      await defaultLocale.update();
+      console.log(`Default locale changed to: ${defaultLocaleCode}`);
+    }
 
     // SPIN-ONE標準Content Modelをインポート
     await contentfulImport({
