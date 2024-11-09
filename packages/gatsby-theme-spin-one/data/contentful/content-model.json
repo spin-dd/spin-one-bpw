@@ -1,6 +1,10 @@
 {
   "contentTypes": [
     {
+      "sys": {
+        "id": "element",
+        "type": "ContentType"
+      },
       "displayField": "name",
       "name": "Element",
       "description": "",
@@ -44,6 +48,10 @@
       ]
     },
     {
+      "sys": {
+        "id": "component",
+        "type": "ContentType"
+      },
       "displayField": "name",
       "name": "Component",
       "description": "",
@@ -114,6 +122,10 @@
       ]
     },
     {
+      "sys": {
+        "id": "image",
+        "type": "ContentType"
+      },
       "displayField": "name",
       "name": "Image",
       "description": "",
@@ -173,6 +185,10 @@
       ]
     },
     {
+      "sys": {
+        "id": "template",
+        "type": "ContentType"
+      },
       "displayField": "name",
       "name": "Template",
       "description": "",
@@ -284,6 +300,10 @@
       ]
     },
     {
+      "sys": {
+        "id": "page",
+        "type": "ContentType"
+      },
       "displayField": "pagePath",
       "name": "Page",
       "description": "",
@@ -431,6 +451,10 @@
       ]
     },
     {
+      "sys": {
+        "id": "information",
+        "type": "ContentType"
+      },
       "displayField": "slug",
       "name": "Information",
       "description": "",
@@ -513,6 +537,17 @@
   ],
   "editorInterfaces": [
     {
+      "sys": {
+        "id": "default",
+        "type": "EditorInterface",
+        "contentType": {
+          "sys": {
+            "id": "element",
+            "type": "Link",
+            "linkType": "ContentType"
+          }
+        }
+      },
       "controls": [
         {
           "fieldId": "name",
@@ -527,6 +562,17 @@
       ]
     },
     {
+      "sys": {
+        "id": "default",
+        "type": "EditorInterface",
+        "contentType": {
+          "sys": {
+            "id": "component",
+            "type": "Link",
+            "linkType": "ContentType"
+          }
+        }
+      },
       "controls": [
         {
           "fieldId": "name",
@@ -554,6 +600,17 @@
       ]
     },
     {
+      "sys": {
+        "id": "default",
+        "type": "EditorInterface",
+        "contentType": {
+          "sys": {
+            "id": "image",
+            "type": "Link",
+            "linkType": "ContentType"
+          }
+        }
+      },
       "controls": [
         {
           "fieldId": "name",
@@ -581,6 +638,17 @@
       ]
     },
     {
+      "sys": {
+        "id": "default",
+        "type": "EditorInterface",
+        "contentType": {
+          "sys": {
+            "id": "template",
+            "type": "Link",
+            "linkType": "ContentType"
+          }
+        }
+      },
       "controls": [
         {
           "fieldId": "name",
@@ -616,6 +684,17 @@
       ]
     },
     {
+      "sys": {
+        "id": "default",
+        "type": "EditorInterface",
+        "contentType": {
+          "sys": {
+            "id": "page",
+            "type": "Link",
+            "linkType": "ContentType"
+          }
+        }
+      },
       "controls": [
         {
           "fieldId": "pagePath",
@@ -645,6 +724,17 @@
       ]
     },
     {
+      "sys": {
+        "id": "default",
+        "type": "EditorInterface",
+        "contentType": {
+          "sys": {
+            "id": "information",
+            "type": "Link",
+            "linkType": "ContentType"
+          }
+        }
+      },
       "controls": [
         {
           "fieldId": "slug",
@@ -691,7 +781,11 @@
       "default": false,
       "contentManagementApi": true,
       "contentDeliveryApi": true,
-      "optional": true
+      "optional": true,
+      "sys": {
+        "type": "Locale",
+        "id": "en"
+      }
     },
     {
       "name": "Japanese",
@@ -700,7 +794,11 @@
       "default": true,
       "contentManagementApi": true,
       "contentDeliveryApi": true,
-      "optional": false
+      "optional": false,
+      "sys": {
+        "type": "Locale",
+        "id": "ja"
+      }
     }
   ]
 }

@@ -7,6 +7,10 @@ var dotenv = require('dotenv');
 
 var contentTypes = [
 	{
+		sys: {
+			id: "element",
+			type: "ContentType"
+		},
 		displayField: "name",
 		name: "Element",
 		description: "",
@@ -54,6 +58,10 @@ var contentTypes = [
 		]
 	},
 	{
+		sys: {
+			id: "component",
+			type: "ContentType"
+		},
 		displayField: "name",
 		name: "Component",
 		description: "",
@@ -134,6 +142,10 @@ var contentTypes = [
 		]
 	},
 	{
+		sys: {
+			id: "image",
+			type: "ContentType"
+		},
 		displayField: "name",
 		name: "Image",
 		description: "",
@@ -199,6 +211,10 @@ var contentTypes = [
 		]
 	},
 	{
+		sys: {
+			id: "template",
+			type: "ContentType"
+		},
 		displayField: "name",
 		name: "Template",
 		description: "",
@@ -328,6 +344,10 @@ var contentTypes = [
 		]
 	},
 	{
+		sys: {
+			id: "page",
+			type: "ContentType"
+		},
 		displayField: "pagePath",
 		name: "Page",
 		description: "",
@@ -504,6 +524,10 @@ var contentTypes = [
 		]
 	},
 	{
+		sys: {
+			id: "information",
+			type: "ContentType"
+		},
 		displayField: "slug",
 		name: "Information",
 		description: "",
@@ -594,6 +618,17 @@ var contentTypes = [
 ];
 var editorInterfaces = [
 	{
+		sys: {
+			id: "default",
+			type: "EditorInterface",
+			contentType: {
+				sys: {
+					id: "element",
+					type: "Link",
+					linkType: "ContentType"
+				}
+			}
+		},
 		controls: [
 			{
 				fieldId: "name",
@@ -608,6 +643,17 @@ var editorInterfaces = [
 		]
 	},
 	{
+		sys: {
+			id: "default",
+			type: "EditorInterface",
+			contentType: {
+				sys: {
+					id: "component",
+					type: "Link",
+					linkType: "ContentType"
+				}
+			}
+		},
 		controls: [
 			{
 				fieldId: "name",
@@ -635,6 +681,17 @@ var editorInterfaces = [
 		]
 	},
 	{
+		sys: {
+			id: "default",
+			type: "EditorInterface",
+			contentType: {
+				sys: {
+					id: "image",
+					type: "Link",
+					linkType: "ContentType"
+				}
+			}
+		},
 		controls: [
 			{
 				fieldId: "name",
@@ -662,6 +719,17 @@ var editorInterfaces = [
 		]
 	},
 	{
+		sys: {
+			id: "default",
+			type: "EditorInterface",
+			contentType: {
+				sys: {
+					id: "template",
+					type: "Link",
+					linkType: "ContentType"
+				}
+			}
+		},
 		controls: [
 			{
 				fieldId: "name",
@@ -697,6 +765,17 @@ var editorInterfaces = [
 		]
 	},
 	{
+		sys: {
+			id: "default",
+			type: "EditorInterface",
+			contentType: {
+				sys: {
+					id: "page",
+					type: "Link",
+					linkType: "ContentType"
+				}
+			}
+		},
 		controls: [
 			{
 				fieldId: "pagePath",
@@ -726,6 +805,17 @@ var editorInterfaces = [
 		]
 	},
 	{
+		sys: {
+			id: "default",
+			type: "EditorInterface",
+			contentType: {
+				sys: {
+					id: "information",
+					type: "Link",
+					linkType: "ContentType"
+				}
+			}
+		},
 		controls: [
 			{
 				fieldId: "slug",
@@ -772,7 +862,11 @@ var locales = [
 		"default": false,
 		contentManagementApi: true,
 		contentDeliveryApi: true,
-		optional: true
+		optional: true,
+		sys: {
+			type: "Locale",
+			id: "en"
+		}
 	},
 	{
 		name: "Japanese",
@@ -781,7 +875,11 @@ var locales = [
 		"default": true,
 		contentManagementApi: true,
 		contentDeliveryApi: true,
-		optional: false
+		optional: false,
+		sys: {
+			type: "Locale",
+			id: "ja"
+		}
 	}
 ];
 var content = {
