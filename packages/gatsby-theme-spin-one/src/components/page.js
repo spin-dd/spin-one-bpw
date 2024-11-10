@@ -1,5 +1,5 @@
 import React from 'react';
-import { parseHtmlToReact, prepareForParse } from '../utils';
+import { parseHtmlToReact, prepareForParse } from '../utils/utils';
 import { Layout } from './Layout';
 
 export { Head } from './Head';
