@@ -1,8 +1,8 @@
 import React from 'react';
-import { parseHtmlToReact, prepareForParse } from '../utils.js';
-import { Layout } from './Layout.js';
+import { parseHtmlToReact, prepareForParse } from '../utils';
+import { Layout } from './Layout';
 
-export { Head } from './Head.js';
+export { Head } from './Head';
 
 export const Page = ({ data, pageContext }) => {
   const { htmlBody, htmlScript, componentData } = prepareForParse({
