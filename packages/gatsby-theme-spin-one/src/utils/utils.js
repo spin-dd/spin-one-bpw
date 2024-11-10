@@ -2,7 +2,7 @@ import React from 'react';
 import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 import { getSrc, getImage } from 'gatsby-plugin-image';
 import escapeHtml from 'escape-html';
-import { parseJson } from './common.mjs';
+import { parseJson } from './common';
 
 export const renderText = (text = '') =>
   text.split('\n').reduce((children, textSegment, index) => {

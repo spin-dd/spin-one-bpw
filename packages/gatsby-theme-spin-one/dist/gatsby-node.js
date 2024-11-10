@@ -4,7 +4,7 @@ import { config } from 'dotenv';
 config();
 const allLocales = (await getContentfulAllLocales()) ?? [];
 const defaultLocaleCode = getContentfulDefaultLocaleCode(allLocales);
-console.error('theme gatsby-node.ts loaded');
+console.info('theme gatsby-node.ts loaded');
 export const createPages = async ({ graphql, actions, reporter }, themeOptions) => {
     const { overrideGatsbyNode = false } = themeOptions;
     // Gatsby theme では gatsby-node を上書きできないため独自実装

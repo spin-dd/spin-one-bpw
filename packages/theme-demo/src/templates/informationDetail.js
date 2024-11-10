@@ -10,7 +10,7 @@ const InformationDetail = ({ data, pageContext }) => (
 export default InformationDetail;
 
 export const query = graphql`
-  query ($name: String!, $locale: String!, $slug: String, $spaceId: String) {
+  query ($name: String, $locale: String, $slug: String, $spaceId: String) {
     contentfulInformation(slug: { eq: $slug }, node_locale: { eq: $locale }) {
       contentful_id
       __typename
