@@ -3,7 +3,7 @@
 import { createHash } from 'crypto';
 import { parse } from 'node-html-parser';
 import contentfulManagement from 'contentful-management';
-import { Mime } from 'mime';
+import mime from 'mime';
 import fs from 'fs/promises';
 import path from 'path';
 // envファイルに設定した情報を読み込む
@@ -31,8 +31,6 @@ const client = contentfulManagement.createClient({
 async function main() {
   const space = await client.getSpace(spaceId);
   const environment = await space.getEnvironment(environmentId);
-
-  const mime = new Mime();
 
   interface ImageInfo {
     src: string;
@@ -65,10 +63,12 @@ async function main() {
       return assets.items[0].sys.id;
     }
 
-    const contentType = mime.getType(fileName);
+    // ファイルタイプの取得
+    const contentType = mime.getType(imageInfo.src);
+
     if (!contentType) {
       console.error(`ファイルタイプが不明です。アセット登録をスキップします: ${relativePath}`);
-      return undefined;
+      return;
     }
 
     // 画像をアップロード
@@ -170,6 +170,9 @@ async function main() {
         const key = `${absoluteSrc}:${hash}`;
         if (!imageInfoMap.has(key)) {
           const assetId = await createAsset(imageInfo, directory);
+          if (!assetId) {
+            continue;
+          }
           imageInfo.assetId = assetId;
 
           // ファイルパスとファイル内容をキーにして、画像情報を管理

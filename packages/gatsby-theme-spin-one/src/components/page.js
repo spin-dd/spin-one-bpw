@@ -1,8 +1,8 @@
 import React from 'react';
-import { parseHtmlToReact, prepareForParse } from '../utils';
-import { Layout } from './Layout';
+import { parseHtmlToReact, prepareForParse } from '../utils.js';
+import { Layout } from './Layout.js';
 
-export { Head } from './Head';
+export { Head } from './Head.js';
 
 export const Page = ({ data, pageContext }) => {
   const { htmlBody, htmlScript, componentData } = prepareForParse({
@@ -12,6 +12,9 @@ export const Page = ({ data, pageContext }) => {
   });
 
   return (
-    <Layout body={parseHtmlToReact(htmlBody, componentData,data)} script={parseHtmlToReact(htmlScript, componentData,data)} />
+    <Layout
+      body={parseHtmlToReact(htmlBody, componentData, data)}
+      script={parseHtmlToReact(htmlScript, componentData, data)}
+    />
   );
 };

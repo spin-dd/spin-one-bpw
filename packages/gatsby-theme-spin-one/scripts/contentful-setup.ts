@@ -1,9 +1,12 @@
 #!/usr/bin/env node
 
-import { createClient } from 'contentful-management';
-import contentfulImport from 'contentful-import';
-// SPIN ONE標準Content Model
-import content from '../data/contentful/content-model.json';
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
+const { createClient } = require('contentful-management');
+const contentfulImport = require('contentful-import');
+// SPIN-ONE標準Content Model
+const content = require('../data/contentful/content-model.json');
+
 // envファイルに設定した情報を読み込む
 import { config } from 'dotenv';
 config();

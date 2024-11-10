@@ -1,5 +1,6 @@
-import { GatsbyConfig } from 'gatsby';
-import 'dotenv/config';
+import type { GatsbyConfig } from 'gatsby';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const contentfulConfig = {
   spaceId: process.env.CONTENTFUL_SPACE_ID as string,
@@ -26,6 +27,7 @@ const config: GatsbyConfig = {
     'gatsby-plugin-sass',
     'gatsby-transformer-remark',
   ],
+  graphqlTypegen: true,
 };
 
 const gtmId = process.env.GATSBY_GOOGLE_TAG_MANAGER_ID;

@@ -1,15 +1,13 @@
 #!/usr/bin/env node
-'use strict';
-
-var crypto = require('crypto');
-var nodeHtmlParser = require('node-html-parser');
-var contentfulManagement = require('contentful-management');
-var mime = require('mime');
-var fs = require('fs/promises');
-var path = require('path');
-var dotenv = require('dotenv');
-
-dotenv.config();
+import { createHash } from 'crypto';
+import { parse } from 'node-html-parser';
+import contentfulManagement from 'contentful-management';
+import mime from 'mime';
+import fs from 'fs/promises';
+import path from 'path';
+// envファイルに設定した情報を読み込む
+import { config } from 'dotenv';
+config();
 const spaceId = process.env.CONTENTFUL_SPACE_ID;
 const managementToken = process.env.CONTENTFUL_MANAGEMENT_TOKEN;
 const environmentId = process.env.CONTENTFUL_ENVIRONMENT_ID;
@@ -27,14 +25,13 @@ const client = contentfulManagement.createClient({
 async function main() {
     const space = await client.getSpace(spaceId);
     const environment = await space.getEnvironment(environmentId);
-    const mime$1 = new mime.Mime();
     // Contentful に画像をアップロードし、アセットを作成する関数
     async function createAsset(imageInfo, directory) {
         // 対象画像ファイル
         const fileName = path.basename(imageInfo.src);
         const relativePath = path.relative(directory, imageInfo.src);
         // directoryからの相対パスをハッシュ化してアセットのIDとして使用する
-        const assetId = crypto.createHash('sha256').update(relativePath).digest('hex');
+        const assetId = createHash('sha256').update(relativePath).digest('hex');
         // 登録済みか確認
         const assets = await environment
             .getAssets({
@@ -50,10 +47,11 @@ async function main() {
             console.info(`更新がありませんでしたのでスキップします: ${relativePath} with hash: ${imageInfo.hash}`);
             return assets.items[0].sys.id;
         }
-        const contentType = mime$1.getType(fileName);
+        // ファイルタイプの取得
+        const contentType = mime.getType(imageInfo.src);
         if (!contentType) {
             console.error(`ファイルタイプが不明です。アセット登録をスキップします: ${relativePath}`);
-            return undefined;
+            return;
         }
         // 画像をアップロード
         const fd = await fs.open(imageInfo.src, 'r');
@@ -126,7 +124,7 @@ async function main() {
         const imageInfoMap = new Map();
         for await (const htmlFile of htmlFiles) {
             const content = await fs.readFile(htmlFile, 'utf-8');
-            const root = nodeHtmlParser.parse(content);
+            const root = parse(content);
             const images = root.querySelectorAll('img');
             // 各imgタグの処理
             for (const img of images) {
@@ -137,12 +135,15 @@ async function main() {
                 const absoluteSrc = path.resolve(path.dirname(htmlFile), src);
                 // 画像ファイルのコンテンツを取得してハッシュ化
                 const imageContent = await fs.readFile(absoluteSrc);
-                const hash = crypto.createHash('sha256').update(imageContent).digest('hex');
+                const hash = createHash('sha256').update(imageContent).digest('hex');
                 const imageInfo = { src: absoluteSrc, hash };
                 // アセット登録
                 const key = `${absoluteSrc}:${hash}`;
                 if (!imageInfoMap.has(key)) {
                     const assetId = await createAsset(imageInfo, directory);
+                    if (!assetId) {
+                        continue;
+                    }
                     imageInfo.assetId = assetId;
                     // ファイルパスとファイル内容をキーにして、画像情報を管理
                     imageInfoMap.set(key, imageInfo);
