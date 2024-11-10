@@ -1,21 +1,12 @@
 # CONTENT MODEL
 
-<https://github.com/spin-dd/spin-one/issues/5>
-<https://github.com/spin-dd/spin-one/issues/23>
+<https://github.com/spin-dd/spin-one/pull/44>
 
-[登録するモデル](./JsonFiles.md)
-[JSON ファイル](./sample.json)に記載した model の情報を指定した contentful の space に登録します。
+[JSON ファイル](/packages/gatsby-theme-spin-one/data/contentful/content-model.json)に記載した model の情報を指定した contentful の space に登録します。
 
 ## env ファイルの設定
 
-登録するために下記の情報を env ファイルから取得します。
-
-| 変数名                      | 入力内容                                    |
-| --------------------------- | ------------------------------------------- |
-| CONTENTFUL_SPACE_ID         | スペース ID を入力                          |
-| CONTENTFUL_MANAGEMENT_TOKEN | Content Management API - access token       |
-| CONTENTFUL_DELIVERY_TOKEN   | Content Delivery API - access token         |
-| CONTENTFUL_ENVIRONMENT_ID   | Environment ID を入力（デフォルト：master） |
+登録するための情報を [.envファイル](../../Gatsby/envfile.md)から取得します。
 
 ## ContentModel の登録内容
 
@@ -38,8 +29,6 @@ space/environment の情報を登録します。
 | description  | -    | Model 備考を記載します                                         |
 | displayField | 〇   | key を指定し、登録情報を表示名にできます。"name"を登録します。 |
 | fields       | 〇   | フィールド情報を作成します。                                   |
-
-※ f 入力内容は[sample.json](./sample.json)を参照
 
 ## 管理画面での登録情報の確認
 

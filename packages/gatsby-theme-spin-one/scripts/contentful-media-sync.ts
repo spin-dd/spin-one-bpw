@@ -3,16 +3,21 @@
 import { createHash } from 'crypto';
 import { parse } from 'node-html-parser';
 import contentfulManagement from 'contentful-management';
+import { Mime } from 'mime';
 import fs from 'fs/promises';
 import path from 'path';
-import { config } from 'dotenv';
-
 // envファイルに設定した情報を読み込む
+import { config } from 'dotenv';
 config();
 
 const spaceId = process.env.CONTENTFUL_SPACE_ID as string;
 const managementToken = process.env.CONTENTFUL_MANAGEMENT_TOKEN as string;
 const environmentId = process.env.CONTENTFUL_ENVIRONMENT_ID as string;
+
+console.log('Sync media with the following config:');
+console.log('Space ID:', spaceId);
+console.log('Environment ID:', environmentId);
+console.log('CMA Token:', managementToken.slice(0, -5).replace(/./g, '*') + managementToken.slice(-5));
 
 if (!spaceId || !managementToken || !environmentId) {
   console.error('Contentfulの設定が不足しています。');
@@ -26,6 +31,8 @@ const client = contentfulManagement.createClient({
 async function main() {
   const space = await client.getSpace(spaceId);
   const environment = await space.getEnvironment(environmentId);
+
+  const mime = new Mime();
 
   interface ImageInfo {
     src: string;
@@ -58,7 +65,6 @@ async function main() {
       return assets.items[0].sys.id;
     }
 
-    const { default: mime } = await import('mime');
     const contentType = mime.getType(fileName);
     if (!contentType) {
       console.error(`ファイルタイプが不明です。アセット登録をスキップします: ${relativePath}`);

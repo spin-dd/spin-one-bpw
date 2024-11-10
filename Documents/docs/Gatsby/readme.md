@@ -6,9 +6,13 @@
 ## ローカルビルド
 
 - [.env ファイルの設定](./envfile.md)
-  contentful の情報などを記載します。
+  `packages\theme-demo\.env`ファイルにcontentful の情報などを記載します。
 
 - `$ gatsby develop`の実行
+
+※リポジトリルートにて
+`cd packages/{実行したいプロジェクト}`
+`npm run develop`
 
 ※ [Contentful に model 情報が登録](../Contentful/readme.md)を行っていない場合はビルド時にエラーとなります。
 

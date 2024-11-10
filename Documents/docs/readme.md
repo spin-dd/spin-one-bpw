@@ -30,7 +30,7 @@ Gatsby の環境作成をしてレポジトリのダウンロードとパッケ�
 
 以下の順番に行います。
 
-- [SPINONE のプロジェクトを初期化](./github/readme.md)
+- [SPIN-ONE のプロジェクトを初期化](./github/readme.md)
 - [Contenful の準備](./Contentful/readme.md)
 - [Gatsby でローカル開発を行う](./Gatsby/readme.md)
 - [Netlify の設定](./netlify/readme.md)

@@ -14,8 +14,8 @@
 | --------------------------- | ----------------------------------------------- |
 | CONTENTFUL_SPACE_ID         | スペース ID を入力                              |
 | CONTENTFUL_MANAGEMENT_TOKEN | Content Management API - access token           |
-| CONTENTFUL_DELIVERY_TOKEN   | Content Delivery API - access token             |
-| ENVIROMENT_ID               | Environment ID を入力(未入力なら master とする) |
+| CONTENTFUL_ACCESS_TOKEN     | Content Delivery API - access token             |
+| ENVIRONMENT_ID              | Environment ID を入力(未入力なら master とする) |
 
 `CONTENTFUL_SPACE_ID`に該当するスペースの
 `ENVIROMENT_ID`に該当するスペースに content を新規登録します。
