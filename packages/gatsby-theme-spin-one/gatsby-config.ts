@@ -2,6 +2,8 @@ import type { GatsbyConfig } from 'gatsby';
 import dotenv from 'dotenv';
 dotenv.config();
 
+console.info('theme gatsby-config.ts loaded');
+
 const contentfulConfig = {
   spaceId: process.env.CONTENTFUL_SPACE_ID as string,
   accessToken: process.env.CONTENTFUL_ACCESS_TOKEN as string,
@@ -43,4 +45,4 @@ if (!gtmId) {
   });
 }
 
-export default config;
+module.exports = config;

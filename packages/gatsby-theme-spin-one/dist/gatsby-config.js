@@ -1,10 +1,16 @@
-import dotenv from 'dotenv';
-dotenv.config();
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
+console.info('theme gatsby-config.ts loaded');
 const contentfulConfig = {
     spaceId: process.env.CONTENTFUL_SPACE_ID,
     accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
     environment: process.env.CONTENTFUL_ENVIRONMENT_ID || 'master',
-    enableTags: true,
+    // enableTags: true,
     pageLimit: 50,
 };
 const { spaceId, accessToken } = contentfulConfig;
@@ -37,4 +43,4 @@ else {
         },
     });
 }
-export default config;
+module.exports = config;

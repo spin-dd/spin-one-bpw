@@ -1,6 +1,5 @@
 import React from 'react';
 import type { GatsbySSR } from 'gatsby';
-import { SSRProvider } from 'react-bootstrap';
 
 /**
  * react-helmet-async 内の script は非同期で読み込まれるため、
@@ -22,9 +21,3 @@ const HeadComponents = [
 export const onRenderBody: GatsbySSR['onRenderBody'] = ({ setHeadComponents }) => {
   setHeadComponents(HeadComponents);
 };
-
-export const wrapRootElement: GatsbySSR['wrapRootElement'] = ({ element }) => (
-  <React.StrictMode>
-    <SSRProvider>{element}</SSRProvider>
-  </React.StrictMode>
-);

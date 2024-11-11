@@ -1,13 +1,16 @@
 #!/usr/bin/env node
-import { createRequire } from 'module';
-const require = createRequire(import.meta.url);
-const { createClient } = require('contentful-management');
-const contentfulImport = require('contentful-import');
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const contentful_management_1 = require("contentful-management");
+const contentful_import_1 = __importDefault(require("contentful-import"));
 // SPIN-ONE標準Content Model
-const content = require('../data/contentful/content-model.json');
+const content_model_json_1 = __importDefault(require("../data/contentful/content-model.json"));
 // envファイルに設定した情報を読み込む
-import { config } from 'dotenv';
-config();
+const dotenv_1 = require("dotenv");
+(0, dotenv_1.config)();
 const spaceId = process.env.CONTENTFUL_SPACE_ID;
 const managementToken = process.env.CONTENTFUL_MANAGEMENT_TOKEN;
 const environmentId = process.env.CONTENTFUL_ENVIRONMENT_ID;
@@ -19,7 +22,7 @@ if (!spaceId || !managementToken || !environmentId) {
     console.error('Missing required environment variables');
     process.exit(1);
 }
-const client = createClient({
+const client = (0, contentful_management_1.createClient)({
     accessToken: managementToken,
 });
 async function setupContentful() {
@@ -71,11 +74,11 @@ async function setupContentful() {
             console.log(`Default locale changed to: ${defaultLocaleCode}`);
         }
         // SPIN-ONE標準Content Modelをインポート
-        await contentfulImport({
+        await (0, contentful_import_1.default)({
             spaceId,
             environmentId,
             managementToken,
-            content,
+            content: content_model_json_1.default,
             contentModelOnly: true,
         });
     }

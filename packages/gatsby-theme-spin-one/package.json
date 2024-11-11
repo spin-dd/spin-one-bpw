@@ -11,8 +11,7 @@
     "url": "git+https://github.com/spin-dd/spin-one.git",
     "directory": "packages/gatsby-theme-spin-one"
   },
-  "type": "module",
-  "main": "dist/gatsby-config.js",
+  "main": "dist/index.js",
   "bin": {
     "contentful-setup": "./dist/scripts/contentful-setup.js",
     "contentful-media-sync": "./dist/scripts/contentful-media-sync.js"

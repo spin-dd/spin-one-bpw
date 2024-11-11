@@ -1,11 +1,40 @@
-import path from 'path';
-import { parseJson, getContentfulAllLocales, getContentfulDefaultLocaleCode, resolveLocalePath, } from './src/utils/common';
-import { config } from 'dotenv';
-config();
-const allLocales = (await getContentfulAllLocales()) ?? [];
-const defaultLocaleCode = getContentfulDefaultLocaleCode(allLocales);
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const path_1 = __importDefault(require("path"));
+const common_1 = require("./src/utils/common");
+const dotenv_1 = require("dotenv");
+(0, dotenv_1.config)();
 console.info('theme gatsby-node.ts loaded');
-export const createPages = async ({ graphql, actions, reporter }, themeOptions) => {
+let allLocales = [];
+let defaultLocaleCode = 'ja';
+const initializeLocales = async () => {
+    allLocales = (await (0, common_1.getContentfulAllLocales)()) ?? [];
+    defaultLocaleCode = (0, common_1.getContentfulDefaultLocaleCode)(allLocales);
+};
+initializeLocales().then(() => {
+    const createPages = async ({ graphql, actions, reporter }, themeOptions) => {
+        const { overrideGatsbyNode = false } = themeOptions;
+        // Gatsby theme では gatsby-node を上書きできないため独自実装
+        if (overrideGatsbyNode) {
+            return;
+        }
+        try {
+            await generatePages({ graphql, actions });
+            await generateInformationPages({ graphql, actions });
+        }
+        catch (error) {
+            reporter.panicOnBuild(`There was an error loading your Contentful posts`, error);
+            return;
+        }
+    };
+    module.exports = {
+        createPages,
+    };
+});
+const createPages = async ({ graphql, actions, reporter }, themeOptions) => {
     const { overrideGatsbyNode = false } = themeOptions;
     // Gatsby theme では gatsby-node を上書きできないため独自実装
     if (overrideGatsbyNode) {
@@ -48,17 +77,16 @@ const generatePages = async ({ graphql, actions }) => {
     }
     const pages = result.data.allContentfulPage.nodes;
     if (pages.length > 0) {
-        const component = path.resolve('./src/templates/page.js');
         pages.forEach((page) => {
             const body = page.body?.raw ?? '';
             if (body === '') {
                 // 該当 locale のページがない場合
                 return;
             }
-            const context = parseJson(page.context?.internal?.content) ?? {};
+            const context = (0, common_1.parseJson)(page.context?.internal?.content) ?? {};
             createPage({
-                path: `${resolveLocalePath(page.node_locale, defaultLocaleCode)}${page.pagePath}`,
-                component,
+                path: `${(0, common_1.resolveLocalePath)(page.node_locale, defaultLocaleCode)}${page.pagePath}`,
+                component: path_1.default.resolve('./src/templates/page.js'),
                 context: {
                     locales: allLocales,
                     pagePath: page.pagePath,
@@ -78,7 +106,7 @@ const generatePages = async ({ graphql, actions }) => {
 const informationPrefixPath = '/information';
 // locale を含まないお知らせページの pagePath を生成
 const createInformationCanonicalPathPath = ({ slug }) => `${informationPrefixPath}/${slug}/`;
-const createInformationPagePath = ({ node_locale, slug }) => `${resolveLocalePath(node_locale, defaultLocaleCode)}${createInformationCanonicalPathPath({
+const createInformationPagePath = ({ node_locale, slug }) => `${(0, common_1.resolveLocalePath)(node_locale, defaultLocaleCode)}${createInformationCanonicalPathPath({
     slug,
 })}`;
 // Contentful Information からのページ生成
@@ -106,7 +134,6 @@ const generateInformationPages = async ({ graphql, actions }) => {
     }
     const information = result.data.allContentfulInformation.nodes;
     if (information.length > 0) {
-        const component = path.resolve('./src/templates/informationDetail.js');
         information.forEach((page) => {
             const body = page.body?.childMarkdownRemark.html ?? '';
             if (body === '') {
@@ -116,7 +143,7 @@ const generateInformationPages = async ({ graphql, actions }) => {
             }
             createPage({
                 path: createInformationPagePath(page),
-                component,
+                component: path_1.default.resolve('./src/templates/informationDetail.js'),
                 context: {
                     locales: allLocales,
                     name: 'informationDetail',
@@ -131,4 +158,7 @@ const generateInformationPages = async ({ graphql, actions }) => {
     else {
         console.info('No Information Content found');
     }
+};
+module.exports = {
+    createPages,
 };

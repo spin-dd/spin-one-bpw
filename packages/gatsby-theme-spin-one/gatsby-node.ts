@@ -9,12 +9,40 @@ import {
 import { config } from 'dotenv';
 config();
 
-const allLocales = (await getContentfulAllLocales()) ?? [];
-const defaultLocaleCode = getContentfulDefaultLocaleCode(allLocales);
-
 console.info('theme gatsby-node.ts loaded');
 
-export const createPages: GatsbyNode['createPages'] = async ({ graphql, actions, reporter }, themeOptions) => {
+// TODO: top-level await が使えるようになったら修正する
+let allLocales = [];
+let defaultLocaleCode = 'ja';
+
+const initializeLocales = async () => {
+  allLocales = (await getContentfulAllLocales()) ?? [];
+  defaultLocaleCode = getContentfulDefaultLocaleCode(allLocales);
+};
+
+initializeLocales().then(() => {
+  const createPages: GatsbyNode['createPages'] = async ({ graphql, actions, reporter }, themeOptions) => {
+    const { overrideGatsbyNode = false } = themeOptions;
+    // Gatsby theme では gatsby-node を上書きできないため独自実装
+    if (overrideGatsbyNode) {
+      return;
+    }
+
+    try {
+      await generatePages({ graphql, actions });
+      await generateInformationPages({ graphql, actions });
+    } catch (error) {
+      reporter.panicOnBuild(`There was an error loading your Contentful posts`, error as Error);
+      return;
+    }
+  };
+
+  module.exports = {
+    createPages,
+  };
+});
+
+const createPages: GatsbyNode['createPages'] = async ({ graphql, actions, reporter }, themeOptions) => {
   const { overrideGatsbyNode = false } = themeOptions;
   // Gatsby theme では gatsby-node を上書きできないため独自実装
   if (overrideGatsbyNode) {
@@ -60,7 +88,6 @@ const generatePages = async ({ graphql, actions }) => {
 
   const pages = result.data.allContentfulPage.nodes;
   if (pages.length > 0) {
-    const component = path.resolve('./src/templates/page.js');
     pages.forEach((page) => {
       const body = page.body?.raw ?? '';
       if (body === '') {
@@ -70,7 +97,7 @@ const generatePages = async ({ graphql, actions }) => {
       const context = parseJson(page.context?.internal?.content) ?? {};
       createPage({
         path: `${resolveLocalePath(page.node_locale, defaultLocaleCode)}${page.pagePath}`,
-        component,
+        component: path.resolve('./src/templates/page.js'),
         context: {
           locales: allLocales,
           pagePath: page.pagePath,
@@ -123,7 +150,6 @@ const generateInformationPages = async ({ graphql, actions }) => {
 
   const information = result.data.allContentfulInformation.nodes;
   if (information.length > 0) {
-    const component = path.resolve('./src/templates/informationDetail.js');
     information.forEach((page) => {
       const body = page.body?.childMarkdownRemark.html ?? '';
       if (body === '') {
@@ -133,7 +159,7 @@ const generateInformationPages = async ({ graphql, actions }) => {
       }
       createPage({
         path: createInformationPagePath(page),
-        component,
+        component: path.resolve('./src/templates/informationDetail.js'),
         context: {
           locales: allLocales,
           name: 'informationDetail',
@@ -147,4 +173,8 @@ const generateInformationPages = async ({ graphql, actions }) => {
   } else {
     console.info('No Information Content found');
   }
+};
+
+module.exports = {
+  createPages,
 };

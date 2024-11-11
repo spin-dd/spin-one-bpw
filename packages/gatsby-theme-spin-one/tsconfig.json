@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
     "target": "ESNext",
-    "module": "ESNext",
+    // https://www.gatsbyjs.com/docs/how-to/custom-configuration/es-modules/#current-limitations
+    "module": "CommonJS",
     "moduleResolution": "Node",
     "jsx": "react",
     // "strict": true,
