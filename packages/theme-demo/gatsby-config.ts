@@ -7,6 +7,7 @@ const config: GatsbyConfig = {
   },
   graphqlTypegen: true,
   plugins: [
+    "gatsby-plugin-typescript",
     {
       resolve: "@spin-dd/gatsby-theme-spin-one",
       options: {},
