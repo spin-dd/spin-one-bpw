@@ -4,7 +4,7 @@ import * as contentful from 'contentful';
 const DEFAULT_LOCALE_CODE = 'ja';
 const SECOND_LOCALE_CODE = 'en';
 
-export const parseJson = (json = '') => {
+export const parseJson = (json = '{}') => {
   try {
     return JSON.parse(json);
   } catch (e) {
