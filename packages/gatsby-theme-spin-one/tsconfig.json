@@ -10,7 +10,9 @@
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
-    "outDir": "dist"
+    "outDir": "./"
   },
-  "include": ["**/*", "data/**/*.json"]
+  // "include": ["gatsby-config.ts", "gatsby-node.ts", "gatsby-ssr.tsx", "gatsby-browser.tsx", "src/**/*.ts"],
+  "include": ["./*.ts", "gatsby-browser.tsx", "src/**/*.ts"],
+  "exclude": ["node_modules", "dist"]
 }

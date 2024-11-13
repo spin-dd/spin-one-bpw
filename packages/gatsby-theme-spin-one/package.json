@@ -11,13 +11,18 @@
     "url": "git+https://github.com/spin-dd/spin-one.git",
     "directory": "packages/gatsby-theme-spin-one"
   },
-  "main": "dist/index.js",
+  "main": "index.js",
   "bin": {
     "contentful-setup": "./dist/scripts/contentful-setup.js",
     "contentful-media-sync": "./dist/scripts/contentful-media-sync.js"
   },
   "files": [
     "dist",
+    "src",
+    "gatsby-config.js",
+    "gatsby-node.js",
+    "gatsby-browser.js",
+    "gatsby-ssr.js",
     "README.md"
   ],
   "scripts": {
@@ -30,7 +35,8 @@
     "lint-fix:prettier": "npm run lint:prettier -- --write",
     "build": "run-s -c build:*",
     "build:clean": "rm -rf dist",
-    "build:theme": "tsc",
+    "build:theme": "tsc --project tsconfig.json",
+    "build:scripts": "tsc --project tsconfig.scripts.json",
     "postbuild": "chmod +x dist/scripts/contentful-setup.js dist/scripts/contentful-media-sync.js"
   },
   "dependencies": {
