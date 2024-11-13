@@ -9,7 +9,10 @@ const config: GatsbyConfig = {
   plugins: [
     {
       resolve: "@spin-dd/gatsby-theme-spin-one",
-      options: {},
+      options: {
+        // サイトのデフォルトlocaleを指定する
+        defaultLocaleCode: "ja",
+      },
     },
   ],
 };

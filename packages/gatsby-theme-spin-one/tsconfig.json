@@ -5,6 +5,7 @@
     "module": "CommonJS",
     "moduleResolution": "Node",
     "jsx": "react",
+    // TODO: 修正する
     // "strict": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
@@ -12,7 +13,6 @@
     "resolveJsonModule": true,
     "outDir": "./"
   },
-  // "include": ["gatsby-config.ts", "gatsby-node.ts", "gatsby-ssr.tsx", "gatsby-browser.tsx", "src/**/*.ts"],
-  "include": ["./*.ts", "gatsby-browser.tsx", "src/**/*.ts"],
-  "exclude": ["node_modules", "dist"]
+  "include": ["./*.ts", "./*.tsx", "src/**/*.ts"],
+  "exclude": ["node_modules"]
 }
