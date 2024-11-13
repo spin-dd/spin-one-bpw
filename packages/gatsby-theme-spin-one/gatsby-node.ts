@@ -1,66 +1,85 @@
 import path from 'path';
-import type { GatsbyNode } from 'gatsby';
-import {
-  parseJson,
-  getContentfulAllLocales,
-  getContentfulDefaultLocaleCode,
-  resolveLocalePath,
-} from './src/utils/common';
+import * as contentful from 'contentful';
+import { parseJson } from './src/utils/common';
 import { config } from 'dotenv';
 config();
 
-console.info('theme gatsby-node.ts loaded');
+/**
+ * テーマオプションデフォルト値
+ */
+// お知らせページのプレフィックスパス
+const THEME_INFORMATION_PREFIX_PATH = '/information';
 
-// TODO: top-level await が使えるようになったら修正する
-let allLocales = [];
-let defaultLocaleCode = 'ja';
+/**
+ * ユーティリティ
+ * FIXME: contentfulモジュールがCommonJSとして利用することしかできないため、tscでCommonJSモジュールとしてコンパイルするgatsby-node.tsに実装している
+ */
+// Contentful 公開環境の設定済みのロケールをすべて取得する
+const getContentfulAllLocales = async (): Promise<Omit<contentful.Locale, 'sys'>[]> => {
+  const client = contentful.createClient({
+    space: process.env.CONTENTFUL_SPACE_ID as string,
+    accessToken: process.env.CONTENTFUL_ACCESS_TOKEN as string,
+  });
 
-const initializeLocales = async () => {
-  allLocales = (await getContentfulAllLocales()) ?? [];
-  defaultLocaleCode = getContentfulDefaultLocaleCode(allLocales);
+  try {
+    const { items } = await client.getLocales();
+    return items;
+  } catch (error) {
+    console.error('Error fetching locales:', error);
+    return [];
+  }
 };
 
-initializeLocales().then(() => {
-  const createPages: GatsbyNode['createPages'] = async ({ graphql, actions, reporter }, themeOptions) => {
-    const { overrideGatsbyNode = false } = themeOptions;
-    // Gatsby theme では gatsby-node を上書きできないため独自実装
-    if (overrideGatsbyNode) {
-      return;
-    }
+// Contentful で設定済みのデフォルトロケールを取得する
+const getContentfulDefaultLocaleCode = (locales: Omit<contentful.Locale, 'sys'>[] = []): string =>
+  locales.find((locale) => locale.default)?.code;
 
-    try {
-      await generatePages({ graphql, actions });
-      await generateInformationPages({ graphql, actions });
-    } catch (error) {
-      reporter.panicOnBuild(`There was an error loading your Contentful posts`, error as Error);
-      return;
-    }
-  };
+// ロケールに基づいてパスを解決する
+const resolveLocalePath = (locale: string, defaultLocaleCode: string): string =>
+  locale === defaultLocaleCode ? '' : `/${locale}`;
 
-  module.exports = {
-    createPages,
-  };
-});
-
-const createPages: GatsbyNode['createPages'] = async ({ graphql, actions, reporter }, themeOptions) => {
+/**
+ * gatsby-nodeのページ生成処理
+ */
+export const createPages = async ({ graphql, actions, reporter }, themeOptions) => {
   const { overrideGatsbyNode = false } = themeOptions;
-  // Gatsby theme では gatsby-node を上書きできないため独自実装
+  // Gatsby theme では theme の gatsby-node を上書きできないため独自実装
   if (overrideGatsbyNode) {
     return;
   }
 
   try {
-    await generatePages({ graphql, actions });
-    await generateInformationPages({ graphql, actions });
+    // Contentful のロケール情報取得
+    const allLocales = await getContentfulAllLocales();
+    // Contentful のデフォルトロケールコード取得
+    const defaultLocaleCode = getContentfulDefaultLocaleCode(allLocales);
+
+    await generatePages(
+      { graphql, actions },
+      {
+        allLocales,
+        defaultLocaleCode,
+        ...themeOptions,
+      },
+    );
+    await generateInformationPages(
+      { graphql, actions },
+      {
+        allLocales,
+        defaultLocaleCode,
+        ...themeOptions,
+      },
+    );
   } catch (error) {
-    reporter.panicOnBuild(`There was an error loading your Contentful posts`, error as Error);
+    reporter.panicOnBuild(`There was an error loading your Contentful posts`, error);
     return;
   }
 };
 
 // Contentful Page からのページ生成
-const generatePages = async ({ graphql, actions }) => {
+const generatePages = async ({ graphql, actions }, themeOptions) => {
   const { createPage } = actions;
+  const { allLocales, defaultLocaleCode } = themeOptions;
 
   const result = await graphql(`
     {
@@ -113,19 +132,10 @@ const generatePages = async ({ graphql, actions }) => {
   }
 };
 
-// お知らせページ prefixPath
-const informationPrefixPath = '/information';
-
-// locale を含まないお知らせページの pagePath を生成
-const createInformationCanonicalPathPath = ({ slug }) => `${informationPrefixPath}/${slug}/`;
-const createInformationPagePath = ({ node_locale, slug }) =>
-  `${resolveLocalePath(node_locale, defaultLocaleCode)}${createInformationCanonicalPathPath({
-    slug,
-  })}`;
-
 // Contentful Information からのページ生成
-const generateInformationPages = async ({ graphql, actions }) => {
+const generateInformationPages = async ({ graphql, actions }, themeOptions) => {
   const { createPage } = actions;
+  const { allLocales, defaultLocaleCode, informationPrefixPath = THEME_INFORMATION_PREFIX_PATH } = themeOptions;
 
   const result = await graphql(`
     {
@@ -148,6 +158,13 @@ const generateInformationPages = async ({ graphql, actions }) => {
     throw result.errors;
   }
 
+  // locale を含まないお知らせページの pagePath を生成
+  const createInformationCanonicalPathPath = ({ slug }) => `${informationPrefixPath}/${slug}/`;
+  const createInformationPagePath = ({ node_locale, slug }) =>
+    `${resolveLocalePath(node_locale, defaultLocaleCode)}${createInformationCanonicalPathPath({
+      slug,
+    })}`;
+
   const information = result.data.allContentfulInformation.nodes;
   if (information.length > 0) {
     information.forEach((page) => {
@@ -162,6 +179,8 @@ const generateInformationPages = async ({ graphql, actions }) => {
         component: path.resolve('./src/templates/informationDetail.js'),
         context: {
           locales: allLocales,
+          // TODO: I/F検討
+          // デフォルトテンプレート名
           name: 'informationDetail',
           locale: page.node_locale,
           slug: page.slug,
@@ -173,8 +192,4 @@ const generateInformationPages = async ({ graphql, actions }) => {
   } else {
     console.info('No Information Content found');
   }
-};
-
-module.exports = {
-  createPages,
 };

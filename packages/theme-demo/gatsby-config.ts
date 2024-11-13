@@ -10,8 +10,8 @@ const config: GatsbyConfig = {
     {
       resolve: "@spin-dd/gatsby-theme-spin-one",
       options: {
-        // サイトのデフォルトlocaleを指定する
-        defaultLocaleCode: "ja",
+        // お知らせページのプレフィックスパスを指定する例
+        informationPrefixPath: "/news",
       },
     },
   ],
