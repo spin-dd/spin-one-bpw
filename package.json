@@ -6,6 +6,7 @@
   "scripts": {
     "clean": "rm -rf node_modules package-lock.json",
     "build:theme": "npm run build -w packages/gatsby-theme-spin-one",
+    "dev:demo": "npm run develop -w packages/theme-demo",
     "lint": "npm run lint --workspaces --if-present",
     "lint-fix": "npm run lint-fix --workspaces --if-present"
   },
@@ -18,6 +19,6 @@
     "npm-run-all": "4.1.5",
     "prettier": "3.3.3",
     "typescript": "5.6.3",
-    "typescript-eslint": "8.12.2"
+    "typescript-eslint": "8.14.0"
   }
 }

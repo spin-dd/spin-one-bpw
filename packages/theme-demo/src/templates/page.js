@@ -10,10 +10,11 @@ const Page = ({ data, pageContext }) => (
 export default Page;
 
 export const query = graphql`
-  query ($pagePath: String!, $locale: String!, $spaceId: String) {
+  query ($locale: String, $pagePath: String, $spaceId: String) {
     contentfulTemplate: contentfulPage(
-      pagePath: { eq: $pagePath }
       node_locale: { eq: $locale }
+      pagePath: { eq: $pagePath }
+      spaceId: { eq: $spaceId }
     ) {
       contentful_id
       __typename

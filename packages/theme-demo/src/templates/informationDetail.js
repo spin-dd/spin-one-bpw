@@ -10,14 +10,22 @@ const InformationDetail = ({ data, pageContext }) => (
 export default InformationDetail;
 
 export const query = graphql`
-  query ($name: String!, $locale: String!, $slug: String, $spaceId: String) {
-    contentfulInformation(slug: { eq: $slug }, node_locale: { eq: $locale }) {
+  query ($name: String, $locale: String, $slug: String, $spaceId: String) {
+    contentfulInformation(
+      slug: { eq: $slug }
+      node_locale: { eq: $locale }
+      spaceId: { eq: $spaceId }
+    ) {
       contentful_id
       __typename
       node_locale
       ...ContentfulInformationFieldsFragment
     }
-    contentfulTemplate(name: { eq: $name }, node_locale: { eq: $locale }) {
+    contentfulTemplate(
+      name: { eq: $name }
+      node_locale: { eq: $locale }
+      spaceId: { eq: $spaceId }
+    ) {
       contentful_id
       __typename
       name

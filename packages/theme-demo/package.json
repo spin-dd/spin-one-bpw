@@ -15,12 +15,12 @@
   },
   "dependencies": {
     "@spin-dd/gatsby-theme-spin-one": "*",
-    "gatsby": "5.13.7",
+    "gatsby": "5.14.0",
     "react": "18.3.1",
     "react-dom": "18.3.1"
   },
   "devDependencies": {
-    "@types/node": "22.8.7",
+    "@types/node": "20.17.6",
     "@types/react": "18.3.12",
     "@types/react-dom": "18.3.1"
   }

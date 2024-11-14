@@ -1,5 +1,7 @@
 import React from 'react';
-import { parseHtmlToReact, parseJson, prepareForParse } from '../utils';
+import { prepareForParse } from '../utils/utils';
+import { parseJson } from '../utils/common';
+import { parseHtmlToReact } from '../utils/htmlToReactParser';
 import { Layout } from './Layout';
 import { Head as HeadBase } from './Head';
 

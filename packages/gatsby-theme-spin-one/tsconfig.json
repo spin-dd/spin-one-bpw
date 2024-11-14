@@ -1,11 +1,18 @@
 {
   "compilerOptions": {
     "target": "ESNext",
-    "moduleResolution": "Bundler",
-    "outDir": "dist",
-    "strict": true,
+    // https://www.gatsbyjs.com/docs/how-to/custom-configuration/es-modules/#current-limitations
+    "module": "CommonJS",
+    "moduleResolution": "Node",
+    "jsx": "react",
+    // TODO: 修正する
+    // "strict": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "skipLibCheck": true
-  }
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "outDir": "./"
+  },
+  "include": ["./*.ts", "./*.tsx", "src/**/*.ts"],
+  "exclude": ["node_modules"]
 }

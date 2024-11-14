@@ -322,7 +322,7 @@
           "id": "head",
           "name": "head",
           "type": "RichText",
-          "localized": false,
+          "localized": true,
           "required": false,
           "validations": [
             {
@@ -402,7 +402,7 @@
           "id": "script",
           "name": "script",
           "type": "RichText",
-          "localized": false,
+          "localized": true,
           "required": false,
           "validations": [
             {
@@ -442,7 +442,7 @@
           "id": "context",
           "name": "context",
           "type": "Object",
-          "localized": false,
+          "localized": true,
           "required": false,
           "validations": [],
           "disabled": false,

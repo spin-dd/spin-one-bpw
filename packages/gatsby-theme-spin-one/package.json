@@ -11,20 +11,20 @@
     "url": "git+https://github.com/spin-dd/spin-one.git",
     "directory": "packages/gatsby-theme-spin-one"
   },
-  "main": "dist/gatsby-node.js",
-  "files": [
-    "dist",
-    "src",
-    "gatsby-browser.js",
-    "gatsby-config.js",
-    "gatsby-node.mjs",
-    "gatsby-ssr.js",
-    "README.md"
-  ],
+  "main": "index.js",
   "bin": {
     "contentful-setup": "./dist/scripts/contentful-setup.js",
     "contentful-media-sync": "./dist/scripts/contentful-media-sync.js"
   },
+  "files": [
+    "dist",
+    "src",
+    "gatsby-config.js",
+    "gatsby-node.js",
+    "gatsby-browser.js",
+    "gatsby-ssr.js",
+    "README.md"
+  ],
   "scripts": {
     "lint": "run-s -c lint:*",
     "lint:es": "eslint .",
@@ -33,37 +33,36 @@
     "lint-fix": "run-s lint-fix:*",
     "lint-fix:es": "npm run lint:es -- --fix",
     "lint-fix:prettier": "npm run lint:prettier -- --write",
-    "build": "rollup -c rollup.config.ts --configPlugin typescript"
+    "build": "run-s -c build:*",
+    "build:clean": "rm -rf dist",
+    "build:theme": "tsc --project tsconfig.json",
+    "build:scripts": "tsc --project tsconfig.scripts.json",
+    "postbuild": "chmod +x dist/scripts/contentful-setup.js dist/scripts/contentful-media-sync.js"
   },
   "dependencies": {
     "bootstrap": "5.3.3",
-    "contentful": "11.2.0",
-    "contentful-import": "9.4.64",
-    "contentful-management": "11.35.1",
-    "gatsby-plugin-google-tagmanager": "5.13.1",
-    "gatsby-plugin-image": "3.13.1",
-    "gatsby-plugin-sass": "6.13.1",
-    "gatsby-plugin-sitemap": "6.13.1",
-    "gatsby-source-contentful": "8.13.2",
-    "gatsby-transformer-remark": "6.13.1",
+    "contentful-import": "9.4.70",
+    "contentful-management": "11.37.0",
+    "gatsby-plugin-google-tagmanager": "5.14.0",
+    "gatsby-plugin-image": "3.14.0",
+    "gatsby-plugin-sass": "6.14.0",
+    "gatsby-plugin-sitemap": "6.14.0",
+    "gatsby-plugin-typescript": "5.14.0",
+    "gatsby-source-contentful": "8.14.0",
+    "gatsby-transformer-remark": "6.14.0",
     "html-to-react": "1.7.0",
     "react-bootstrap": "2.10.5"
   },
   "devDependencies": {
-    "@rollup/plugin-commonjs": "28.0.1",
-    "@rollup/plugin-json": "6.1.0",
-    "@rollup/plugin-node-resolve": "15.3.0",
-    "@rollup/plugin-typescript": "12.1.0",
-    "contentful-cli": "3.4.5",
+    "contentful-cli": "3.5.4",
     "dotenv": "16.4.5",
-    "http-proxy-middleware": "3.0.3",
+    "graphql-config": "5.1.3",
     "mime": "4.0.4",
-    "node-html-parser": "6.1.13",
-    "rollup": "4.24.3"
+    "node-html-parser": "6.1.13"
   },
   "peerDependencies": {
-    "gatsby": "^5.13.7",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "gatsby": "5.14.0",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
   }
 }
