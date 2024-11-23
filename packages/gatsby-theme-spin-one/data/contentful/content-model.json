@@ -474,20 +474,6 @@
           "omitted": false
         },
         {
-          "id": "label",
-          "name": "label",
-          "type": "Symbol",
-          "localized": false,
-          "required": true,
-          "validations": [
-            {
-              "in": ["news", "important"]
-            }
-          ],
-          "disabled": false,
-          "omitted": false
-        },
-        {
           "id": "title",
           "name": "title",
           "type": "Symbol",
@@ -496,6 +482,21 @@
           "validations": [],
           "disabled": false,
           "omitted": false
+        },
+        {
+          "id": "category",
+          "name": "category",
+          "type": "Link",
+          "localized": false,
+          "required": false,
+          "validations": [
+            {
+              "linkContentType": ["category"]
+            }
+          ],
+          "disabled": false,
+          "omitted": false,
+          "linkType": "Entry"
         },
         {
           "id": "body",
@@ -805,13 +806,13 @@
           "widgetNamespace": "builtin"
         },
         {
-          "fieldId": "label",
-          "widgetId": "dropdown",
+          "fieldId": "title",
+          "widgetId": "singleLine",
           "widgetNamespace": "builtin"
         },
         {
-          "fieldId": "title",
-          "widgetId": "singleLine",
+          "fieldId": "category",
+          "widgetId": "entryLinkEditor",
           "widgetNamespace": "builtin"
         },
         {
