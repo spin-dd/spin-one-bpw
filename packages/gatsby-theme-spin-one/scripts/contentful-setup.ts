@@ -91,6 +91,13 @@ async function setupContentful() {
       content,
       contentModelOnly: true,
     });
+
+    // importしたContent Modelをpublish
+    const contentTypes = await environment.getContentTypes();
+    for (const contentType of contentTypes.items) {
+      await contentType.publish();
+      console.log(`Content type published: ${contentType.sys.id}`);
+    }
   } catch (error) {
     console.error('Error setting up Contentful:', error);
     process.exit(1);
