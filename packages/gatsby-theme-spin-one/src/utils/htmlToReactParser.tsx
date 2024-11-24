@@ -7,8 +7,6 @@ import { parseJson } from './common';
 // カスタムコンポーネント
 import * as customComponents from '../components/CustomComponents';
 
-const processNodeDefinitions = new ProcessNodeDefinitions();
-
 // node には rich text をプレ処理した text をパースしたものが格納されている
 const processingInstructions = (data) => [
   // Image
@@ -53,7 +51,7 @@ const processingInstructions = (data) => [
   // デフォルト処理
   {
     shouldProcessNode: () => true,
-    processNode: processNodeDefinitions.processDefaultNode,
+    processNode: ProcessNodeDefinitions().processDefaultNode,
   },
 ];
 
@@ -61,7 +59,7 @@ const isValidNode = () => true;
 
 export const parseHtmlToReact = (html, data) => {
   // https://github.com/aknuds1/html-to-react
-  const htmlToReactParser = new Parser();
+  const htmlToReactParser = Parser();
   const instructions = processingInstructions(data);
   return htmlToReactParser.parseWithInstructions(html, isValidNode, instructions);
 };

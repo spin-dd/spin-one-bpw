@@ -125,7 +125,7 @@ const generatePages = async ({ graphql, actions }, themeOptions) => {
         path: `${resolveLocalePath(page.node_locale, defaultLocaleCode)}${page.pagePath}`,
         component: resolveTemplatePath(
           path.resolve('./src/templates/Page.js'),
-          require.resolve('@spin-dd/gatsby-theme-spin-one/src/templates/Page.js'),
+          require.resolve('@spin-dd/gatsby-theme-spin-one/src/templates/Page.tsx'),
         ),
         context: {
           locales: allLocales,
@@ -188,7 +188,7 @@ const generateInformationPages = async ({ graphql, actions }, themeOptions) => {
         path: createInformationPagePath(page),
         component: resolveTemplatePath(
           path.resolve('./src/templates/InformationDetail.js'),
-          require.resolve('@spin-dd/gatsby-theme-spin-one/src/templates/InformationDetail.js'),
+          require.resolve('@spin-dd/gatsby-theme-spin-one/src/templates/InformationDetail.tsx'),
         ),
         context: {
           locales: allLocales,

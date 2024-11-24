@@ -1,8 +1,8 @@
 import React from 'react';
 import { graphql } from 'gatsby';
-import { InformationDetail } from '../components/InformationDetail.js';
+import { InformationDetail } from '../components/InformationDetail.tsx';
 
-export { Head } from '../components/InformationDetail.js';
+export { Head } from '../components/InformationDetail.tsx';
 
 // InformationDetail
 export default ({ data, pageContext }) => <InformationDetail data={data} pageContext={pageContext} />;

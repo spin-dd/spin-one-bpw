@@ -13,6 +13,6 @@
     "resolveJsonModule": true,
     "outDir": "./"
   },
-  "include": ["./*.ts", "./*.tsx", "src/**/*.ts"],
+  "include": ["./*.ts", "./*.tsx"],
   "exclude": ["node_modules"]
 }

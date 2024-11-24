@@ -154,23 +154,3 @@ export const parseSearchParams = (search) => {
     return acc;
   }, {});
 };
-
-export const mailFormData = ({ formId, subject, templateBody: body, data, confirmedData }) => {
-  const formData = new FormData();
-  const { htmlBody: mailBody } = prepareForParse({
-    template: { body },
-    data: {
-      ...data,
-      context: confirmedData,
-    },
-  });
-  const name = confirmedData.nameKanji || `${confirmedData.nameKanjiSei} ${confirmedData.nameKanjiMei}`;
-  formData.append('csrfToken', confirmedData.csrftoken);
-  formData.append('g-recaptcha-response', confirmedData['g-recaptcha-response']);
-  formData.append('formId', formId);
-  formData.append('subject', `${subject} | ${name} 様`);
-  formData.append('body', mailBody);
-  formData.append('email', confirmedData.email);
-
-  return formData;
-};
