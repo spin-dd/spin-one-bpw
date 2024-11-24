@@ -1,4 +1,8 @@
 import type { GatsbyConfig } from "gatsby";
+import dotenv from "dotenv";
+dotenv.config();
+
+console.info("site gatsby-config.ts loaded");
 
 const config: GatsbyConfig = {
   siteMetadata: {

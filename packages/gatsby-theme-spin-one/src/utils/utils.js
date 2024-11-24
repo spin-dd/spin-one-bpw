@@ -9,7 +9,7 @@ export const renderText = (text = '') =>
     return [...children, index > 0 && <br key={index} />, textSegment];
   }, []);
 
-export const textInline = ({ data, target = '', escape = false }) => {
+export const textInline = ({ data, target = '', escape = true }) => {
   const text = target.split('.').reduce((object, key) => (object == null ? undefined : object[key]), data);
   if (text == null) {
     console.warn(`${target} is undefined`);
@@ -82,7 +82,6 @@ const richTextToHtml = (richTextNodes = [], data) =>
             return textInline({
               data,
               target,
-              escape: true,
             });
           }
         }
@@ -119,31 +118,22 @@ export const parseCustomModuleName = (customModuleName = '') => {
   return { moduleName, subModuleName: subModuleNames[0] };
 };
 
-// data.context 未完成の状態で呼び出すと body を html に変換する際に customTemplateText
-// で参照できず警告がでるため事前に page.context を data.context にマージしておくこと
 export const prepareForParse = ({ template = null, data, pageContext }) => {
   if (template === null) {
     throw new Error('Template is not found.');
   }
 
-  const { context: injects, ...pageData } = data;
   // Contentful raw data to json
   const body = parseJson(template.body?.raw) ?? {};
   const head = parseJson(template.head?.raw) ?? {};
   const script = parseJson(template.script?.raw) ?? {};
-  // json
-  const context = parseJson(template.context?.internal?.content) ?? {};
-  // RichText (json) to html
+  const templateContext = parseJson(template.context?.internal?.content) ?? {};
+
+  // contentfulのデータをベースに、templateContext, pageContextをマージする
   const componentData = {
-    ...pageData,
-    // コンポーネントの context に由来
-    context: {
-      ...context,
-      // data.context で上書きする
-      ...injects,
-    },
-    // ページあるいはテンプレートの context に由来
-    pageContext,
+    ...data,
+    ...templateContext,
+    ...pageContext,
   };
   const htmlBody = richTextToHtml(body.content, componentData);
   const htmlHead = richTextToHtml(head.content, componentData);

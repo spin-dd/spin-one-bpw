@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { useLocation } from '@reach/router';
 import { useScript } from '../hooks/useScript';
-import NotFound from './404';
 
 export function Layout({ body, script }) {
   // https://paulie.dev/posts/2022/10/react-hydration-error-425-text-content-does-not-match-server-rendered-html/
@@ -23,8 +22,5 @@ export function Layout({ body, script }) {
     }
   }, [isHydrated, hash]);
 
-  if (!body) {
-    return <NotFound />;
-  }
   return isHydrated && <>{body}</>;
 }

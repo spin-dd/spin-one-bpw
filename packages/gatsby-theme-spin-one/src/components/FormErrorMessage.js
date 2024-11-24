@@ -1,6 +1,6 @@
 import React from 'react';
 
-function FormErrorMessage({ error }) {
+export const FormErrorMessage = ({ error }) => {
   if (!error?.message) {
     return null;
   }
@@ -10,6 +10,4 @@ function FormErrorMessage({ error }) {
       <p>{error.message}</p>
     </div>
   );
-}
-
-export { FormErrorMessage };
+};
