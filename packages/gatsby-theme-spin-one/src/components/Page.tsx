@@ -13,9 +13,6 @@ export const Page = ({ data, pageContext }) => {
   });
 
   return (
-    <Layout
-      body={parseHtmlToReact(htmlBody, componentData, data)}
-      script={parseHtmlToReact(htmlScript, componentData, data)}
-    />
+    <Layout body={parseHtmlToReact(htmlBody, componentData)} script={parseHtmlToReact(htmlScript, componentData)} />
   );
 };

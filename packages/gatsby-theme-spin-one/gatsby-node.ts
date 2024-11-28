@@ -1,4 +1,5 @@
 import path from 'path';
+import fs from 'fs';
 import * as contentful from 'contentful';
 import { parseJson } from './src/utils/common';
 import { config } from 'dotenv';
@@ -37,6 +38,12 @@ const getContentfulDefaultLocaleCode = (locales: Omit<contentful.Locale, 'sys'>[
 // ロケールに基づいてパスを解決する
 const resolveLocalePath = (locale: string, defaultLocaleCode: string): string =>
   locale === defaultLocaleCode ? '' : `/${locale}`;
+
+// テンプレートファイルのパスを動的に決定する関数
+// サイト側にテンプレートファイルが存在する場合はそちらを優先する
+const resolveTemplatePath = (sitePath: string, themePath: string): string => {
+  return fs.existsSync(sitePath) ? sitePath : themePath;
+};
 
 /**
  * gatsby-nodeのページ生成処理
@@ -116,7 +123,10 @@ const generatePages = async ({ graphql, actions }, themeOptions) => {
       const context = parseJson(page.context?.internal?.content) ?? {};
       createPage({
         path: `${resolveLocalePath(page.node_locale, defaultLocaleCode)}${page.pagePath}`,
-        component: path.resolve('./src/templates/page.js'),
+        component: resolveTemplatePath(
+          path.resolve('./src/templates/Page.js'),
+          require.resolve('@spin-dd/gatsby-theme-spin-one/src/templates/Page.tsx'),
+        ),
         context: {
           locales: allLocales,
           pagePath: page.pagePath,
@@ -176,7 +186,10 @@ const generateInformationPages = async ({ graphql, actions }, themeOptions) => {
       }
       createPage({
         path: createInformationPagePath(page),
-        component: path.resolve('./src/templates/informationDetail.js'),
+        component: resolveTemplatePath(
+          path.resolve('./src/templates/InformationDetail.js'),
+          require.resolve('@spin-dd/gatsby-theme-spin-one/src/templates/InformationDetail.tsx'),
+        ),
         context: {
           locales: allLocales,
           // TODO: I/F検討

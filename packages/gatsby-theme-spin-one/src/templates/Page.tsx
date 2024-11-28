@@ -1,13 +1,11 @@
-import React from "react";
-import { graphql } from "gatsby";
-import { Page as Template } from "@spin-dd/gatsby-theme-spin-one/src/components/page";
+import React from 'react';
+import { graphql } from 'gatsby';
+import { Page } from '../components/Page';
 
-export { Head } from "@spin-dd/gatsby-theme-spin-one/src/components/page";
+export { Head } from '../components/Head';
 
-const Page = ({ data, pageContext }) => (
-  <Template data={data} pageContext={pageContext} />
-);
-export default Page;
+// Page
+export default ({ data, pageContext }) => <Page data={data} pageContext={pageContext} />;
 
 export const query = graphql`
   query ($locale: String, $pagePath: String, $spaceId: String) {

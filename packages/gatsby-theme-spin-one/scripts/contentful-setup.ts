@@ -3,7 +3,7 @@
 import { createClient } from 'contentful-management';
 import contentfulImport from 'contentful-import';
 // SPIN-ONE標準Content Model
-import content from '../data/contentful/content-model.json';
+import content from './data/contentful-content-model.json';
 
 // envファイルに設定した情報を読み込む
 import { config } from 'dotenv';
@@ -91,6 +91,13 @@ async function setupContentful() {
       content,
       contentModelOnly: true,
     });
+
+    // importしたContent Modelをpublish
+    const contentTypes = await environment.getContentTypes();
+    for (const contentType of contentTypes.items) {
+      await contentType.publish();
+      console.log(`Content type published: ${contentType.sys.id}`);
+    }
   } catch (error) {
     console.error('Error setting up Contentful:', error);
     process.exit(1);

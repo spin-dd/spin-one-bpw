@@ -11,7 +11,7 @@ export const Head = ({ data, pageContext, children }) => {
 
   return (
     <>
-      <React.Fragment key="children">{children}</React.Fragment>
+      <React.Fragment key="head_children">{children}</React.Fragment>
       {parseHtmlToReact(htmlHead, componentData)}
     </>
   );

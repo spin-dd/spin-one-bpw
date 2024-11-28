@@ -76,7 +76,10 @@ export const query = graphql`
 
   fragment ContentfulInformationFieldsFragment on ContentfulInformation {
     slug
-    label
+    category {
+      name
+      slug
+    }
     title
     body {
       childMarkdownRemark {
