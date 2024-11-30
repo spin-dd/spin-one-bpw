@@ -7,7 +7,7 @@
   "scripts": {
     "init": "run-s -c init:*",
     "init:contentful-setup": "npx contentful-setup",
-    "init:contentful-media-sync": "npx contentful-media-sync data",
+    "init:contentful-media-sync": "npx contentful-media-sync demo-data",
     "demo": "npm run build:theme --prefix ../.. && npm run clean && npm run develop",
     "develop": "gatsby develop",
     "build": "gatsby build",
