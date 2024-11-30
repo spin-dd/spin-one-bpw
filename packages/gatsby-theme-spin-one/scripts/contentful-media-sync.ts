@@ -6,6 +6,7 @@ import * as contentfulManagement from 'contentful-management';
 import mime from 'mime';
 import fs from 'fs/promises';
 import path from 'path';
+import { uploadImage, createAsset, getHtmlFiles } from './lib/utils';
 // envファイルに設定した情報を読み込む
 import { config } from 'dotenv';
 config();
@@ -38,8 +39,8 @@ async function main() {
     assetId?: string;
   }
 
-  // Contentful に画像をアップロードし、アセットを作成する関数
-  async function createAsset(imageInfo: ImageInfo, directory: string): Promise<string | undefined> {
+  // Contentful に画像をアップロードする関数
+  async function createImageAsset(imageInfo: ImageInfo, directory: string): Promise<string | undefined> {
     // 対象画像ファイル
     const fileName = path.basename(imageInfo.src);
     const relativePath = path.relative(directory, imageInfo.src);
@@ -72,16 +73,7 @@ async function main() {
     }
 
     // 画像をアップロード
-    const fd = await fs.open(imageInfo.src, 'r');
-    const upload = await environment
-      .createUpload({
-        file: await fd.readFile(),
-      })
-      .finally(() => fd.close())
-      .catch((error) => {
-        console.error({ error });
-        return undefined;
-      });
+    const upload = await uploadImage(environment, imageInfo.src);
 
     if (!upload) {
       console.error(`アップロードに失敗しました: ${relativePath}`);
@@ -89,57 +81,13 @@ async function main() {
     }
 
     // アセットを作成
-    const asset = await environment.createAssetWithId(assetId, {
-      fields: {
-        title: {
-          // デフォルト言語のみ設定
-          // TODO: 仕様確認が必要
-          ja: fileName,
-        },
-        file: {
-          ja: {
-            fileName,
-            contentType,
-            uploadFrom: {
-              sys: {
-                type: 'Link',
-                linkType: 'Upload',
-                id: upload.sys.id,
-              },
-            },
-          },
-        },
-        description: {
-          ja: imageInfo.hash,
-        },
-      },
-    });
+    const asset = await createAsset(environment, assetId, fileName, contentType, upload);
 
-    // アセットを処理（公開はしない）
+    // アセットを処理（この時点では公開はしない）
     await asset.processForAllLocales();
 
     console.info(`アセットを作成しました: ${relativePath} with hash: ${imageInfo.hash}`);
     return asset.sys.id;
-  }
-
-  // ディレクトリ内のHTMLファイルを再帰的に取得する関数
-  async function findHtmlFiles(directory: string): Promise<string[]> {
-    const htmlFiles: string[] = [];
-
-    const walk = async (dir: string) => {
-      const dirents = await fs.readdir(dir, { withFileTypes: true });
-      for await (const dirent of dirents) {
-        const fullPath = path.join(dir, dirent.name);
-        if (dirent.isDirectory()) {
-          await walk(fullPath);
-        } else if (path.extname(fullPath) === '.html') {
-          htmlFiles.push(fullPath);
-        }
-      }
-    };
-    await walk(directory);
-
-    return htmlFiles;
   }
 
   // html ファイルを入力に img タグに指定されたローカル画像をContentfulに登録する関数
@@ -169,7 +117,7 @@ async function main() {
         // アセット登録
         const key = `${absoluteSrc}:${hash}`;
         if (!imageInfoMap.has(key)) {
-          const assetId = await createAsset(imageInfo, directory);
+          const assetId = await createImageAsset(imageInfo, directory);
           if (!assetId) {
             continue;
           }
@@ -205,7 +153,7 @@ async function main() {
   }
 
   // HTMLファイルのパスを取得
-  const htmlFiles = await findHtmlFiles(directory);
+  const htmlFiles = await getHtmlFiles(directory);
 
   // 取得したHTMLファイルからimgタグに指定された画像情報を取得
   await processHtmlFiles(htmlFiles, directory);
