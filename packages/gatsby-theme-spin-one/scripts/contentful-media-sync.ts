@@ -2,7 +2,7 @@
 
 import { createHash } from 'crypto';
 import { parse } from 'node-html-parser';
-import contentfulManagement from 'contentful-management';
+import * as contentfulManagement from 'contentful-management';
 import mime from 'mime';
 import fs from 'fs/promises';
 import path from 'path';
