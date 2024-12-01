@@ -4,6 +4,7 @@ import fs from 'fs/promises';
 import * as contentfulManagement from 'contentful-management';
 import { parse } from 'node-html-parser';
 import { getHtmlFiles, processImageTags } from './lib/utils';
+import { createContentfulPage } from './lib/createContentfulPage';
 // envファイルに設定した情報を読み込む
 import { config } from 'dotenv';
 config();
@@ -65,9 +66,8 @@ async function main() {
     // imgタグの処理
     html = await processImageTags(html, imageInfoMap, environment, htmlFile, directory);
 
-    // FIXME: 動作確認のため、出力（ファイル更新は行わない）
-    console.log(htmlFile);
-    console.log(html.toString());
+    // htmlファイルからPage Contentを作成
+    await createContentfulPage(html, environment, htmlFile, directory);
   }
 }
 
