@@ -22,6 +22,8 @@ export const createContentfulPage = async (
 
   if (page) {
     console.info(`Page Contentを更新します: ${pagePath}`);
+  } else {
+    console.info(`Page Contentを作成します: ${pagePath}`);
   }
 
   const head = html.querySelector('head');
