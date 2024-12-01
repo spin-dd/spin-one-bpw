@@ -38,10 +38,10 @@ npx contentful-setup
 <https://github.com/spin-dd/spin-one/pull/45>
 
 ```shell
-npx contentful-media-sync
+npx contentful-sync
 ```
 
-[contentful-media-sync.js](/packages/gatsby-theme-spin-one/dist/scripts/contentful-media-sync.js)を実行します。
+[contentful-sync.js](/packages/gatsby-theme-spin-one/dist/scripts/contentful-sync.js)を実行します。
 
 実行後にContentfulに
 Mediaに画像ファイル、Contentにhtmlファイルが登録されます。
