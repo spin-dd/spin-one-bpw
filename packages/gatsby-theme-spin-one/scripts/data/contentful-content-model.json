@@ -35,11 +35,24 @@
               "message": "Marks are not allowed"
             },
             {
-              "enabledNodeTypes": ["embedded-entry-block"],
-              "message": "Only block entry nodes are allowed"
+              "enabledNodeTypes": ["embedded-entry-block", "hyperlink", "embedded-entry-inline"],
+              "message": "Only block entry, link to Url, and inline entry nodes are allowed"
             },
             {
-              "nodes": {}
+              "nodes": {
+                "embedded-entry-block": [
+                  {
+                    "linkContentType": ["component", "element", "image"],
+                    "message": null
+                  }
+                ],
+                "embedded-entry-inline": [
+                  {
+                    "linkContentType": ["component"],
+                    "message": null
+                  }
+                ]
+              }
             }
           ],
           "disabled": false,
@@ -102,14 +115,20 @@
               "message": "Marks are not allowed"
             },
             {
-              "enabledNodeTypes": ["embedded-entry-block", "embedded-entry-inline"],
-              "message": "Only block entry and inline entry nodes are allowed"
+              "enabledNodeTypes": ["embedded-entry-block", "hyperlink", "embedded-entry-inline"],
+              "message": "Only block entry, link to Url, and inline entry nodes are allowed"
             },
             {
               "nodes": {
                 "embedded-entry-block": [
                   {
                     "linkContentType": ["component", "element", "image"],
+                    "message": null
+                  }
+                ],
+                "embedded-entry-inline": [
+                  {
+                    "linkContentType": ["component"],
                     "message": null
                   }
                 ]
@@ -219,14 +238,20 @@
               "message": "Marks are not allowed"
             },
             {
-              "enabledNodeTypes": ["embedded-entry-block"],
-              "message": "Only block entry nodes are allowed"
+              "enabledNodeTypes": ["embedded-entry-block", "hyperlink", "embedded-entry-inline"],
+              "message": "Only block entry, link to Url, and inline entry nodes are allowed"
             },
             {
               "nodes": {
                 "embedded-entry-block": [
                   {
-                    "linkContentType": ["element"],
+                    "linkContentType": ["element", "component", "image"],
+                    "message": null
+                  }
+                ],
+                "embedded-entry-inline": [
+                  {
+                    "linkContentType": ["component"],
                     "message": null
                   }
                 ]
@@ -248,14 +273,20 @@
               "message": "Marks are not allowed"
             },
             {
-              "enabledNodeTypes": ["embedded-entry-block", "embedded-entry-inline"],
-              "message": "Only block entry and inline entry nodes are allowed"
+              "enabledNodeTypes": ["embedded-entry-block", "embedded-entry-inline", "hyperlink"],
+              "message": "Only block entry, inline entry, and link to Url nodes are allowed"
             },
             {
               "nodes": {
                 "embedded-entry-block": [
                   {
                     "linkContentType": ["component", "element", "image"],
+                    "message": null
+                  }
+                ],
+                "embedded-entry-inline": [
+                  {
+                    "linkContentType": ["component"],
                     "message": null
                   }
                 ]
@@ -277,11 +308,18 @@
               "message": "Marks are not allowed"
             },
             {
-              "enabledNodeTypes": ["embedded-entry-block"],
-              "message": "Only block entry nodes are allowed"
+              "enabledNodeTypes": ["embedded-entry-block", "hyperlink"],
+              "message": "Only block entry and link to Url nodes are allowed"
             },
             {
-              "nodes": {}
+              "nodes": {
+                "embedded-entry-block": [
+                  {
+                    "linkContentType": ["component", "element", "image"],
+                    "message": null
+                  }
+                ]
+              }
             }
           ],
           "disabled": false,
@@ -326,33 +364,22 @@
           "required": false,
           "validations": [
             {
-              "enabledMarks": ["bold", "italic", "underline", "code", "superscript", "subscript", "strikethrough"],
-              "message": "Only bold, italic, underline, code, superscript, subscript, and strikethrough marks are allowed"
+              "enabledMarks": [],
+              "message": "Marks are not allowed"
             },
             {
-              "enabledNodeTypes": [
-                "heading-1",
-                "heading-2",
-                "heading-3",
-                "heading-4",
-                "heading-5",
-                "heading-6",
-                "ordered-list",
-                "unordered-list",
-                "hr",
-                "blockquote",
-                "embedded-entry-block",
-                "embedded-asset-block",
-                "table",
-                "asset-hyperlink",
-                "embedded-entry-inline",
-                "entry-hyperlink",
-                "hyperlink"
-              ],
-              "message": "Only heading 1, heading 2, heading 3, heading 4, heading 5, heading 6, ordered list, unordered list, horizontal rule, quote, block entry, asset, table, link to asset, inline entry, link to entry, and link to Url nodes are allowed"
+              "enabledNodeTypes": ["hyperlink", "embedded-entry-block"],
+              "message": "Only link to Url and block entry nodes are allowed"
             },
             {
-              "nodes": {}
+              "nodes": {
+                "embedded-entry-block": [
+                  {
+                    "linkContentType": ["component", "element", "image"],
+                    "message": null
+                  }
+                ]
+              }
             }
           ],
           "disabled": false,
@@ -366,33 +393,22 @@
           "required": false,
           "validations": [
             {
-              "enabledMarks": ["bold", "italic", "underline", "code", "superscript", "subscript", "strikethrough"],
-              "message": "Only bold, italic, underline, code, superscript, subscript, and strikethrough marks are allowed"
+              "enabledMarks": [],
+              "message": "Marks are not allowed"
             },
             {
-              "enabledNodeTypes": [
-                "heading-1",
-                "heading-2",
-                "heading-3",
-                "heading-4",
-                "heading-5",
-                "heading-6",
-                "ordered-list",
-                "unordered-list",
-                "hr",
-                "blockquote",
-                "embedded-entry-block",
-                "embedded-asset-block",
-                "table",
-                "asset-hyperlink",
-                "embedded-entry-inline",
-                "entry-hyperlink",
-                "hyperlink"
-              ],
-              "message": "Only heading 1, heading 2, heading 3, heading 4, heading 5, heading 6, ordered list, unordered list, horizontal rule, quote, block entry, asset, table, link to asset, inline entry, link to entry, and link to Url nodes are allowed"
+              "enabledNodeTypes": ["hyperlink", "embedded-entry-block"],
+              "message": "Only link to Url and block entry nodes are allowed"
             },
             {
-              "nodes": {}
+              "nodes": {
+                "embedded-entry-block": [
+                  {
+                    "linkContentType": ["component", "element", "image"],
+                    "message": null
+                  }
+                ]
+              }
             }
           ],
           "disabled": false,
@@ -406,33 +422,22 @@
           "required": false,
           "validations": [
             {
-              "enabledMarks": ["bold", "italic", "underline", "code", "superscript", "subscript", "strikethrough"],
-              "message": "Only bold, italic, underline, code, superscript, subscript, and strikethrough marks are allowed"
+              "enabledMarks": [],
+              "message": "Marks are not allowed"
             },
             {
-              "enabledNodeTypes": [
-                "heading-1",
-                "heading-2",
-                "heading-3",
-                "heading-4",
-                "heading-5",
-                "heading-6",
-                "ordered-list",
-                "unordered-list",
-                "hr",
-                "blockquote",
-                "embedded-entry-block",
-                "embedded-asset-block",
-                "table",
-                "asset-hyperlink",
-                "embedded-entry-inline",
-                "entry-hyperlink",
-                "hyperlink"
-              ],
-              "message": "Only heading 1, heading 2, heading 3, heading 4, heading 5, heading 6, ordered list, unordered list, horizontal rule, quote, block entry, asset, table, link to asset, inline entry, link to entry, and link to Url nodes are allowed"
+              "enabledNodeTypes": ["embedded-entry-block", "hyperlink"],
+              "message": "Only block entry and link to Url nodes are allowed"
             },
             {
-              "nodes": {}
+              "nodes": {
+                "embedded-entry-block": [
+                  {
+                    "linkContentType": ["component", "element", "image"],
+                    "message": null
+                  }
+                ]
+              }
             }
           ],
           "disabled": false,
