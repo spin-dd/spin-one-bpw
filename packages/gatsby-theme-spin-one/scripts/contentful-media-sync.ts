@@ -37,11 +37,22 @@ async function main() {
     process.exit(1);
   }
 
+  try {
+    const stat = await fs.stat(directory);
+    if (!stat.isDirectory()) {
+      console.error('指定されたパスはディレクトリではありません。');
+      process.exit(1);
+    }
+  } catch (error) {
+    console.error('ディレクトリの確認中にエラーが発生しました:', error);
+    process.exit(1);
+  }
+
   /**
    *  HTMLファイルを処理
    */
 
-  // 処理対象とするHTMLファイルのパスを取得
+  // 処理対象とするHTMLファイルのインプットディレクトリを基準とした相対パスで取得
   const htmlFiles = await getHtmlFiles(directory);
 
   // 画像のコンテンツのハッシュと画像情報の対応表

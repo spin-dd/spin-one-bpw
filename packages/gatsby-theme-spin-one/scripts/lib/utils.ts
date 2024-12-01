@@ -108,9 +108,9 @@ export const getHtmlFiles = async (directory: string): Promise<string[]> => {
 
   const walk = async (dir: string) => {
     const dirEntities = await fs.readdir(dir, { withFileTypes: true });
-    for await (const dirent of dirEntities) {
-      const fullPath = path.join(dir, dirent.name);
-      if (dirent.isDirectory()) {
+    for await (const entity of dirEntities) {
+      const fullPath = path.join(dir, entity.name);
+      if (entity.isDirectory()) {
         await walk(fullPath);
       } else if (path.extname(fullPath) === '.html') {
         htmlFiles.push(fullPath);
