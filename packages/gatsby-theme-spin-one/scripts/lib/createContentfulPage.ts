@@ -65,7 +65,11 @@ export const createContentfulPage = async (
 // - path/to/page.html -> /path/to/page
 const generatePagePath = (htmlFilePath: string, baseDirectory: string) => {
   const relativePath = path.relative(baseDirectory, htmlFilePath);
-  const pagePath = path.join('/', relativePath).replace(/\.html$/, '');
+  // windowsの場合、パスの区切り文字がバックスラッシュになるため、スラッシュに変換
+  const pagePath = path
+    .join('/', relativePath)
+    .replace(/\\/g, '/')
+    .replace(/\.html$/, '');
   return pagePath.replace(/\/index$/, '/');
 };
 
