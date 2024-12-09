@@ -7,7 +7,7 @@
   "scripts": {
     "init": "run-s -c init:*",
     "init:contentful-setup": "npx contentful-setup",
-    "init:contentful-media-sync": "npx contentful-media-sync data",
+    "init:contentful-sync": "npx contentful-sync demo-data",
     "demo": "npm run build:theme --prefix ../.. && npm run clean && npm run develop",
     "develop": "gatsby develop",
     "build": "gatsby build",
@@ -21,6 +21,7 @@
     "react-dom": "18.3.1"
   },
   "devDependencies": {
+    "@contentful/rich-text-types": "17.0.0",
     "@types/node": "20.17.6",
     "@types/react": "18.3.12",
     "@types/react-dom": "18.3.1"

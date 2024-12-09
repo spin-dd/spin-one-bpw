@@ -14,7 +14,7 @@
   "main": "index.js",
   "bin": {
     "contentful-setup": "./dist/scripts/contentful-setup.js",
-    "contentful-media-sync": "./dist/scripts/contentful-media-sync.js"
+    "contentful-sync": "./dist/scripts/contentful-sync.js"
   },
   "files": [
     "dist",
@@ -38,7 +38,7 @@
     "build:theme-gatsby": "tsc --project tsconfig.json",
     "build:theme-component": "tsc --project src/tsconfig.json",
     "build:scripts": "tsc --project scripts/tsconfig.json",
-    "postbuild": "chmod +x dist/scripts/contentful-setup.js dist/scripts/contentful-media-sync.js"
+    "postbuild": "chmod +x dist/scripts/contentful-setup.js dist/scripts/contentful-sync.js"
   },
   "dependencies": {
     "bootstrap": "5.3.3",
@@ -55,10 +55,11 @@
     "react-bootstrap": "2.10.5"
   },
   "devDependencies": {
+    "@types/mime": "3.0.4",
     "contentful-cli": "3.5.4",
     "dotenv": "16.4.5",
     "graphql-config": "5.1.3",
-    "mime": "4.0.4",
+    "mime": "3.0.0",
     "node-html-parser": "6.1.13"
   },
   "peerDependencies": {
