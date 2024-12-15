@@ -1,15 +1,9 @@
-import path from 'path';
 import fs from 'fs';
 import * as contentful from 'contentful';
-import { parseJson } from './src/utils/common';
 import { config } from 'dotenv';
+import { generatePages } from './src/utils/generatePages';
+import { generateArticlePages } from './src/utils/generateArticlePages';
 config();
-
-/**
- * テーマオプションデフォルト値
- */
-// お知らせページのプレフィックスパス
-const THEME_INFORMATION_PREFIX_PATH = '/information';
 
 /**
  * ユーティリティ
@@ -69,14 +63,16 @@ export const createPages = async ({ graphql, actions, reporter }, themeOptions) 
         defaultLocaleCode,
         ...themeOptions,
       },
+      { resolveLocalePath, resolveTemplatePath },
     );
-    await generateInformationPages(
+    await generateArticlePages(
       { graphql, actions },
       {
         allLocales,
         defaultLocaleCode,
         ...themeOptions,
       },
+      { resolveLocalePath, resolveTemplatePath },
     );
   } catch (error) {
     reporter.panicOnBuild(`There was an error loading your Contentful posts`, error);
@@ -84,126 +80,16 @@ export const createPages = async ({ graphql, actions, reporter }, themeOptions) 
   }
 };
 
-// Contentful Page からのページ生成
-const generatePages = async ({ graphql, actions }, themeOptions) => {
-  const { createPage } = actions;
-  const { allLocales, defaultLocaleCode } = themeOptions;
-
-  const result = await graphql(`
-    {
-      allContentfulPage {
-        nodes {
-          contentful_id
-          __typename
-          pagePath
-          node_locale
-          body {
-            raw
-          }
-          context {
-            internal {
-              content
-            }
-          }
-        }
-      }
+// Contentful Content modelのオプショナルなフィールドをGraphQLスキーマに追加する
+export const createSchemaCustomization = ({ actions }) => {
+  const { createTypes } = actions;
+  const typeDefs = `
+    type ContentfulArticle implements Node {
+      thumbnail: Thumbnail
     }
-  `);
-  if (result.errors) {
-    throw result.errors;
-  }
-
-  const pages = result.data.allContentfulPage.nodes;
-  if (pages.length > 0) {
-    pages.forEach((page) => {
-      const body = page.body?.raw ?? '';
-      if (body === '') {
-        // 該当 locale のページがない場合
-        return;
-      }
-      const context = parseJson(page.context?.internal?.content) ?? {};
-      createPage({
-        path: `${resolveLocalePath(page.node_locale, defaultLocaleCode)}${page.pagePath}`,
-        component: resolveTemplatePath(
-          path.resolve('./src/templates/Page.js'),
-          require.resolve('@spin-dd/gatsby-theme-spin-one/src/templates/Page.tsx'),
-        ),
-        context: {
-          locales: allLocales,
-          pagePath: page.pagePath,
-          locale: page.node_locale,
-          // Page context に指定がない場合全件ヒットするのを防止する
-          tag: '',
-          ...context,
-        },
-      });
-    });
-  } else {
-    console.info('No Page Content found');
-  }
-};
-
-// Contentful Information からのページ生成
-const generateInformationPages = async ({ graphql, actions }, themeOptions) => {
-  const { createPage } = actions;
-  const { allLocales, defaultLocaleCode, informationPrefixPath = THEME_INFORMATION_PREFIX_PATH } = themeOptions;
-
-  const result = await graphql(`
-    {
-      allContentfulInformation {
-        nodes {
-          contentful_id
-          __typename
-          node_locale
-          slug
-          body {
-            childMarkdownRemark {
-              html
-            }
-          }
-        }
-      }
+    type Thumbnail implements Node {
+      body: ContentfulAsset
     }
-  `);
-  if (result.errors) {
-    throw result.errors;
-  }
-
-  // locale を含まないお知らせページの pagePath を生成
-  const createInformationCanonicalPathPath = ({ slug }) => `${informationPrefixPath}/${slug}/`;
-  const createInformationPagePath = ({ node_locale, slug }) =>
-    `${resolveLocalePath(node_locale, defaultLocaleCode)}${createInformationCanonicalPathPath({
-      slug,
-    })}`;
-
-  const information = result.data.allContentfulInformation.nodes;
-  if (information.length > 0) {
-    information.forEach((page) => {
-      const body = page.body?.childMarkdownRemark.html ?? '';
-      if (body === '') {
-        // 該当 locale のページがない場合
-        console.info('No Information Content Body found');
-        return;
-      }
-      createPage({
-        path: createInformationPagePath(page),
-        component: resolveTemplatePath(
-          path.resolve('./src/templates/InformationDetail.js'),
-          require.resolve('@spin-dd/gatsby-theme-spin-one/src/templates/InformationDetail.tsx'),
-        ),
-        context: {
-          locales: allLocales,
-          // TODO: I/F検討
-          // デフォルトテンプレート名
-          name: 'informationDetail',
-          locale: page.node_locale,
-          slug: page.slug,
-          // customToggleButton 用
-          pagePath: createInformationCanonicalPathPath(page),
-        },
-      });
-    });
-  } else {
-    console.info('No Information Content found');
-  }
+  `;
+  createTypes(typeDefs);
 };

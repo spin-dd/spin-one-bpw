@@ -4,7 +4,7 @@ import { renderText, textInline } from '../../utils/utils';
 export const CustomTemplateText = ({
   data: pageData,
   context: pageContext,
-  // 例：contentfulInformation.title
+  // 例：contentfulArticle.title
   target = '',
   withBr = false,
 }) => {

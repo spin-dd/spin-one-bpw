@@ -14,10 +14,7 @@ const config: GatsbyConfig = {
     "gatsby-plugin-typescript",
     {
       resolve: "@spin-dd/gatsby-theme-spin-one",
-      options: {
-        // お知らせページのプレフィックスパスを指定する例
-        informationPrefixPath: "/news",
-      },
+      options: {},
     },
   ],
 };

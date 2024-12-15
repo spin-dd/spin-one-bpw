@@ -44,7 +44,7 @@ export const query = graphql`
         }
       }
     }
-    allContentfulInformation(
+    allContentfulArticle(
       sort: { publishDate: DESC }
       filter: { node_locale: { eq: $locale }, spaceId: { eq: $spaceId } }
     ) {
@@ -52,7 +52,7 @@ export const query = graphql`
         contentful_id
         __typename
         node_locale
-        ...ContentfulInformationFieldsFragment
+        ...ContentfulArticleFieldsFragment
       }
     }
   }
@@ -74,18 +74,22 @@ export const query = graphql`
     }
   }
 
-  fragment ContentfulInformationFieldsFragment on ContentfulInformation {
-    slug
-    category {
-      name
+  fragment ContentfulArticleFieldsFragment on ContentfulArticle {
+    type {
       slug
+      name
     }
+    slug
     title
     body {
       childMarkdownRemark {
         html
         excerpt(truncate: true, pruneLength: 100)
       }
+    }
+    category {
+      slug
+      name
     }
     thumbnail {
       body {

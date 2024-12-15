@@ -6,11 +6,11 @@ import { Head as HeadBase } from './Head';
 
 export const Head = (props) => {
   const { data } = props;
-  const title = data.contentfulInformation.title;
+  const title = data.contentfulArticle.title;
   return <HeadBase {...props}>{title !== '' && <title key="title">{title}</title>}</HeadBase>;
 };
 
-export const InformationDetail = ({ data, pageContext }) => {
+export const ArticleDetail = ({ data, pageContext }) => {
   const { htmlBody, htmlScript, componentData } = prepareForParse({
     template: data.contentfulTemplate,
     data,

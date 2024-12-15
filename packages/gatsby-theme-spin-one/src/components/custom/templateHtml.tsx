@@ -3,7 +3,7 @@ import React from 'react';
 export const CustomTemplateHtml = ({
   data: pageData,
   // component props
-  // 例：contentfulInformation.body.childMarkdownRemark.html
+  // 例：contentfulArticle.body.childMarkdownRemark.html
   target = '',
 }) => {
   const html = target.split('.').reduce((object, key) => (object == null ? undefined : object[key]), pageData);
