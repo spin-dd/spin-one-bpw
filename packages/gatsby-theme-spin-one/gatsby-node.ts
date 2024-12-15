@@ -39,7 +39,7 @@ const getContentfulDefaultLocaleCode = (locales: Omit<contentful.Locale, 'sys'>[
 const resolveLocalePath = (locale: string, defaultLocaleCode: string): string =>
   locale === defaultLocaleCode ? '' : `/${locale}`;
 
-// テンプレートファイルのパスを動的に決定する関数
+// ページ生成に使うテンプレートファイルのパスを動的に決定する関数
 // サイト側にテンプレートファイルが存在する場合はそちらを優先する
 const resolveTemplatePath = (sitePath: string, themePath: string): string => {
   return fs.existsSync(sitePath) ? sitePath : themePath;
@@ -51,6 +51,7 @@ const resolveTemplatePath = (sitePath: string, themePath: string): string => {
 export const createPages = async ({ graphql, actions, reporter }, themeOptions) => {
   const { overrideGatsbyNode = false } = themeOptions;
   // Gatsby theme では theme の gatsby-node を上書きできないため独自実装
+  // フラグの設定がある場合、テーマのgatsby-nodeを実行せず、サイト側のgatsby-nodeを実行する
   if (overrideGatsbyNode) {
     return;
   }
