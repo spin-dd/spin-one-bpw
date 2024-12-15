@@ -79,7 +79,7 @@
 ## Template
 
 - gatsby-node で取得したデータに基づいて複数の詳細ページを生成するのに利用
-  - Template articleDetail
+  - Template ArticleDetail
 - カスタムコンポーネントが利用するテンプレート入稿用
   - それ以外（対応するカスタムコンポーネントについては docs/contentful-component-module-name.md を参照）
 - 基本的なフィールドは `Page` を継承

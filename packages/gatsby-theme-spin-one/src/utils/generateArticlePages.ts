@@ -60,7 +60,7 @@ export const generateArticlePages = async (
           locales: allLocales,
           // TODO: I/F検討
           // ArticleTypeを考慮したデフォルトテンプレート名
-          name: 'articleDetail',
+          name: 'ArticleDetail',
           locale: page.node_locale,
           slug: page.slug,
           // customToggleButton 用
