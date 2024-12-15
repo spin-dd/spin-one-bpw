@@ -25,6 +25,9 @@ export const generateArticlePages = async (
               html
             }
           }
+          category {
+            slug
+          }
         }
       }
     }
@@ -34,10 +37,11 @@ export const generateArticlePages = async (
   }
 
   // locale を含まない記事ページの pagePath を生成
-  const createCanonicalPathPath = ({ type, slug }) => `/${type.slug}/${slug}/`;
-  const createPagePath = ({ node_locale, type, slug }) =>
+  const createCanonicalPathPath = ({ type, category, slug }) => `/${type.slug}/${category.slug}/${slug}/`;
+  const createPagePath = ({ node_locale, type, category, slug }) =>
     `${resolveLocalePath(node_locale, defaultLocaleCode)}${createCanonicalPathPath({
       type,
+      category,
       slug,
     })}`;
 
