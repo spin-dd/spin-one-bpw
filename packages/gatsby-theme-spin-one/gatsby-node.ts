@@ -84,6 +84,20 @@ export const createPages = async ({ graphql, actions, reporter }, themeOptions) 
 export const createSchemaCustomization = ({ actions }) => {
   const { createTypes } = actions;
   const typeDefs = `
+    type ContentfulPage implements Node {
+      script: Script
+      context: Context
+    }
+    type ContentfulTemplate implements Node {
+      script: Script
+      context: Context
+    }
+    type Script implements Node {
+      raw: String
+    }
+    type Context implements Node {
+      internal: Internal
+    }
     type ContentfulArticle implements Node {
       thumbnail: Thumbnail
     }
