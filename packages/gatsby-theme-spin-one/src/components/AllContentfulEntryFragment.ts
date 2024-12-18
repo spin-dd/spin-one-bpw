@@ -1,6 +1,7 @@
 import { graphql } from 'gatsby';
 
 export const query = graphql`
+  # util.richTextToHtmlで利用するフラグメント
   fragment AllContentfulEntryFragment on Query {
     allContentfulComponent(filter: { node_locale: { eq: $locale }, spaceId: { eq: $spaceId } }) {
       nodes {
@@ -42,17 +43,6 @@ export const query = graphql`
         body {
           raw
         }
-      }
-    }
-    allContentfulArticle(
-      sort: { publishDate: DESC }
-      filter: { node_locale: { eq: $locale }, spaceId: { eq: $spaceId } }
-    ) {
-      nodes {
-        contentful_id
-        __typename
-        node_locale
-        ...ContentfulArticleFieldsFragment
       }
     }
   }

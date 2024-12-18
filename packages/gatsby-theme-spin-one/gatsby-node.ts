@@ -3,6 +3,7 @@ import * as contentful from 'contentful';
 import { config } from 'dotenv';
 import { generatePages } from './src/utils/generatePages';
 import { generateArticlePages } from './src/utils/generateArticlePages';
+import { generateArticleListPages } from './src/utils/generateArticleListPages';
 config();
 
 /**
@@ -66,6 +67,15 @@ export const createPages = async ({ graphql, actions, reporter }, themeOptions) 
       { resolveLocalePath, resolveTemplatePath },
     );
     await generateArticlePages(
+      { graphql, actions },
+      {
+        allLocales,
+        defaultLocaleCode,
+        ...themeOptions,
+      },
+      { resolveLocalePath, resolveTemplatePath },
+    );
+    await generateArticleListPages(
       { graphql, actions },
       {
         allLocales,
