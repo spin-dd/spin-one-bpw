@@ -787,9 +787,6 @@
         },
         {
           "fieldId": "head",
-          "settings": {
-            "helpText": "https://github.com/nfl/react-helmet#reference-guide"
-          },
           "widgetId": "richTextEditor",
           "widgetNamespace": "builtin"
         },
@@ -801,7 +798,7 @@
         {
           "fieldId": "script",
           "settings": {
-            "helpText": "jQuery 依存処理などを記述する（利用は非推奨）"
+            "helpText": "jQuery依存処理などを記述します（利用は非推奨です）"
           },
           "widgetId": "richTextEditor",
           "widgetNamespace": "builtin"
