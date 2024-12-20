@@ -1,11 +1,8 @@
 import path from 'path';
+import { resolveLocalePath, resolveTemplatePath } from './common';
 
 // Contentful ArticleType と ArticleCategory でカテゴライズした Article 一覧ページ生成
-export const generateArticleListPages = async (
-  { graphql, actions },
-  themeOptions,
-  { resolveLocalePath, resolveTemplatePath },
-) => {
+export const generateArticleListPages = async ({ graphql, actions }, themeOptions) => {
   const { createPage } = actions;
   const { allLocales, defaultLocaleCode } = themeOptions;
 
@@ -56,7 +53,8 @@ export const generateArticleListPages = async (
           context: {
             locales: allLocales,
             // TODO: I/F検討
-            name: 'ArticleList',
+            templateList: 'ArticleList',
+            templateListDetail: 'ArticleListDetail',
             locale: category.node_locale,
             type: type.slug,
             category: category.slug,

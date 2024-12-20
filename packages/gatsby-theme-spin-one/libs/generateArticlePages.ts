@@ -1,11 +1,8 @@
 import path from 'path';
+import { parseJson, resolveLocalePath, resolveTemplatePath } from './common';
 
 // Contentful Article からのページ生成
-export const generateArticlePages = async (
-  { graphql, actions },
-  themeOptions,
-  { resolveLocalePath, resolveTemplatePath },
-) => {
+export const generateArticlePages = async ({ graphql, actions }, themeOptions) => {
   const { createPage } = actions;
   const { allLocales, defaultLocaleCode } = themeOptions;
 
@@ -54,6 +51,7 @@ export const generateArticlePages = async (
         console.info('No Article Content Body found');
         return;
       }
+      const context = parseJson(page.context?.internal?.content) ?? {};
       createPage({
         path: createPagePath(page),
         component: resolveTemplatePath(
@@ -69,6 +67,7 @@ export const generateArticlePages = async (
           slug: page.slug,
           // customToggleButton 用
           pagePath: createCanonicalPathPath(page),
+          ...context,
         },
       });
     });

@@ -1,14 +1,12 @@
-import fs from 'fs';
 import * as contentful from 'contentful';
 import { config } from 'dotenv';
-import { generatePages } from './src/utils/generatePages';
-import { generateArticlePages } from './src/utils/generateArticlePages';
-import { generateArticleListPages } from './src/utils/generateArticleListPages';
+import { generatePages } from './libs/generatePages';
+import { generateArticlePages } from './libs/generateArticlePages';
+import { generateArticleListPages } from './libs/generateArticleListPages';
 config();
 
 /**
  * ユーティリティ
- * FIXME: contentfulモジュールがCommonJSとして利用することしかできないため、tscでCommonJSモジュールとしてコンパイルするgatsby-node.tsに実装している
  */
 // Contentful 公開環境の設定済みのロケールをすべて取得する
 const getContentfulAllLocales = async (): Promise<Omit<contentful.Locale, 'sys'>[]> => {
@@ -29,16 +27,6 @@ const getContentfulAllLocales = async (): Promise<Omit<contentful.Locale, 'sys'>
 // Contentful で設定済みのデフォルトロケールを取得する
 const getContentfulDefaultLocaleCode = (locales: Omit<contentful.Locale, 'sys'>[] = []): string =>
   locales.find((locale) => locale.default)?.code;
-
-// ロケールに基づいてパスを解決する
-const resolveLocalePath = (locale: string, defaultLocaleCode: string): string =>
-  locale === defaultLocaleCode ? '' : `/${locale}`;
-
-// ページ生成に使うテンプレートファイルのパスを動的に決定する関数
-// サイト側にテンプレートファイルが存在する場合はそちらを優先する
-const resolveTemplatePath = (sitePath: string, themePath: string): string => {
-  return fs.existsSync(sitePath) ? sitePath : themePath;
-};
 
 /**
  * gatsby-nodeのページ生成処理
@@ -64,7 +52,6 @@ export const createPages = async ({ graphql, actions, reporter }, themeOptions) 
         defaultLocaleCode,
         ...themeOptions,
       },
-      { resolveLocalePath, resolveTemplatePath },
     );
     await generateArticlePages(
       { graphql, actions },
@@ -73,7 +60,6 @@ export const createPages = async ({ graphql, actions, reporter }, themeOptions) 
         defaultLocaleCode,
         ...themeOptions,
       },
-      { resolveLocalePath, resolveTemplatePath },
     );
     await generateArticleListPages(
       { graphql, actions },
@@ -82,7 +68,6 @@ export const createPages = async ({ graphql, actions, reporter }, themeOptions) 
         defaultLocaleCode,
         ...themeOptions,
       },
-      { resolveLocalePath, resolveTemplatePath },
     );
   } catch (error) {
     reporter.panicOnBuild(`There was an error loading your Contentful posts`, error);

@@ -1,8 +1,8 @@
 import path from 'path';
-import { parseJson } from './common';
+import { parseJson, resolveLocalePath, resolveTemplatePath } from './common';
 
 // Contentful Page からのページ生成
-export const generatePages = async ({ graphql, actions }, themeOptions, { resolveLocalePath, resolveTemplatePath }) => {
+export const generatePages = async ({ graphql, actions }, themeOptions) => {
   const { createPage } = actions;
   const { allLocales, defaultLocaleCode } = themeOptions;
 
