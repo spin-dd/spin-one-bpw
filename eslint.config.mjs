@@ -11,7 +11,7 @@ export default tsEslint.config(
     rules: {
       "no-undef": "off",
     },
-    files: ["**/*.ts", "**/*.js", "**/*.mjs"],
+    files: ["**/*.ts", "**/*.tsx", "**/*.mjs"],
   },
   eslintConfigPrettier,
 );

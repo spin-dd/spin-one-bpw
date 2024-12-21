@@ -25,7 +25,7 @@
   ],
   "scripts": {
     "lint": "run-s -c lint:*",
-    "lint:es": "eslint .",
+    "lint:es": "ESLINT_USE_FLAT_CONFIG=true eslint **/*.ts **/*.tsx",
     "lint:ts": "tsc --noEmit",
     "lint:prettier": "prettier --check .",
     "lint-fix": "run-s lint-fix:*",
