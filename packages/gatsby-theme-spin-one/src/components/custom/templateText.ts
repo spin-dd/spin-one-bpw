@@ -1,4 +1,4 @@
-import { renderText, textInline } from '../../utils/utils';
+import { renderText, textInline } from '../../utils';
 
 // Contentful のデータからテキストを取得する
 export const CustomTemplateText = ({

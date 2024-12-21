@@ -1,6 +1,5 @@
 import React from 'react';
-import { prepareForParse } from '../utils/utils';
-import { parseHtmlToReact } from '../utils/htmlToReactParser';
+import { prepareForParse, parseHtmlToReact } from '../utils';
 
 export const Head = ({ data, pageContext, children }) => {
   const { htmlHead, componentData } = prepareForParse({

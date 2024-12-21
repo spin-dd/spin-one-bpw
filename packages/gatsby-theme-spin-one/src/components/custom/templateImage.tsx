@@ -1,4 +1,4 @@
-import { imageEntryToImage } from '../../utils/utils';
+import { imageEntryToImage } from '../../utils';
 
 export const CustomTemplateImage = ({
   data: pageData,
