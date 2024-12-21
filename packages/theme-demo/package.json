@@ -8,9 +8,10 @@
     "init": "run-s -c init:*",
     "init:contentful-setup": "npx contentful-setup",
     "init:contentful-sync": "npx contentful-sync demo-data",
-    "demo": "npm run build:theme --prefix ../.. && npm run clean && npm run develop",
+    "demo": "run-s build:theme clean develop",
     "develop": "gatsby develop",
     "build": "gatsby build",
+    "build:theme": "npm run build -w  ../gatsby-theme-spin-one",
     "serve": "gatsby serve",
     "clean": "gatsby clean"
   },
