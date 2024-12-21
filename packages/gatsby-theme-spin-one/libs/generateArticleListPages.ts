@@ -53,8 +53,7 @@ export const generateArticleListPages = async ({ graphql, actions }, themeOption
           context: {
             locales: allLocales,
             // TODO: I/F検討
-            templateList: 'ArticleList',
-            templateListDetail: 'ArticleListDetail',
+            name: 'ArticleList',
             locale: category.node_locale,
             type: type.slug,
             category: category.slug,

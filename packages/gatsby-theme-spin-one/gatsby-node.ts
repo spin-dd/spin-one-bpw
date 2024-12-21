@@ -94,10 +94,7 @@ export const createSchemaCustomization = ({ actions }) => {
       internal: Internal
     }
     type ContentfulArticle implements Node {
-      thumbnail: Thumbnail
-    }
-    type Thumbnail implements Node {
-      body: ContentfulAsset
+      thumbnail: ContentfulImage
     }
   `;
   createTypes(typeDefs);
