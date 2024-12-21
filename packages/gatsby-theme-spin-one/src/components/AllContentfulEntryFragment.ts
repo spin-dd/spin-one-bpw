@@ -86,13 +86,11 @@ export const query = graphql`
         gatsbyImageData
       }
     }
-    publishDate: publishDate(formatString: "YYYY-MM-DD")
-    publishYear: publishDate(formatString: "YYYY")
-    publishMonth: publishDate(formatString: "MM")
-    publishDay: publishDate(formatString: "DD")
-    displayDate: publishDate(formatString: "YYYY年MM月DD日")
-    displayDateEn: publishDate(formatString: "MM-DD-YYYY")
-    displayMonth: publishDate(formatString: "MMM")
+    publishDate
+    displayDate: publishDate(formatString: "YYYY-MM-DD")
+    displayDateYear: publishDate(formatString: "YYYY")
+    displayDateMonth: publishDate(formatString: "MM")
+    displayDateDay: publishDate(formatString: "DD")
   }
 
   fragment ContentfulTemplateFieldsFragment on ContentfulTemplate {

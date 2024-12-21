@@ -7,6 +7,7 @@ function CustomArticleList({
   // component props
   tagName = 'ul',
   className = '',
+  pagerClassName = '',
   entry,
 }) {
   // entry（moduleName: CustomArticleListのComponent）をテンプレートとして
@@ -18,7 +19,10 @@ function CustomArticleList({
         ...pageData,
         contentfulArticle: node,
       },
-      pageContext,
+      pageContext: {
+        ...pageContext,
+        pagerClassName,
+      },
     });
 
     return <React.Fragment key={index}>{parseHtmlToReact(htmlBody, componentData)}</React.Fragment>;
