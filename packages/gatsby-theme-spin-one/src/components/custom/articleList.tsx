@@ -9,7 +9,8 @@ function CustomArticleList({
   className = '',
   entry,
 }) {
-  // entryをテンプレートとしてpageData.allContentfulArticleから一覧要素を生成する
+  // entry（moduleName: CustomArticleListのComponent）をテンプレートとして
+  // pageData.allContentfulArticleから一覧要素を生成する
   const itemElements = pageData.allContentfulArticle.nodes.map((node, index) => {
     const { htmlBody, componentData } = prepareForParse({
       template: entry,
