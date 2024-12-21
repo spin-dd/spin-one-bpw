@@ -93,9 +93,6 @@ export const createSchemaCustomization = ({ actions }) => {
     type Context implements Node {
       internal: Internal
     }
-    type ContentfulArticle implements Node {
-      thumbnail: ContentfulImage
-    }
   `;
   createTypes(typeDefs);
 };
