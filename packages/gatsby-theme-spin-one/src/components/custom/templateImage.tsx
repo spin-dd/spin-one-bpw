@@ -8,7 +8,8 @@ export const CustomTemplateImage = ({
 }) => {
   const node = target.split('.').reduce((object, key) => (object == null ? undefined : object[key]), pageData);
   if (node == null) {
-    console.warn(`${target} is undefined`);
+    // TODO: Content modelの定義済みオプショナルフィールドが空の場合も該当するためgatsby-node.tsで型定義する
+    console.info(`${target} is undefined`);
     return null;
   }
   return imageEntryToImage(node);

@@ -30,17 +30,13 @@ const processingInstructions = (data) => [
       const moduleName = customModuleNameFromNode(node);
       return moduleName && moduleName in customComponents;
     },
-    processNode: (node, children) => {
+    processNode: (node) => {
       const moduleName = customModuleNameFromNode(node);
       const CustomComponent = customComponents[moduleName];
       const entryId = entryIdFromNode(node);
       const entry = entryWithId(entryId, data);
       const props = parseJson(entry.props?.internal?.content) ?? {};
-      return (
-        <CustomComponent key={entry.contentful_id} data={data} entry={entry} {...props}>
-          {children}
-        </CustomComponent>
-      );
+      return <CustomComponent key={entry.contentful_id} data={data} entry={entry} {...props} />;
     },
   },
   // Contentful Content Type: Element

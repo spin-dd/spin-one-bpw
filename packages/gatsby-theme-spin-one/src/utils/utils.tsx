@@ -62,7 +62,7 @@ const richTextToHtml = (richTextNodes = [], data) =>
           return blockEntry.moduleName
             ? `<custom-tag data-custom-module-name="${blockEntry.moduleName}" data-entry-contentful_id="${
                 blockEntry.contentful_id
-              }">${richTextToHtml(blockBody?.content, data)}</custom-tag>`
+              }"></custom-tag>`
             : // Element の場合は、そのまま出力
               richTextToHtml(blockBody?.content, data);
         }
