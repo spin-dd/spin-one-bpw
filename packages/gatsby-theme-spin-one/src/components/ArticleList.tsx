@@ -8,7 +8,11 @@ export const ArticleList = ({ data, pageContext }) => {
   const { htmlBody, htmlScript, componentData } = prepareForParse({
     template: data.contentfulTemplate,
     data,
-    pageContext,
+    pageContext: {
+      ...pageContext,
+      // ページネーションのためのデータを追加
+      pageInfo: data.allContentfulArticle.pageInfo,
+    },
   });
 
   return (

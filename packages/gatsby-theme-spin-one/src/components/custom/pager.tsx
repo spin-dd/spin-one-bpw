@@ -6,19 +6,17 @@ interface PagerProps {
   className?: string;
   data: {
     basePath: string;
-    allContentfulArticle: {
-      pageInfo: {
-        currentPage: number;
-        pageCount: number;
-        hasPreviousPage: boolean;
-        hasNextPage: boolean;
-      };
+    pageInfo: {
+      currentPage: number;
+      pageCount: number;
+      hasPreviousPage: boolean;
+      hasNextPage: boolean;
     };
   };
 }
 
-export const CustomPager: React.FC<PagerProps> = ({ tagName, className, data: { basePath, ...pageData } }) => {
-  const { currentPage, pageCount, hasPreviousPage, hasNextPage } = pageData.allContentfulArticle.pageInfo;
+export const CustomPager: React.FC<PagerProps> = ({ tagName, className, data: { basePath, pageInfo } }) => {
+  const { currentPage, pageCount, hasPreviousPage, hasNextPage } = pageInfo;
 
   if (pageCount <= 1) return null;
 
