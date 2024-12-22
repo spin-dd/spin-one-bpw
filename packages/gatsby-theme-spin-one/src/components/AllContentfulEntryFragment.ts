@@ -82,6 +82,11 @@ export const query = graphql`
       name
     }
     thumbnail {
+      props {
+        internal {
+          content
+        }
+      }
       body {
         gatsbyImageData
       }

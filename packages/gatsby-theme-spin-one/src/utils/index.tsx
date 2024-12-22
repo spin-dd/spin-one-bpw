@@ -109,8 +109,8 @@ export const imageEntryToImage = (entry) => {
       key={entry.contentful_id}
       src={src.toString()}
       alt={entry.name}
-      width={image.width.toFixed(0)}
-      height={image.height.toFixed(0)}
+      width={props.width}
+      height={props.height}
       {...props}
     />
   );
@@ -160,9 +160,7 @@ export const parseHtmlToReact = (html, data) => {
       processNode: (node) => {
         const entryId = entryIdFromNode(node);
         const entry = entryWithId(entryId, data);
-        const body = entry.body;
-        if (body === null) {
-          // 多言語対応：対応言語の body がない場合
+        if (entry.body === null) {
           return null;
         }
         return imageEntryToImage(entry);
