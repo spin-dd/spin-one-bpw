@@ -1,7 +1,6 @@
 import React from 'react';
 import { prepareForParse, parseHtmlToReact } from '../utils';
 import { Layout } from './Layout';
-import { Pager } from './Pager';
 
 export { Head } from './Head';
 
@@ -13,15 +12,6 @@ export const ArticleList = ({ data, pageContext }) => {
   });
 
   return (
-    <>
-      <Layout body={parseHtmlToReact(htmlBody, componentData)} script={parseHtmlToReact(htmlScript, componentData)} />
-      <Pager
-        className={pageContext.pagerClassName}
-        pageInfo={{
-          ...data.allContentfulArticle.pageInfo,
-          basePath: pageContext.basePath,
-        }}
-      />
-    </>
+    <Layout body={parseHtmlToReact(htmlBody, componentData)} script={parseHtmlToReact(htmlScript, componentData)} />
   );
 };
