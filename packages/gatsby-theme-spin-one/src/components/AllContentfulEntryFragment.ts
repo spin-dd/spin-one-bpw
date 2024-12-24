@@ -1,6 +1,7 @@
 import { graphql } from 'gatsby';
 
 export const query = graphql`
+  # util.richTextToHtmlで利用するフラグメント
   fragment AllContentfulEntryFragment on Query {
     allContentfulComponent(filter: { node_locale: { eq: $locale }, spaceId: { eq: $spaceId } }) {
       nodes {
@@ -44,17 +45,6 @@ export const query = graphql`
         }
       }
     }
-    allContentfulInformation(
-      sort: { publishDate: DESC }
-      filter: { node_locale: { eq: $locale }, spaceId: { eq: $spaceId } }
-    ) {
-      nodes {
-        contentful_id
-        __typename
-        node_locale
-        ...ContentfulInformationFieldsFragment
-      }
-    }
   }
 
   fragment ContentfulPageFieldsFragment on ContentfulPage {
@@ -74,12 +64,12 @@ export const query = graphql`
     }
   }
 
-  fragment ContentfulInformationFieldsFragment on ContentfulInformation {
-    slug
-    category {
-      name
+  fragment ContentfulArticleFieldsFragment on ContentfulArticle {
+    type {
       slug
+      name
     }
+    slug
     title
     body {
       childMarkdownRemark {
@@ -87,18 +77,25 @@ export const query = graphql`
         excerpt(truncate: true, pruneLength: 100)
       }
     }
+    category {
+      slug
+      name
+    }
     thumbnail {
+      props {
+        internal {
+          content
+        }
+      }
       body {
         gatsbyImageData
       }
     }
-    publishDate: publishDate(formatString: "YYYY-MM-DD")
-    publishYear: publishDate(formatString: "YYYY")
-    publishMonth: publishDate(formatString: "MM")
-    publishDay: publishDate(formatString: "DD")
-    displayDate: publishDate(formatString: "YYYY年MM月DD日")
-    displayDateEn: publishDate(formatString: "MM-DD-YYYY")
-    displayMonth: publishDate(formatString: "MMM")
+    publishDate
+    displayDate: publishDate(formatString: "YYYY-MM-DD")
+    displayDateYear: publishDate(formatString: "YYYY")
+    displayDateMonth: publishDate(formatString: "MM")
+    displayDateDay: publishDate(formatString: "DD")
   }
 
   fragment ContentfulTemplateFieldsFragment on ContentfulTemplate {

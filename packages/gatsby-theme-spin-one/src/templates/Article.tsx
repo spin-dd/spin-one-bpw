@@ -1,19 +1,18 @@
 import React from 'react';
 import { graphql } from 'gatsby';
-import { InformationDetail } from '../components/InformationDetail.tsx';
+import { ArticleDetail } from '../components/ArticleDetail';
 
-export { Head } from '../components/InformationDetail.tsx';
+export { Head } from '../components/ArticleDetail';
 
-// InformationDetail
-export default ({ data, pageContext }) => <InformationDetail data={data} pageContext={pageContext} />;
+export default ({ data, pageContext }) => <ArticleDetail data={data} pageContext={pageContext} />;
 
 export const query = graphql`
   query ($name: String, $locale: String, $slug: String, $spaceId: String) {
-    contentfulInformation(slug: { eq: $slug }, node_locale: { eq: $locale }, spaceId: { eq: $spaceId }) {
+    contentfulArticle(slug: { eq: $slug }, node_locale: { eq: $locale }, spaceId: { eq: $spaceId }) {
       contentful_id
       __typename
       node_locale
-      ...ContentfulInformationFieldsFragment
+      ...ContentfulArticleFieldsFragment
     }
     contentfulTemplate(name: { eq: $name }, node_locale: { eq: $locale }, spaceId: { eq: $spaceId }) {
       contentful_id

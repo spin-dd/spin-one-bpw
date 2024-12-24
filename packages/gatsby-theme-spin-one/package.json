@@ -17,17 +17,15 @@
     "contentful-sync": "./dist/scripts/contentful-sync.js"
   },
   "files": [
+    "libs",
     "dist",
     "src",
-    "gatsby-config.js",
-    "gatsby-node.js",
-    "gatsby-browser.js",
-    "gatsby-ssr.js",
+    "*.js",
     "README.md"
   ],
   "scripts": {
     "lint": "run-s -c lint:*",
-    "lint:es": "eslint .",
+    "lint:es": "ESLINT_USE_FLAT_CONFIG=true eslint **/*.ts **/*.tsx",
     "lint:ts": "tsc --noEmit",
     "lint:prettier": "prettier --check .",
     "lint-fix": "run-s lint-fix:*",
@@ -36,7 +34,6 @@
     "build": "run-s -c build:*",
     "build:clean": "rm -rf dist",
     "build:theme-gatsby": "tsc --project tsconfig.json",
-    "build:theme-component": "tsc --project src/tsconfig.json",
     "build:scripts": "tsc --project scripts/tsconfig.json",
     "postbuild": "chmod +x dist/scripts/contentful-setup.js dist/scripts/contentful-sync.js"
   },

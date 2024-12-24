@@ -1,8 +1,11 @@
 import React from 'react';
 import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 import { getSrc, getImage } from 'gatsby-plugin-image';
+import { ProcessNodeDefinitions, Parser } from 'html-to-react';
 import escapeHtml from 'escape-html';
 import { parseJson } from './common';
+// カスタムコンポーネント
+import * as customComponents from '../components/CustomComponents';
 
 export const renderText = (text = '') =>
   text.split('\n').reduce((children, textSegment, index) => {
@@ -62,7 +65,7 @@ const richTextToHtml = (richTextNodes = [], data) =>
           return blockEntry.moduleName
             ? `<custom-tag data-custom-module-name="${blockEntry.moduleName}" data-entry-contentful_id="${
                 blockEntry.contentful_id
-              }">${richTextToHtml(blockBody?.content, data)}</custom-tag>`
+              }"></custom-tag>`
             : // Element の場合は、そのまま出力
               richTextToHtml(blockBody?.content, data);
         }
@@ -106,8 +109,8 @@ export const imageEntryToImage = (entry) => {
       key={entry.contentful_id}
       src={src.toString()}
       alt={entry.name}
-      width={image.width.toFixed(0)}
-      height={image.height.toFixed(0)}
+      width={props.width}
+      height={props.height}
       {...props}
     />
   );
@@ -147,10 +150,53 @@ export const prepareForParse = ({ template = null, data, pageContext }) => {
   };
 };
 
-export const parseSearchParams = (search) => {
-  const searchParams = new URLSearchParams(search);
-  return Array.from(searchParams.keys()).reduce((acc, key) => {
-    acc[key] = searchParams.get(key);
-    return acc;
-  }, {});
+export const parseHtmlToReact = (html, data) => {
+  // node には rich text をプレ処理した text をパースしたものが格納されている
+  const processingInstructions = (data) => [
+    // Image
+    // props で width や height の指定があれば Contentful でリサイズし、通常の img タグとして表示
+    {
+      shouldProcessNode: (node) => customModuleNameFromNode(node) === 'Image',
+      processNode: (node) => {
+        const entryId = entryIdFromNode(node);
+        const entry = entryWithId(entryId, data);
+        if (entry.body === null) {
+          return null;
+        }
+        return imageEntryToImage(entry);
+      },
+    },
+    // カスタムコンポーネント
+    {
+      shouldProcessNode: (node) => {
+        const moduleName = customModuleNameFromNode(node);
+        return moduleName && moduleName in customComponents;
+      },
+      processNode: (node) => {
+        const moduleName = customModuleNameFromNode(node);
+        const CustomComponent = customComponents[moduleName];
+        const entryId = entryIdFromNode(node);
+        const entry = entryWithId(entryId, data);
+        const props = parseJson(entry.props?.internal?.content) ?? {};
+        return <CustomComponent key={entry.contentful_id} data={data} entry={entry} {...props} />;
+      },
+    },
+    // Contentful Content Type: Element
+    {
+      shouldProcessNode: (node) => customModuleNameFromNode(node) === '',
+      processNode: (_, children) => children,
+    },
+    // デフォルト処理
+    {
+      shouldProcessNode: () => true,
+      processNode: ProcessNodeDefinitions().processDefaultNode,
+    },
+  ];
+
+  const isValidNode = () => true;
+
+  // https://github.com/aknuds1/html-to-react
+  const htmlToReactParser = Parser();
+  const instructions = processingInstructions(data);
+  return htmlToReactParser.parseWithInstructions(html, isValidNode, instructions);
 };

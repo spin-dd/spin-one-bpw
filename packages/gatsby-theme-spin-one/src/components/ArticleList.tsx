@@ -4,11 +4,15 @@ import { Layout } from './Layout';
 
 export { Head } from './Head';
 
-export const Page = ({ data, pageContext }) => {
+export const ArticleList = ({ data, pageContext }) => {
   const { htmlBody, htmlScript, componentData } = prepareForParse({
     template: data.contentfulTemplate,
     data,
-    pageContext,
+    pageContext: {
+      ...pageContext,
+      // ページネーションのためのデータを追加
+      pageInfo: data.allContentfulArticle.pageInfo,
+    },
   });
 
   return (

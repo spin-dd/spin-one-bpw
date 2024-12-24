@@ -7,8 +7,8 @@
 - Component
 - Element
 - Image
-- Templete
-- Information
+- Template
+- Article
 
 ## Page
 
@@ -79,7 +79,7 @@
 ## Template
 
 - gatsby-node で取得したデータに基づいて複数の詳細ページを生成するのに利用
-  - Template informationDetail
+  - Template ArticleDetail
 - カスタムコンポーネントが利用するテンプレート入稿用
   - それ以外（対応するカスタムコンポーネントについては docs/contentful-component-module-name.md を参照）
 - 基本的なフィールドは `Page` を継承
@@ -104,9 +104,14 @@
 - `context`: JSON Object
   - 未使用（拡張用）
 
-## Information
+## Article
 
-- `slug`: Short text
+- `type`: Reference
+
+  - 記事の種類
+  - ArticleType に登録された記事の種類を選択
+
+- `slug`: Slug
 
   - url 末尾
   - gatsby 内からテンプレートを一意に参照するために利用
@@ -122,6 +127,11 @@
 - `body`: Rich text
 
   - ページの内容
+
+- `category`: Reference
+
+  - 記事のカテゴリ
+  - ArticleCategory に登録されたカテゴリを選択
 
 - `publishDate`: Date & time
 
