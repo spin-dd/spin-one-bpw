@@ -14,7 +14,7 @@
           "name": "name",
           "type": "Symbol",
           "localized": false,
-          "required": false,
+          "required": true,
           "validations": [
             {
               "unique": true
