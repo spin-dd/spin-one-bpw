@@ -75,6 +75,19 @@ export const createPages = async ({ graphql, actions, reporter }, themeOptions) 
   }
 };
 
+// Contentful に entry が一つもない場合にエラーを出力し、ビルドを中断する
+export const onPreInit = async ({ reporter }) => {
+  const client = contentful.createClient({
+    space: process.env.CONTENTFUL_SPACE_ID as string,
+    accessToken: process.env.CONTENTFUL_ACCESS_TOKEN as string,
+  });
+
+  const entries = await client.getEntries();
+  if (entries.total === 0) {
+    reporter.panic('No entries found in Contentful');
+  }
+};
+
 // Contentful Content modelのオプショナルなフィールドをGraphQLスキーマに追加する
 export const createSchemaCustomization = ({ actions }) => {
   const { createTypes } = actions;
@@ -99,6 +112,13 @@ export const createSchemaCustomization = ({ actions }) => {
     props: Internal
     body: Body
   }
+  type MarkdownRemark implements Node {
+    html: String
+    excerpt: String
+  }
+  type TextNode implements Node {
+    childMarkdownRemark: MarkdownRemark
+  }
   type ContentfulImage implements Node {
     props: Internal
   }
@@ -106,6 +126,7 @@ export const createSchemaCustomization = ({ actions }) => {
     body: Body
   }
   type ContentfulPage implements Node {
+    pagePath: String
     head: Head
     body: Body
     script: Script
@@ -117,6 +138,7 @@ export const createSchemaCustomization = ({ actions }) => {
     context: Context
   }
   type ContentfulArticle implements Node {
+    body: TextNode
     thumbnail: ContentfulImage
   }
   type ContentfulCategory implements Node {
