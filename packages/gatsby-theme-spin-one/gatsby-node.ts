@@ -80,6 +80,8 @@ export const createSchemaCustomization = ({ actions }) => {
   const { createTypes } = actions;
   const typeDefs = `
     type ContentfulPage implements Node {
+      head: Head
+      body: Body
       script: Script
       context: Context
     }
@@ -87,11 +89,19 @@ export const createSchemaCustomization = ({ actions }) => {
       script: Script
       context: Context
     }
+    type Head implements Node {
+      raw: String
+    }
+    type Body implements Node {
+      raw: String
+    }
     type Script implements Node {
       raw: String
     }
     type Context implements Node {
-      internal: Internal
+      internal: {
+        content: String
+      }
     }
   `;
   createTypes(typeDefs);
