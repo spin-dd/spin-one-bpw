@@ -78,31 +78,53 @@ export const createPages = async ({ graphql, actions, reporter }, themeOptions) 
 // Contentful Content modelのオプショナルなフィールドをGraphQLスキーマに追加する
 export const createSchemaCustomization = ({ actions }) => {
   const { createTypes } = actions;
+
   const typeDefs = `
-    type ContentfulPage implements Node {
-      head: Head
-      body: Body
-      script: Script
-      context: Context
-    }
-    type ContentfulTemplate implements Node {
-      script: Script
-      context: Context
-    }
-    type Head implements Node {
-      raw: String
-    }
-    type Body implements Node {
-      raw: String
-    }
-    type Script implements Node {
-      raw: String
-    }
-    type Context implements Node {
-      internal: {
-        content: String
-      }
-    }
+  type Head implements Node {
+    raw: String
+  }
+  type Body implements Node {
+    raw: String
+  }
+  type Script implements Node {
+    raw: String
+  }
+  type Context implements Node {
+    internal: Internal
+  }
+  type Internal implements Node {
+    content: String
+  }
+  type ContentfulComponent implements Node {
+    props: Internal
+    body: Body
+  }
+  type ContentfulImage implements Node {
+    props: Internal
+  }
+  type ContentfulElement implements Node {
+    body: Body
+  }
+  type ContentfulPage implements Node {
+    head: Head
+    body: Body
+    script: Script
+    context: Context
+  }
+  type ContentfulTemplate implements Node {
+    head: Head
+    script: Script
+    context: Context
+  }
+  type ContentfulArticle implements Node {
+    thumbnail: ContentfulImage
+  }
+  type ContentfulCategory implements Node {
+    description: String
+  }
+  type ContentfulType implements Node {
+    description: String
+  }
   `;
   createTypes(typeDefs);
 };
