@@ -103,20 +103,17 @@ export const createSchemaCustomization = ({ actions }) => {
     raw: String
   }
   type Context implements Node {
-    internal: InternalContent
-  }
-  type InternalContent implements Node {
-    content: String
+    internal: Internal
   }
   type ContentfulComponent implements Node {
-    props: InternalContent
+    props: Context
     body: Body
   }
   type TextNode implements Node {
     childMarkdownRemark: MarkdownRemark
   }
   type ContentfulImage implements Node {
-    props: InternalContent
+    props: Context
   }
   type ContentfulElement implements Node {
     body: Body
