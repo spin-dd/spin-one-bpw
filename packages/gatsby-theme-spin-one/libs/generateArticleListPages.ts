@@ -50,6 +50,10 @@ export const generateArticleListPages = async ({ graphql, actions }, themeOption
     return;
   }
 
+  if (result.errors) {
+    throw result.errors;
+  }
+
   for (const type of types) {
     for (const category of categories) {
       const articles = await graphql(`

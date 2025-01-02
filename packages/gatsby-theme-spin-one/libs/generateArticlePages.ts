@@ -29,6 +29,11 @@ export const generateArticlePages = async ({ graphql, actions }, themeOptions) =
       }
     }
   `);
+  if (result.data.allContentfulArticle.nodes.length === 0) {
+    console.info('No Article Content Entry found');
+    return;
+  }
+
   if (result.errors) {
     throw result.errors;
   }

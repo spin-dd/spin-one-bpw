@@ -26,6 +26,11 @@ export const generatePages = async ({ graphql, actions }, themeOptions) => {
       }
     }
   `);
+  if (result.data.allContentfulPage.nodes.length === 0) {
+    console.info('No Page Content Entry found');
+    return;
+  }
+
   if (result.errors) {
     throw result.errors;
   }
