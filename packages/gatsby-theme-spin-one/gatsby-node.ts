@@ -112,10 +112,6 @@ export const createSchemaCustomization = ({ actions }) => {
     props: InternalContent
     body: Body
   }
-  type MarkdownRemark implements Node {
-    html: String
-    excerpt: String
-  }
   type TextNode implements Node {
     childMarkdownRemark: MarkdownRemark
   }
