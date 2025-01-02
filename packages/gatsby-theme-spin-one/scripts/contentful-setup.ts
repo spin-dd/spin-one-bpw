@@ -11,7 +11,7 @@ config();
 
 const spaceId = process.env.CONTENTFUL_SPACE_ID as string;
 const managementToken = process.env.CONTENTFUL_MANAGEMENT_TOKEN as string;
-const environmentId = process.env.CONTENTFUL_ENVIRONMENT_ID as string;
+const environmentId = process.env.CONTENTFUL_ENVIRONMENT_ID || 'master';
 
 console.log('Setting up Contentful with the following config:');
 console.log('Space ID:', spaceId);
