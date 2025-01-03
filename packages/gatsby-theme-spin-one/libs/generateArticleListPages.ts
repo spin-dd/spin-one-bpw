@@ -22,7 +22,7 @@ export const generateArticleListPages = async ({ graphql, actions }, themeOption
     checkEntry.data.allContentfulArticleType.nodes.length === 0 ||
     checkEntry.data.allContentfulArticleCategory.nodes.length === 0
   ) {
-    console.info('No ArticleType / ArticleCategory found');
+    console.warn('No ArticleType / ArticleCategory found');
     return;
   }
 

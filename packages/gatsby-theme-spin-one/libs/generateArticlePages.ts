@@ -14,7 +14,7 @@ export const generateArticlePages = async ({ graphql, actions }, themeOptions) =
     }
   `);
   if (checkArticleContentEntry.data.allContentfulArticle.nodes.length === 0) {
-    console.info('No Article Content Entry found');
+    console.warn('No Article Content Entry found');
     return;
   }
 
