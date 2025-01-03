@@ -28,7 +28,6 @@ const config: GatsbyConfig = {
     'gatsby-plugin-sass',
     'gatsby-transformer-remark',
   ],
-  graphqlTypegen: true,
 };
 
 const gtmId = process.env.GATSBY_GOOGLE_TAG_MANAGER_ID;
