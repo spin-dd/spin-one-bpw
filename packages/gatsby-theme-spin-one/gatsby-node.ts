@@ -77,8 +77,8 @@ export const createPages = async ({ graphql, actions, reporter }, themeOptions) 
   }
 };
 
-// Contentful に entry が一つもない場合にエラーを出力し、ビルドを中断する
 export const onPreInit = async ({ reporter }) => {
+  // Contentful に entry が一つもない場合にエラーを出力し、ビルドを中断する
   const client = contentful.createClient({
     space: process.env.CONTENTFUL_SPACE_ID as string,
     accessToken: process.env.CONTENTFUL_ACCESS_TOKEN as string,
