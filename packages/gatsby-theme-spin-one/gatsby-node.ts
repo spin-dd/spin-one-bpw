@@ -1,4 +1,6 @@
 import * as contentful from 'contentful';
+import fs from 'fs';
+import path from 'path';
 import { config } from 'dotenv';
 import { generatePages } from './libs/generatePages';
 import { generateArticlePages } from './libs/generateArticlePages';
@@ -88,58 +90,23 @@ export const onPreInit = async ({ reporter }) => {
   }
 };
 
-// Contentful Content modelのオプショナルなフィールドをGraphQLスキーマに追加する
-export const createSchemaCustomization = ({ actions }) => {
-  const { createTypes } = actions;
+export const createSchemaCustomization = ({ actions, reporter }) => {
+  const { createTypes, printTypeDefinitions } = actions;
 
-  const typeDefs = `
-  type Head implements Node {
-    raw: String
-  }
-  type Body implements Node {
-    raw: String
-  }
-  type Script implements Node {
-    raw: String
-  }
-  type Context implements Node {
-    internal: Internal
-  }
-  type ContentfulComponent implements Node {
-    props: Context
-    body: Body
-  }
-  type TextNode implements Node {
-    childMarkdownRemark: MarkdownRemark
-  }
-  type ContentfulImage implements Node {
-    props: Context
-  }
-  type ContentfulElement implements Node {
-    body: Body
-  }
-  type ContentfulPage implements Node {
-    pagePath: String
-    head: Head
-    body: Body
-    script: Script
-    context: Context
-  }
-  type ContentfulTemplate implements Node {
-    head: Head
-    script: Script
-    context: Context
-  }
-  type ContentfulArticle implements Node {
-    body: TextNode
-    thumbnail: ContentfulImage
-  }
-  type ContentfulCategory implements Node {
-    description: String
-  }
-  type ContentfulType implements Node {
-    description: String
-  }
-  `;
+  // テーマ内のschema.gql
+  const filePath = path.resolve(__dirname, 'schema.gql');
+  // Contentfulのオプショナルフィールドに値がない場合のGraphQLエラーを回避する
+  const typeDefs = fs.readFileSync(filePath, 'utf8');
   createTypes(typeDefs);
+
+  // MEMO: Contentful content model更新時などには
+  // GATSBY_UPDATE_SCHEMA_SNAPSHOTをtrueにしてschema.gqlを更新する
+  if (process.env.GATSBY_UPDATE_SCHEMA_SNAPSHOT === 'true') {
+    // schema.gqlを更新するためにファイルを削除
+    fs.unlinkSync(filePath);
+    reporter.info('Removed schema file');
+    // schema.gqlを更新する
+    reporter.info(`Write schema file: ${filePath}`);
+    printTypeDefinitions({ path: filePath });
+  }
 };
