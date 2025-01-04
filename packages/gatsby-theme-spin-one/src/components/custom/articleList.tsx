@@ -6,13 +6,13 @@ function CustomArticleList({
   // component props
   tagName = 'ul',
   className = '',
-  entry,
+  // parseHtmlToReactでComponent entryがテンプレートとしてI/Fされる
+  template,
 }) {
-  // entry（moduleName: CustomArticleListのComponent）をテンプレートとして
-  // pageData.allContentfulArticleから一覧要素を生成する
+  // templateとpageData.allContentfulArticleから一覧要素を生成する
   const itemElements = pageData.allContentfulArticle.nodes.map((node, index) => {
     const { htmlBody, componentData } = prepareForParse({
-      template: entry,
+      template,
       data: {
         ...pageData,
         contentfulArticle: node,
