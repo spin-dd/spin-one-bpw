@@ -19,7 +19,8 @@ export const generateArticleListPages = async ({ graphql, actions }, themeOption
           slug
         }
       }
-      allContentfulArticleCategory(filter: { node_locale: { eq: "${defaultLocaleCode}" } }) {
+      # 多言語対応のため、categoryは全てのロケールのものを取得
+      allContentfulArticleCategory {
         nodes {
           contentful_id
           __typename
@@ -55,7 +56,7 @@ export const generateArticleListPages = async ({ graphql, actions }, themeOption
       const articles = await graphql(`
         {
           allContentfulArticle(
-            filter: { type: { slug: { eq: "${type.slug}" } }, category: { slug: { eq: "${category.slug}" } }, node_locale: { eq: "${defaultLocaleCode}" } }
+            filter: { type: { slug: { eq: "${type.slug}" } }, category: { slug: { eq: "${category.slug}" } }, node_locale: { eq: "${category.node_locale}" } }
           ) {
             nodes {
               contentful_id
