@@ -7,8 +7,8 @@ export const generateArticleListPages = async ({ graphql, actions }, themeOption
   const { allLocales, defaultLocaleCode, articlesPerPage = 10 } = themeOptions;
 
   // GraphQLでは一つのクエリでArticleTypeとArticleCategoryでGroupByできないため、処理を分割する
-  // まずはデフォルトロケールでArticleType、ArticleCategoryを取得する
-  // なお、Articleとして取得しないのは件数上限による制約を回避するため
+  // まずはデフォルトロケールでArticleType、ArticleCategoryを取得
+  // その後、指定条件でArticleを取得し、ページ生成する
   const result = await graphql(`
     {
       allContentfulArticleType(filter: { node_locale: { eq: "${defaultLocaleCode}" } }) {

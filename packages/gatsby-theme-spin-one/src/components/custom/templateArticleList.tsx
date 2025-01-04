@@ -3,11 +3,11 @@ import { prepareForParse, parseHtmlToReact } from '../../utils';
 
 function CustomTemplateArticleList({
   data: { pageContext, ...pageData },
+  // parseHtmlToReactでComponent entryがテンプレートとしてI/Fされる
+  template,
   // component props
   tagName = 'ul',
   className = '',
-  // parseHtmlToReactでComponent entryがテンプレートとしてI/Fされる
-  template,
 }) {
   // templateとpageData.allContentfulArticleから一覧要素を生成する
   const itemElements = pageData.allContentfulArticle.nodes.map((node, index) => {
