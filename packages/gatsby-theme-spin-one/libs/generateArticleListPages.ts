@@ -80,7 +80,7 @@ export const generateArticleListPages = async ({ graphql, actions }, themeOption
           context: {
             locales: allLocales,
             // TODO: I/F検討
-            name: 'ArticleList',
+            name: 'ArticleListPage',
             // Article検索条件
             locale: category.node_locale,
             type: type.slug,
