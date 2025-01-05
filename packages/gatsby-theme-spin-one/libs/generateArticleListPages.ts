@@ -38,16 +38,58 @@ export const generateArticleListPages = async ({ graphql, actions }, themeOption
     return;
   }
 
+  // モジュール内の共通処理関数
+  const createArticleListPages = ({ articles, type, category = null }) => {
+    // locale を含まない記事ページの pagePath を生成
+    const createCanonicalPath = ({ type, category, page }) => {
+      const basePath = category ? `/${type.slug}/${category.slug}/` : `/${type.slug}/`;
+      return page === 1 ? basePath : `${basePath}${page}/`;
+    };
+    const createPagePath = ({ locale, type, category, page }) =>
+      `${resolveLocalePath(locale, defaultLocaleCode)}${createCanonicalPath({
+        type,
+        category,
+        page,
+      })}`;
+
+    const numPages = Math.ceil(articles.data.allContentfulArticle.totalCount / articlesPerPage);
+    const locale = category ? category.node_locale : type.node_locale;
+    Array.from({ length: numPages }).forEach((_, i) => {
+      const currentPage = i + 1;
+      createPage({
+        path: createPagePath({ locale, type, category, page: currentPage }),
+        component: resolveTemplatePath(
+          path.resolve('./src/templates/ArticleList.js'),
+          require.resolve('@spin-dd/gatsby-theme-spin-one/src/templates/ArticleList.tsx'),
+        ),
+        context: {
+          locales: allLocales,
+          // TODO: I/F検討
+          name: 'ArticleListPage',
+          // Article検索条件
+          locale,
+          type: type.slug,
+          ...(category && { category: category.slug }),
+          sort: [
+            {
+              publishDate: 'DESC',
+            },
+          ],
+          // ページネーション用
+          limit: articlesPerPage,
+          skip: i * articlesPerPage,
+          currentPage,
+          basePath: createPagePath({ locale: type.node_locale, type, category, page: 1 }),
+          // customToggleButton 用
+          pagePath: createCanonicalPath({ type, category, page: currentPage }),
+        },
+      });
+    });
+  };
+
   // ArticleType[]、ArticleCategory[]をループして記事一覧ページを生成する
   for (const type of types) {
     // ArticleCategoryなしの記事一覧ページを生成
-    const createCanonicalPath = ({ type, page }) => {
-      const basePath = `/${type.slug}/`;
-      return page === 1 ? basePath : `${basePath}${page}/`;
-    };
-    const createPagePath = ({ node_locale, type, page }) =>
-      `${resolveLocalePath(node_locale, defaultLocaleCode)}${createCanonicalPath({ type, page })}`;
-
     const articles = await graphql(`
       {
         allContentfulArticle(
@@ -63,52 +105,10 @@ export const generateArticleListPages = async ({ graphql, actions }, themeOption
         }
       }
     `);
-    const numPages = Math.ceil(articles.data.allContentfulArticle.totalCount / articlesPerPage);
-    Array.from({ length: numPages }).forEach((_, i) => {
-      const currentPage = i + 1;
-      createPage({
-        path: createPagePath({ node_locale: type.node_locale, type, page: currentPage }),
-        component: resolveTemplatePath(
-          path.resolve('./src/templates/ArticleList.js'),
-          require.resolve('@spin-dd/gatsby-theme-spin-one/src/templates/ArticleList.tsx'),
-        ),
-        context: {
-          locales: allLocales,
-          // TODO: I/F検討
-          name: 'ArticleListPage',
-          // Article検索条件
-          locale: type.node_locale,
-          type: type.slug,
-          sort: [
-            {
-              publishDate: 'DESC',
-            },
-          ],
-          // ページネーション用
-          limit: articlesPerPage,
-          skip: i * articlesPerPage,
-          currentPage,
-          basePath: createPagePath({ node_locale: type.node_locale, type, page: 1 }),
-          // customToggleButton 用
-          pagePath: createCanonicalPath({ type, page: currentPage }),
-        },
-      });
-    });
+    createArticleListPages({ articles, type });
 
     // ArticleCategory[]をループして記事一覧ページを生成する
     for (const category of categories) {
-      // locale を含まない記事ページの pagePath を生成
-      const createCanonicalPath = ({ type, category, page }) => {
-        const basePath = `/${type.slug}/${category.slug}/`;
-        return page === 1 ? basePath : `${basePath}${page}/`;
-      };
-      const createPagePath = ({ node_locale, type, category, page }) =>
-        `${resolveLocalePath(node_locale, defaultLocaleCode)}${createCanonicalPath({
-          type,
-          category,
-          page,
-        })}`;
-
       const articles = await graphql(`
         {
           allContentfulArticle(
@@ -124,38 +124,7 @@ export const generateArticleListPages = async ({ graphql, actions }, themeOption
           }
         }
       `);
-      const numPages = Math.ceil(articles.data.allContentfulArticle.totalCount / articlesPerPage);
-      Array.from({ length: numPages }).forEach((_, i) => {
-        const currentPage = i + 1;
-        createPage({
-          path: createPagePath({ node_locale: category.node_locale, type, category, page: currentPage }),
-          component: resolveTemplatePath(
-            path.resolve('./src/templates/ArticleList.js'),
-            require.resolve('@spin-dd/gatsby-theme-spin-one/src/templates/ArticleList.tsx'),
-          ),
-          context: {
-            locales: allLocales,
-            // TODO: I/F検討
-            name: 'ArticleListPage',
-            // Article検索条件
-            locale: category.node_locale,
-            type: type.slug,
-            category: category.slug,
-            sort: [
-              {
-                publishDate: 'DESC',
-              },
-            ],
-            // ページネーション用
-            limit: articlesPerPage,
-            skip: i * articlesPerPage,
-            currentPage,
-            basePath: createPagePath({ node_locale: category.node_locale, type, category, page: 1 }),
-            // customToggleButton 用
-            pagePath: createCanonicalPath({ type, category, page: currentPage }),
-          },
-        });
-      });
+      createArticleListPages({ articles, type, category });
     }
   }
 };
