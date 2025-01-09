@@ -3,6 +3,21 @@ import { parseJson, resolveLocalePath, resolveTemplatePath } from './common';
 
 // Contentful Article からのページ生成
 export const generateArticlePages = async ({ graphql, actions }, themeOptions) => {
+  // GraphQLエラーを防ぐため、処理実行前にContentfulArticleのentryが存在するか確認
+  const checkArticleContentEntry = await graphql(`
+    {
+      allContentfulArticle {
+        nodes {
+          contentful_id
+        }
+      }
+    }
+  `);
+  if (checkArticleContentEntry.data.allContentfulArticle.nodes.length === 0) {
+    console.warn('No Article Content Entry found');
+    return;
+  }
+
   const { createPage } = actions;
   const { allLocales, defaultLocaleCode } = themeOptions;
 
@@ -29,6 +44,7 @@ export const generateArticlePages = async ({ graphql, actions }, themeOptions) =
       }
     }
   `);
+
   if (result.errors) {
     throw result.errors;
   }

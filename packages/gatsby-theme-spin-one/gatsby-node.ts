@@ -1,4 +1,6 @@
 import * as contentful from 'contentful';
+import fs from 'fs';
+import path from 'path';
 import { config } from 'dotenv';
 import { generatePages } from './libs/generatePages';
 import { generateArticlePages } from './libs/generateArticlePages';
@@ -75,24 +77,36 @@ export const createPages = async ({ graphql, actions, reporter }, themeOptions) 
   }
 };
 
-// Contentful Content modelのオプショナルなフィールドをGraphQLスキーマに追加する
-export const createSchemaCustomization = ({ actions }) => {
-  const { createTypes } = actions;
-  const typeDefs = `
-    type ContentfulPage implements Node {
-      script: Script
-      context: Context
-    }
-    type ContentfulTemplate implements Node {
-      script: Script
-      context: Context
-    }
-    type Script implements Node {
-      raw: String
-    }
-    type Context implements Node {
-      internal: Internal
-    }
-  `;
+export const onPreInit = async ({ reporter }) => {
+  // Contentful に entry が一つもない場合にエラーを出力し、ビルドを中断する
+  const client = contentful.createClient({
+    space: process.env.CONTENTFUL_SPACE_ID as string,
+    accessToken: process.env.CONTENTFUL_ACCESS_TOKEN as string,
+  });
+
+  const entries = await client.getEntries();
+  if (entries.total === 0) {
+    reporter.panic('No entries found in Contentful');
+  }
+};
+
+export const createSchemaCustomization = ({ actions, reporter }) => {
+  const { createTypes, printTypeDefinitions } = actions;
+
+  // テーマ内のschema.gql
+  const filePath = path.resolve(__dirname, 'schema.gql');
+  // Contentfulのオプショナルフィールドに値がない場合のGraphQLエラーを回避する
+  const typeDefs = fs.readFileSync(filePath, 'utf8');
   createTypes(typeDefs);
+
+  // MEMO: Contentful content model更新時などには
+  // GATSBY_UPDATE_SCHEMA_SNAPSHOTをtrueにしてschema.gqlを更新する
+  if (process.env.GATSBY_UPDATE_SCHEMA_SNAPSHOT === 'true') {
+    // schema.gqlを更新するためにファイルを削除
+    fs.unlinkSync(filePath);
+    reporter.info('Removed schema file');
+    // schema.gqlを更新する
+    reporter.info(`Write schema file: ${filePath}`);
+    printTypeDefinitions({ path: filePath });
+  }
 };

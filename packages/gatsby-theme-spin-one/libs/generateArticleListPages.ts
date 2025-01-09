@@ -3,6 +3,29 @@ import { resolveLocalePath, resolveTemplatePath } from './common';
 
 // Contentful ArticleType と ArticleCategory でカテゴライズした Article 一覧ページ生成
 export const generateArticleListPages = async ({ graphql, actions }, themeOptions) => {
+  // GraphQLエラーを防ぐため、処理実行前にContentfulArticleType、ContentfulArticleCategoryのentryが存在するか確認
+  const checkEntry = await graphql(`
+    {
+      allContentfulArticleType {
+        nodes {
+          contentful_id
+        }
+      }
+      allContentfulArticleCategory {
+        nodes {
+          contentful_id
+        }
+      }
+    }
+  `);
+  if (
+    checkEntry.data.allContentfulArticleType.nodes.length === 0 ||
+    checkEntry.data.allContentfulArticleCategory.nodes.length === 0
+  ) {
+    console.warn('No ArticleType / ArticleCategory found');
+    return;
+  }
+
   const { createPage } = actions;
   const { allLocales, defaultLocaleCode, articlesPerPage = 10 } = themeOptions;
 
@@ -30,6 +53,10 @@ export const generateArticleListPages = async ({ graphql, actions }, themeOption
     }
   `);
 
+  if (result.errors) {
+    throw result.errors;
+  }
+
   // locale を含まない記事ページの pagePath を生成
   const createCanonicalPath = ({ type, category, page }) => {
     const basePath = `/${type.slug}/${category.slug}/`;
@@ -45,11 +72,6 @@ export const generateArticleListPages = async ({ graphql, actions }, themeOption
   // ArticleType[]、ArticleCategory[]をループしてページ生成する
   const types = result.data.allContentfulArticleType.nodes;
   const categories = result.data.allContentfulArticleCategory.nodes;
-  if (types.length === 0 || categories.length === 0) {
-    console.info('No ArticleType / ArticleCategory found');
-    return;
-  }
-
   for (const type of types) {
     for (const category of categories) {
       const articles = await graphql(`

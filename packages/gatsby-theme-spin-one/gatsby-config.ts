@@ -8,7 +8,6 @@ const contentfulConfig = {
   spaceId: process.env.CONTENTFUL_SPACE_ID as string,
   accessToken: process.env.CONTENTFUL_ACCESS_TOKEN as string,
   environment: process.env.CONTENTFUL_ENVIRONMENT_ID || 'master',
-  enableTags: true,
   pageLimit: 50,
 };
 
@@ -29,7 +28,6 @@ const config: GatsbyConfig = {
     'gatsby-plugin-sass',
     'gatsby-transformer-remark',
   ],
-  graphqlTypegen: true,
 };
 
 const gtmId = process.env.GATSBY_GOOGLE_TAG_MANAGER_ID;
