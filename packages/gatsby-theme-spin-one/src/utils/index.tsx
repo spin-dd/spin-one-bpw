@@ -178,7 +178,7 @@ export const parseHtmlToReact = (html, data) => {
         const entryId = entryIdFromNode(node);
         const entry = entryWithId(entryId, data);
         const props = parseJson(entry.props?.internal?.content) ?? {};
-        return <CustomComponent key={entry.contentful_id} data={data} entry={entry} {...props} />;
+        return <CustomComponent key={entry.contentful_id} data={data} template={entry} {...props} />;
       },
     },
     // Contentful Content Type: Element
