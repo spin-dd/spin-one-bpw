@@ -6,6 +6,7 @@
   "scripts": {
     "clean": "rm -rf node_modules package-lock.json",
     "build:theme": "npm run build -w packages/gatsby-theme-spin-one",
+    "build:theme-demo": "npm run build -w packages/theme-demo",
     "dev:demo": "npm run demo -w packages/theme-demo",
     "lint": "npm run lint --workspaces --if-present",
     "lint-fix": "npm run lint-fix --workspaces --if-present"

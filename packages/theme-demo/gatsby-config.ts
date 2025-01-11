@@ -9,7 +9,9 @@ const config: GatsbyConfig = {
     title: `theme-demo`,
     siteUrl: `https://one.spin-dd.com`,
   },
-  graphqlTypegen: true,
+  graphqlTypegen: {
+    generateOnBuild: true,
+  },
   plugins: [
     "gatsby-plugin-typescript",
     {
