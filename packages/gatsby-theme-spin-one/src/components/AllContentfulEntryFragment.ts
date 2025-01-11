@@ -45,6 +45,18 @@ export const query = graphql`
         }
       }
     }
+    # コンポーネント内でソート、フィルタを行うCustomArticleListコンポーネントの実装ため、全Articleを取得
+    customAllContentfulArticle: allContentfulArticle(
+      filter: { node_locale: { eq: $locale }, spaceId: { eq: $spaceId } }
+    ) {
+      nodes {
+        contentful_id
+        __typename
+        ...ContentfulArticleFieldsFragment
+        createdAt
+        updatedAt
+      }
+    }
   }
 
   fragment ContentfulPageFieldsFragment on ContentfulPage {
