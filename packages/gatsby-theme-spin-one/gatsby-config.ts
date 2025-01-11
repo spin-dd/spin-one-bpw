@@ -1,5 +1,6 @@
 import type { GatsbyConfig } from 'gatsby';
 import dotenv from 'dotenv';
+
 dotenv.config();
 
 console.info('theme gatsby-config.ts loaded');
@@ -29,6 +30,7 @@ const config: GatsbyConfig = {
   ],
 };
 
+// Google Tag Manager
 const gtmId = process.env.GATSBY_GOOGLE_TAG_MANAGER_ID;
 if (!gtmId) {
   console.info('Google Tag Manager ID is not set.');

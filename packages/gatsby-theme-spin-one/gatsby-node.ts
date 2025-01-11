@@ -1,6 +1,4 @@
 import * as contentful from 'contentful';
-import fs from 'fs';
-import path from 'path';
 import { config } from 'dotenv';
 import { generatePages } from './libs/generatePages';
 import { generateArticlePages } from './libs/generateArticlePages';
@@ -95,26 +93,5 @@ export const onPreInit: GatsbyNode['onPreInit'] = async ({ reporter }) => {
   const entries = await client.getEntries();
   if (entries.total === 0) {
     reporter.panic('No entries found in Contentful');
-  }
-};
-
-export const createSchemaCustomization: GatsbyNode['createSchemaCustomization'] = ({ actions, reporter }) => {
-  const { createTypes, printTypeDefinitions } = actions;
-
-  // テーマ内のschema.gql
-  const filePath = path.resolve(__dirname, 'schema.gql');
-  // Contentfulのオプショナルフィールドに値がない場合のGraphQLエラーを回避する
-  const typeDefs = fs.readFileSync(filePath, 'utf8');
-  createTypes(typeDefs);
-
-  // MEMO: Contentful content model更新時などには
-  // GATSBY_UPDATE_SCHEMA_SNAPSHOTをtrueにしてschema.gqlを更新する
-  if (process.env.GATSBY_UPDATE_SCHEMA_SNAPSHOT === 'true') {
-    // schema.gqlを更新するためにファイルを削除
-    fs.unlinkSync(filePath);
-    reporter.info('Removed schema file');
-    // schema.gqlを更新する
-    reporter.info(`Write schema file: ${filePath}`);
-    printTypeDefinitions({ path: filePath });
   }
 };

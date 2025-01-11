@@ -1,5 +1,7 @@
+import path from "path";
 import type { GatsbyConfig } from "gatsby";
 import dotenv from "dotenv";
+
 dotenv.config();
 
 console.info("site gatsby-config.ts loaded");
@@ -13,6 +15,13 @@ const config: GatsbyConfig = {
     generateOnBuild: true,
   },
   plugins: [
+    {
+      resolve: "gatsby-plugin-schema-snapshot",
+      options: {
+        update: process.env.GATSBY_UPDATE_SCHEMA_SNAPSHOT === "true",
+        path: path.resolve(__dirname, "schema.gql"),
+      },
+    },
     "gatsby-plugin-typescript",
     {
       resolve: "@spin-dd/gatsby-theme-spin-one",
