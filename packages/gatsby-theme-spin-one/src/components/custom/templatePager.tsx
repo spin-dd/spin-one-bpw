@@ -15,6 +15,8 @@ interface PagerProps {
   };
 }
 
+// Contentful Template内で使用する記事一覧ページャーコンポーネント
+// generateArticleListPage.ts内でテンプレートに指定しているContentfulのArticleListPage Templateのbody内で使用されている
 export const CustomTemplatePager: React.FC<PagerProps> = ({ tagName, className, data: { basePath, pageInfo } }) => {
   const { currentPage, pageCount, hasPreviousPage, hasNextPage } = pageInfo;
 

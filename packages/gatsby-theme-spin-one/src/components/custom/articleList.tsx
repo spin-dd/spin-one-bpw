@@ -5,7 +5,7 @@ function CustomArticleList({
   data: { pageContext, ...pageData },
   // parseHtmlToReactでComponent entryがテンプレートとしてI/Fされる
   template,
-  // component props
+  // Contentful Component propsからの入力値
   tagName = 'ul',
   className = '',
   filter = {
@@ -18,6 +18,7 @@ function CustomArticleList({
   },
   limit = 5,
 }) {
+  // propsからの入力値を元に、filterFunc, sortFuncを定義
   const filterFunc = (node) => {
     return (
       (!filter.type || node.type.slug === filter.type) && (!filter.category || node.category.slug === filter.category)
@@ -36,6 +37,7 @@ function CustomArticleList({
     return 0;
   };
 
+  // filterFunc, sortFuncを適用し、limit数分の記事を取得してContentful Component bodyをテンプレートにして出力
   const itemElements = pageData.customAllContentfulArticle.nodes
     .filter(filterFunc)
     .sort(sortFunc)
@@ -52,6 +54,7 @@ function CustomArticleList({
 
       return <React.Fragment key={index}>{parseHtmlToReact(htmlBody, componentData)}</React.Fragment>;
     });
+
   return React.createElement(tagName, { className }, itemElements);
 }
 
