@@ -12,25 +12,21 @@ export const generateArticleListPages = async (
   const { graphql } = args;
   // GraphQLエラーを防ぐため、処理実行前にContentfulArticleType、ContentfulArticleCategoryのentryが存在するか確認
   const checkEntry = await graphql<{
-    allContentfulArticleType: Queries.ContentfulArticleTypeConnection;
-    allContentfulArticleCategory: Queries.ContentfulArticleCategoryConnection;
+    allContentfulArticleType: Pick<Queries.ContentfulArticleTypeConnection, 'totalCount'>;
+    allContentfulArticleCategory: Pick<Queries.ContentfulArticleCategoryConnection, 'totalCount'>;
   }>(`
     {
       allContentfulArticleType {
-        nodes {
-          contentful_id
-        }
+        totalCount
       }
       allContentfulArticleCategory {
-        nodes {
-          contentful_id
-        }
+        totalCount
       }
     }
   `);
   if (
-    checkEntry.data.allContentfulArticleType.nodes.length === 0 ||
-    checkEntry.data.allContentfulArticleCategory.nodes.length === 0
+    checkEntry.data.allContentfulArticleType.totalCount === 0 ||
+    checkEntry.data.allContentfulArticleCategory.totalCount === 0
   ) {
     console.warn('No ArticleType / ArticleCategory found');
     return;
@@ -58,8 +54,8 @@ const generateArticleListPageWithLocale = async (
   // まずはデフォルトロケールでArticleType、ArticleCategoryを取得
   // その後、指定条件でArticleを取得し、ページ生成する
   const result = await graphql<{
-    allContentfulArticleType: Queries.ContentfulArticleTypeConnection;
-    allContentfulArticleCategory: Queries.ContentfulArticleCategoryConnection;
+    allContentfulArticleType: Pick<Queries.ContentfulArticleTypeConnection, 'nodes'>;
+    allContentfulArticleCategory: Pick<Queries.ContentfulArticleCategoryConnection, 'nodes'>;
   }>(`
     {
       allContentfulArticleType(filter: { node_locale: { eq: "${locale}" } }) {
@@ -89,7 +85,17 @@ const generateArticleListPageWithLocale = async (
   }
 
   // モジュール内の共通処理関数
-  const createArticleListPages = ({ articles, type, category = null, locale }) => {
+  const createArticleListPages = ({
+    totalCount,
+    type,
+    category = null,
+    locale,
+  }: {
+    totalCount: number;
+    type: Queries.ContentfulArticleType;
+    category?: Queries.ContentfulArticleCategory;
+    locale: string;
+  }) => {
     // locale を含まない記事ページの pagePath を生成
     const createCanonicalPath = ({ type, category, page }) => {
       const basePath = category ? `/${type.slug}/${category.slug}/` : `/${type.slug}/`;
@@ -102,7 +108,7 @@ const generateArticleListPageWithLocale = async (
         page,
       })}`;
 
-    const numPages = Math.ceil(articles.data.allContentfulArticle.totalCount / articlesPerPage);
+    const numPages = Math.ceil(totalCount / articlesPerPage);
     Array.from({ length: numPages }).forEach((_, i) => {
       const currentPage = i + 1;
       createPage({
@@ -141,7 +147,7 @@ const generateArticleListPageWithLocale = async (
   for (const type of types) {
     // ArticleCategoryなしの記事一覧ページを生成
     const articles = await graphql<{
-      allContentfulArticle: Queries.ContentfulArticleConnection;
+      allContentfulArticle: Pick<Queries.ContentfulArticleConnection, 'totalCount'>;
     }>(`
       {
         allContentfulArticle(
@@ -151,12 +157,12 @@ const generateArticleListPageWithLocale = async (
         }
       }
     `);
-    createArticleListPages({ articles, type, locale });
+    createArticleListPages({ totalCount: articles.data.allContentfulArticle.totalCount, type, locale });
 
     // ArticleCategory[]をループして記事一覧ページを生成する
     for (const category of categories) {
       const articles = await graphql<{
-        allContentfulArticle: Queries.ContentfulArticleConnection;
+        allContentfulArticle: Pick<Queries.ContentfulArticleConnection, 'totalCount'>;
       }>(`
         {
           allContentfulArticle(
@@ -166,7 +172,7 @@ const generateArticleListPageWithLocale = async (
           }
         }
       `);
-      createArticleListPages({ articles, type, category, locale });
+      createArticleListPages({ totalCount: articles.data.allContentfulArticle.totalCount, type, category, locale });
     }
   }
 };
