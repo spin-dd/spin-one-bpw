@@ -23,6 +23,7 @@
     "react-dom": "18.3.1"
   },
   "devDependencies": {
+    "gatsby-plugin-schema-snapshot": "4.14.0",
     "@contentful/rich-text-types": "17.0.0",
     "@types/node": "20.17.6",
     "@types/react": "18.3.12",
