@@ -20,6 +20,8 @@ export type GeneratePagesOptions = {
   defaultLocaleCode: string;
 };
 
+const DefaultLocaleCode = 'ja';
+
 /**
  * ユーティリティ
  */
@@ -41,15 +43,12 @@ const getContentfulAllLocales = async (): Promise<Omit<contentful.Locale, 'sys'>
 
 // Contentful で設定済みのデフォルトロケールを取得する
 const getContentfulDefaultLocaleCode = (locales: Omit<contentful.Locale, 'sys'>[] = []): string =>
-  locales.find((locale) => locale.default)?.code;
+  locales.find((locale) => locale.default)?.code ?? DefaultLocaleCode;
 
 /**
  * gatsby-nodeのページ生成処理
  */
-export const createPages: GatsbyNode['createPages'] = async (
-  createPagesArgs: Parameters<GatsbyNode['createPages']>[0],
-  themeOptions: SpinOneThemeOptions,
-) => {
+export const createPages: GatsbyNode['createPages'] = async (createPagesArgs, themeOptions: SpinOneThemeOptions) => {
   const { reporter } = createPagesArgs;
   const { overrideGatsbyNode = false } = themeOptions;
   // Gatsby theme では theme の gatsby-node を上書きできないため独自実装
@@ -81,7 +80,7 @@ export const createPages: GatsbyNode['createPages'] = async (
       themeOptions,
     );
   } catch (error) {
-    reporter.panicOnBuild(`There was an error loading your Contentful posts`, error);
+    reporter.panicOnBuild(`There was an error loading your Contentful posts:`, error as Error);
     return;
   }
 };

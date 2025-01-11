@@ -15,7 +15,7 @@ export const generateArticlePages = async ({ graphql, actions }: CreatePagesArgs
       }
     }
   `);
-  if (checkArticleContentEntry.data.allContentfulArticle.totalCount === 0) {
+  if (!checkArticleContentEntry.data?.allContentfulArticle.totalCount) {
     console.warn('No Article Content Entry found');
     return;
   }
@@ -54,21 +54,31 @@ export const generateArticlePages = async ({ graphql, actions }: CreatePagesArgs
   }
 
   // locale を含まない記事ページの pagePath を生成
-  const createCanonicalPathPath = ({ type, category, slug }) => `/${type.slug}/${category.slug}/${slug}/`;
-  const createPagePath = ({ node_locale, type, category, slug }) =>
+  const createCanonicalPathPath = ({
+    type,
+    category,
+    slug,
+  }: Pick<Queries.ContentfulArticle, 'type' | 'category' | 'slug'>) => `/${type?.slug}/${category?.slug}/${slug}/`;
+  const createPagePath = ({
+    node_locale,
+    type,
+    category,
+    slug,
+  }: Pick<Queries.ContentfulArticle, 'node_locale' | 'type' | 'category' | 'slug'>) =>
     `${resolveLocalePath(node_locale, defaultLocaleCode)}${createCanonicalPathPath({
       type,
       category,
       slug,
     })}`;
 
-  result.data.allContentfulArticle.nodes.forEach((page) => {
-    const body = page.body?.childMarkdownRemark.html ?? '';
+  result.data?.allContentfulArticle.nodes.forEach((page) => {
+    const body = page.body?.childMarkdownRemark?.html ?? '';
     if (body === '') {
       // 該当 locale のページがない場合
       console.info('No Article Content Body found');
       return;
     }
+
     createPage({
       path: createPagePath(page),
       component: resolveTemplatePath(

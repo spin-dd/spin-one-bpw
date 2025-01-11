@@ -15,7 +15,7 @@ export const generatePages = async ({ graphql, actions }: CreatePagesArgs, optio
       }
     }
   `);
-  if (checkPageContentEntry.data.allContentfulPage.totalCount === 0) {
+  if (!checkPageContentEntry.data?.allContentfulPage.totalCount) {
     console.warn('No Page Content Entry found');
     return;
   }
@@ -50,13 +50,13 @@ export const generatePages = async ({ graphql, actions }: CreatePagesArgs, optio
     throw result.errors;
   }
 
-  result.data.allContentfulPage.nodes.forEach((page) => {
+  result.data?.allContentfulPage.nodes.forEach((page) => {
     const body = page.body?.raw ?? '';
     if (body === '') {
       // 該当 locale のページがない場合
       return;
     }
-    const context = parseJson(page.context?.internal?.content) ?? {};
+    const context = parseJson(page.context?.internal?.content as string) ?? {};
     createPage({
       path: `${resolveLocalePath(page.node_locale, defaultLocaleCode)}${page.pagePath}`,
       component: resolveTemplatePath(

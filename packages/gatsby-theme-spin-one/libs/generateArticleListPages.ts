@@ -5,7 +5,7 @@ import type { SpinOneThemeOptions, GeneratePagesOptions } from '../gatsby-node';
 
 // Contentful ArticleType と ArticleCategory でカテゴライズした Article 一覧ページ生成
 export const generateArticleListPages = async (
-  args: Parameters<GatsbyNode['createPages']>[0],
+  args: Parameters<NonNullable<GatsbyNode['createPages']>>[0],
   options: GeneratePagesOptions,
   themeOptions: SpinOneThemeOptions,
 ) => {
@@ -25,8 +25,8 @@ export const generateArticleListPages = async (
     }
   `);
   if (
-    checkEntry.data.allContentfulArticleType.totalCount === 0 ||
-    checkEntry.data.allContentfulArticleCategory.totalCount === 0
+    !checkEntry.data?.allContentfulArticleType.totalCount ||
+    !checkEntry.data?.allContentfulArticleCategory.totalCount
   ) {
     console.warn('No ArticleType / ArticleCategory found');
     return;
@@ -41,7 +41,7 @@ export const generateArticleListPages = async (
 };
 
 const generateArticleListPageWithLocale = async (
-  { graphql, actions }: Parameters<GatsbyNode['createPages']>[0],
+  { graphql, actions }: Parameters<NonNullable<GatsbyNode['createPages']>>[0],
   options: GeneratePagesOptions,
   themeOptions: SpinOneThemeOptions,
   locale: string,
@@ -77,31 +77,49 @@ const generateArticleListPageWithLocale = async (
     }
   `);
 
-  const types = result.data.allContentfulArticleType.nodes;
-  const categories = result.data.allContentfulArticleCategory.nodes;
-  if (types.length === 0 || categories.length === 0) {
+  const types = result.data?.allContentfulArticleType.nodes;
+  const categories = result.data?.allContentfulArticleCategory.nodes;
+  if (!types || !categories) {
     console.info('No ArticleType / ArticleCategory found');
     return;
   }
 
   // モジュール内の共通処理関数
   const createArticleListPages = ({
-    totalCount,
+    totalCount = 0,
     type,
-    category = null,
+    category,
     locale,
   }: {
-    totalCount: number;
+    totalCount: number | undefined;
     type: Queries.ContentfulArticleType;
-    category?: Queries.ContentfulArticleCategory;
+    category?: Queries.ContentfulArticleCategory | undefined;
     locale: string;
   }) => {
     // locale を含まない記事ページの pagePath を生成
-    const createCanonicalPath = ({ type, category, page }) => {
+    const createCanonicalPath = ({
+      type,
+      category,
+      page,
+    }: {
+      type: Queries.ContentfulArticleType;
+      category: Queries.ContentfulArticleCategory | undefined;
+      page: number;
+    }) => {
       const basePath = category ? `/${type.slug}/${category.slug}/` : `/${type.slug}/`;
       return page === 1 ? basePath : `${basePath}${page}/`;
     };
-    const createPagePath = ({ locale, type, category, page }) =>
+    const createPagePath = ({
+      locale,
+      type,
+      category,
+      page,
+    }: {
+      locale: string;
+      type: Queries.ContentfulArticleType;
+      category: Queries.ContentfulArticleCategory | undefined;
+      page: number;
+    }) =>
       `${resolveLocalePath(locale, defaultLocaleCode)}${createCanonicalPath({
         type,
         category,
@@ -157,7 +175,7 @@ const generateArticleListPageWithLocale = async (
         }
       }
     `);
-    createArticleListPages({ totalCount: articles.data.allContentfulArticle.totalCount, type, locale });
+    createArticleListPages({ totalCount: articles.data?.allContentfulArticle.totalCount, type, locale });
 
     // ArticleCategory[]をループして記事一覧ページを生成する
     for (const category of categories) {
@@ -172,7 +190,7 @@ const generateArticleListPageWithLocale = async (
           }
         }
       `);
-      createArticleListPages({ totalCount: articles.data.allContentfulArticle.totalCount, type, category, locale });
+      createArticleListPages({ totalCount: articles.data?.allContentfulArticle.totalCount, type, category, locale });
     }
   }
 };
