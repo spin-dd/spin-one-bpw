@@ -44,3 +44,4 @@ Documents/site
 
 # Graphql Typegen
 packages/theme-demo/src/gatsby-types.d.ts
+packages/theme-demo/schema.gql

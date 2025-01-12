@@ -1215,6 +1215,8 @@ type ContentfulComponentConnection_sumArgs = {
   field: ContentfulComponentFieldSelector;
 };
 
+type ContentfulComponentContentfulElementContentfulImageUnion = ContentfulComponent | ContentfulElement | ContentfulImage;
+
 type ContentfulComponentEdge = {
   readonly next: Maybe<ContentfulComponent>;
   readonly node: ContentfulComponent;
@@ -1566,18 +1568,22 @@ type ContentfulElement_updatedAtArgs = {
 
 type ContentfulElementBody = {
   readonly raw: Maybe<Scalars['String']>;
+  readonly references: Maybe<ReadonlyArray<Maybe<ContentfulComponent>>>;
 };
 
 type ContentfulElementBodyFieldSelector = {
   readonly raw: InputMaybe<FieldSelectorEnum>;
+  readonly references: InputMaybe<ContentfulComponentFieldSelector>;
 };
 
 type ContentfulElementBodyFilterInput = {
   readonly raw: InputMaybe<StringQueryOperatorInput>;
+  readonly references: InputMaybe<ContentfulComponentFilterListInput>;
 };
 
 type ContentfulElementBodySortInput = {
   readonly raw: InputMaybe<SortOrderEnum>;
+  readonly references: InputMaybe<ContentfulComponentSortInput>;
 };
 
 type ContentfulElementConnection = {
@@ -1618,8 +1624,6 @@ type ContentfulElementConnection_minArgs = {
 type ContentfulElementConnection_sumArgs = {
   field: ContentfulElementFieldSelector;
 };
-
-type ContentfulElementContentfulImageUnion = ContentfulElement | ContentfulImage;
 
 type ContentfulElementEdge = {
   readonly next: Maybe<ContentfulElement>;
@@ -2200,7 +2204,7 @@ type ContentfulPage_updatedAtArgs = {
 
 type ContentfulPageBody = {
   readonly raw: Maybe<Scalars['String']>;
-  readonly references: Maybe<ReadonlyArray<Maybe<ContentfulElementContentfulImageUnion>>>;
+  readonly references: Maybe<ReadonlyArray<Maybe<ContentfulComponentContentfulElementContentfulImageUnion>>>;
 };
 
 type ContentfulPageBodyFieldSelector = {
@@ -4161,19 +4165,24 @@ type Query_contentfulComponentPropsJsonNodeArgs = {
   as: InputMaybe<StringQueryOperatorInput>;
   autoplay: InputMaybe<contentfulComponentPropsJsonNodeAutoplayFilterInput>;
   breakpoints: InputMaybe<contentfulComponentPropsJsonNodeBreakpointsFilterInput>;
+  category: InputMaybe<Scalars['String']>;
   children: InputMaybe<NodeFilterListInput>;
   className: InputMaybe<StringQueryOperatorInput>;
+  filter: InputMaybe<contentfulComponentPropsJsonNodeFilterFilterInput>;
   id: InputMaybe<StringQueryOperatorInput>;
   internal: InputMaybe<InternalFilterInput>;
+  limit: InputMaybe<IntQueryOperatorInput>;
   loop: InputMaybe<BooleanQueryOperatorInput>;
   navigation: InputMaybe<contentfulComponentPropsJsonNodeNavigationFilterInput>;
   parent: InputMaybe<NodeFilterInput>;
   slidesPerView: InputMaybe<IntQueryOperatorInput>;
+  sort: InputMaybe<contentfulComponentPropsJsonNodeSortFilterInput>;
   spaceBetween: InputMaybe<IntQueryOperatorInput>;
   speed: InputMaybe<IntQueryOperatorInput>;
   sys: InputMaybe<contentfulComponentPropsJsonNodeSysFilterInput>;
   tagName: InputMaybe<StringQueryOperatorInput>;
   target: InputMaybe<StringQueryOperatorInput>;
+  type: InputMaybe<Scalars['String']>;
 };
 
 
@@ -5514,12 +5523,15 @@ type contentfulComponentPropsJsonNode = Node & {
   readonly breakpoints: Maybe<contentfulComponentPropsJsonNodeBreakpoints>;
   readonly children: ReadonlyArray<Node>;
   readonly className: Maybe<Scalars['String']>;
+  readonly filter: Maybe<contentfulComponentPropsJsonNodeFilter>;
   readonly id: Scalars['ID'];
   readonly internal: Internal;
+  readonly limit: Maybe<Scalars['Int']>;
   readonly loop: Maybe<Scalars['Boolean']>;
   readonly navigation: Maybe<contentfulComponentPropsJsonNodeNavigation>;
   readonly parent: Maybe<Node>;
   readonly slidesPerView: Maybe<Scalars['Int']>;
+  readonly sort: Maybe<contentfulComponentPropsJsonNodeSort>;
   readonly spaceBetween: Maybe<Scalars['Int']>;
   readonly speed: Maybe<Scalars['Int']>;
   readonly sys: Maybe<contentfulComponentPropsJsonNodeSys>;
@@ -5539,10 +5551,6 @@ type contentfulComponentPropsJsonNodeAutoplayFilterInput = {
   readonly delay: InputMaybe<IntQueryOperatorInput>;
 };
 
-type contentfulComponentPropsJsonNodeAutoplaySortInput = {
-  readonly delay: InputMaybe<SortOrderEnum>;
-};
-
 type contentfulComponentPropsJsonNodeBreakpoints = {
   readonly _768: Maybe<contentfulComponentPropsJsonNodeBreakpoints_768>;
 };
@@ -5555,10 +5563,6 @@ type contentfulComponentPropsJsonNodeBreakpointsFilterInput = {
   readonly _768: InputMaybe<contentfulComponentPropsJsonNodeBreakpoints_768FilterInput>;
 };
 
-type contentfulComponentPropsJsonNodeBreakpointsSortInput = {
-  readonly _768: InputMaybe<contentfulComponentPropsJsonNodeBreakpoints_768SortInput>;
-};
-
 type contentfulComponentPropsJsonNodeBreakpoints_768 = {
   readonly slidesPerView: Maybe<Scalars['Int']>;
 };
@@ -5569,10 +5573,6 @@ type contentfulComponentPropsJsonNodeBreakpoints_768FieldSelector = {
 
 type contentfulComponentPropsJsonNodeBreakpoints_768FilterInput = {
   readonly slidesPerView: InputMaybe<IntQueryOperatorInput>;
-};
-
-type contentfulComponentPropsJsonNodeBreakpoints_768SortInput = {
-  readonly slidesPerView: InputMaybe<SortOrderEnum>;
 };
 
 type contentfulComponentPropsJsonNodeConnection = {
@@ -5626,12 +5626,15 @@ type contentfulComponentPropsJsonNodeFieldSelector = {
   readonly breakpoints: InputMaybe<contentfulComponentPropsJsonNodeBreakpointsFieldSelector>;
   readonly children: InputMaybe<NodeFieldSelector>;
   readonly className: InputMaybe<FieldSelectorEnum>;
+  readonly filter: InputMaybe<contentfulComponentPropsJsonNodeFilterFieldSelector>;
   readonly id: InputMaybe<FieldSelectorEnum>;
   readonly internal: InputMaybe<InternalFieldSelector>;
+  readonly limit: InputMaybe<FieldSelectorEnum>;
   readonly loop: InputMaybe<FieldSelectorEnum>;
   readonly navigation: InputMaybe<contentfulComponentPropsJsonNodeNavigationFieldSelector>;
   readonly parent: InputMaybe<NodeFieldSelector>;
   readonly slidesPerView: InputMaybe<FieldSelectorEnum>;
+  readonly sort: InputMaybe<contentfulComponentPropsJsonNodeSortFieldSelector>;
   readonly spaceBetween: InputMaybe<FieldSelectorEnum>;
   readonly speed: InputMaybe<FieldSelectorEnum>;
   readonly sys: InputMaybe<contentfulComponentPropsJsonNodeSysFieldSelector>;
@@ -5639,23 +5642,43 @@ type contentfulComponentPropsJsonNodeFieldSelector = {
   readonly target: InputMaybe<FieldSelectorEnum>;
 };
 
+type contentfulComponentPropsJsonNodeFilter = {
+  readonly category: Maybe<Scalars['String']>;
+  readonly type: Maybe<Scalars['String']>;
+};
+
+type contentfulComponentPropsJsonNodeFilterFieldSelector = {
+  readonly category: InputMaybe<FieldSelectorEnum>;
+  readonly type: InputMaybe<FieldSelectorEnum>;
+};
+
+type contentfulComponentPropsJsonNodeFilterFilterInput = {
+  readonly category: InputMaybe<StringQueryOperatorInput>;
+  readonly type: InputMaybe<StringQueryOperatorInput>;
+};
+
 type contentfulComponentPropsJsonNodeFilterInput = {
   readonly as: InputMaybe<StringQueryOperatorInput>;
   readonly autoplay: InputMaybe<contentfulComponentPropsJsonNodeAutoplayFilterInput>;
   readonly breakpoints: InputMaybe<contentfulComponentPropsJsonNodeBreakpointsFilterInput>;
+  readonly category: InputMaybe<Scalars['String']>;
   readonly children: InputMaybe<NodeFilterListInput>;
   readonly className: InputMaybe<StringQueryOperatorInput>;
+  readonly filter: InputMaybe<contentfulComponentPropsJsonNodeFilterFilterInput>;
   readonly id: InputMaybe<StringQueryOperatorInput>;
   readonly internal: InputMaybe<InternalFilterInput>;
+  readonly limit: InputMaybe<IntQueryOperatorInput>;
   readonly loop: InputMaybe<BooleanQueryOperatorInput>;
   readonly navigation: InputMaybe<contentfulComponentPropsJsonNodeNavigationFilterInput>;
   readonly parent: InputMaybe<NodeFilterInput>;
   readonly slidesPerView: InputMaybe<IntQueryOperatorInput>;
+  readonly sort: InputMaybe<contentfulComponentPropsJsonNodeSortFilterInput>;
   readonly spaceBetween: InputMaybe<IntQueryOperatorInput>;
   readonly speed: InputMaybe<IntQueryOperatorInput>;
   readonly sys: InputMaybe<contentfulComponentPropsJsonNodeSysFilterInput>;
   readonly tagName: InputMaybe<StringQueryOperatorInput>;
   readonly target: InputMaybe<StringQueryOperatorInput>;
+  readonly type: InputMaybe<Scalars['String']>;
 };
 
 type contentfulComponentPropsJsonNodeFilterListInput = {
@@ -5718,28 +5741,24 @@ type contentfulComponentPropsJsonNodeNavigationFilterInput = {
   readonly prevEl: InputMaybe<StringQueryOperatorInput>;
 };
 
-type contentfulComponentPropsJsonNodeNavigationSortInput = {
-  readonly nextEl: InputMaybe<SortOrderEnum>;
-  readonly prevEl: InputMaybe<SortOrderEnum>;
+type contentfulComponentPropsJsonNodeSort = {
+  readonly field: Maybe<Scalars['String']>;
+  readonly order: Maybe<Scalars['String']>;
+};
+
+type contentfulComponentPropsJsonNodeSortFieldSelector = {
+  readonly field: InputMaybe<FieldSelectorEnum>;
+  readonly order: InputMaybe<FieldSelectorEnum>;
+};
+
+type contentfulComponentPropsJsonNodeSortFilterInput = {
+  readonly field: InputMaybe<StringQueryOperatorInput>;
+  readonly order: InputMaybe<StringQueryOperatorInput>;
 };
 
 type contentfulComponentPropsJsonNodeSortInput = {
-  readonly as: InputMaybe<SortOrderEnum>;
-  readonly autoplay: InputMaybe<contentfulComponentPropsJsonNodeAutoplaySortInput>;
-  readonly breakpoints: InputMaybe<contentfulComponentPropsJsonNodeBreakpointsSortInput>;
-  readonly children: InputMaybe<NodeSortInput>;
-  readonly className: InputMaybe<SortOrderEnum>;
-  readonly id: InputMaybe<SortOrderEnum>;
-  readonly internal: InputMaybe<InternalSortInput>;
-  readonly loop: InputMaybe<SortOrderEnum>;
-  readonly navigation: InputMaybe<contentfulComponentPropsJsonNodeNavigationSortInput>;
-  readonly parent: InputMaybe<NodeSortInput>;
-  readonly slidesPerView: InputMaybe<SortOrderEnum>;
-  readonly spaceBetween: InputMaybe<SortOrderEnum>;
-  readonly speed: InputMaybe<SortOrderEnum>;
-  readonly sys: InputMaybe<contentfulComponentPropsJsonNodeSysSortInput>;
-  readonly tagName: InputMaybe<SortOrderEnum>;
-  readonly target: InputMaybe<SortOrderEnum>;
+  readonly field: InputMaybe<Scalars['String']>;
+  readonly order: InputMaybe<Scalars['String']>;
 };
 
 type contentfulComponentPropsJsonNodeSys = {
@@ -5752,10 +5771,6 @@ type contentfulComponentPropsJsonNodeSysFieldSelector = {
 
 type contentfulComponentPropsJsonNodeSysFilterInput = {
   readonly type: InputMaybe<StringQueryOperatorInput>;
-};
-
-type contentfulComponentPropsJsonNodeSysSortInput = {
-  readonly type: InputMaybe<SortOrderEnum>;
 };
 
 type contentfulImagePropsJsonNode = Node & {

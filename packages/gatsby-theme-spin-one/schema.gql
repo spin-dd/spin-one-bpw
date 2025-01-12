@@ -1,4 +1,4 @@
-### Type definitions saved at 2025-01-03T03:14:17.784Z ###
+### Type definitions saved at 2025-01-12T10:25:40.413Z ###
 
 enum RemoteFileFit {
   COVER
@@ -254,9 +254,9 @@ type SiteSiteMetadata {
 }
 
 type SiteGraphqlTypegen {
+  generateOnBuild: Boolean
   typesOutputPath: String
   documentSearchPaths: [String]
-  generateOnBuild: Boolean
 }
 
 type SiteFunction implements Node @dontInfer {
@@ -517,6 +517,90 @@ type ContentfulElement implements ContentfulReference & ContentfulEntry & Node @
 
 type ContentfulElementBody {
   raw: String
+  references: [ContentfulComponent] @link(by: "id", from: "references___NODE")
+}
+
+type ContentfulComponent implements ContentfulReference & ContentfulEntry & Node @dontInfer {
+  contentful_id: String!
+  node_locale: String!
+  name: String
+  moduleName: String
+  props: contentfulComponentPropsJsonNode @link(by: "id", from: "props___NODE")
+  spaceId: String
+  createdAt: Date @dateformat
+  updatedAt: Date @dateformat
+  sys: ContentfulComponentSys
+  body: ContentfulComponentBody
+}
+
+type contentfulComponentPropsJsonNode implements Node @childOf(mimeTypes: [], types: ["ContentfulComponent"]) @dontInfer {
+  target: String
+  sys: contentfulComponentPropsJsonNodeSys
+  as: String
+  className: String
+  tagName: String
+  loop: Boolean
+  speed: Int
+  autoplay: contentfulComponentPropsJsonNodeAutoplay
+  navigation: contentfulComponentPropsJsonNodeNavigation
+  breakpoints: contentfulComponentPropsJsonNodeBreakpoints
+  spaceBetween: Int
+  slidesPerView: Int
+  sort: contentfulComponentPropsJsonNodeSort
+  limit: Int
+  filter: contentfulComponentPropsJsonNodeFilter
+}
+
+type contentfulComponentPropsJsonNodeSys {
+  type: String
+}
+
+type contentfulComponentPropsJsonNodeAutoplay {
+  delay: Int
+}
+
+type contentfulComponentPropsJsonNodeNavigation {
+  nextEl: String
+  prevEl: String
+}
+
+type contentfulComponentPropsJsonNodeBreakpoints {
+  _768: contentfulComponentPropsJsonNodeBreakpoints_768 @proxy(from: "768", fromNode: false)
+}
+
+type contentfulComponentPropsJsonNodeBreakpoints_768 {
+  slidesPerView: Int
+}
+
+type contentfulComponentPropsJsonNodeSort {
+  field: String
+  order: String
+}
+
+type contentfulComponentPropsJsonNodeFilter {
+  type: String
+  category: String
+}
+
+type ContentfulComponentSys {
+  type: String
+  revision: Int
+  contentType: ContentfulComponentSysContentType
+}
+
+type ContentfulComponentSysContentType {
+  sys: ContentfulComponentSysContentTypeSys
+}
+
+type ContentfulComponentSysContentTypeSys {
+  type: String
+  linkType: String
+  id: String
+}
+
+type ContentfulComponentBody {
+  raw: String
+  references: [ContentfulComponent] @link(by: "id", from: "references___NODE")
 }
 
 type ContentfulElementSys {
@@ -673,76 +757,6 @@ type contentfulImagePropsJsonNodeSys {
   type: String
 }
 
-type ContentfulComponent implements ContentfulReference & ContentfulEntry & Node @dontInfer {
-  contentful_id: String!
-  node_locale: String!
-  name: String
-  moduleName: String
-  props: contentfulComponentPropsJsonNode @link(by: "id", from: "props___NODE")
-  spaceId: String
-  createdAt: Date @dateformat
-  updatedAt: Date @dateformat
-  sys: ContentfulComponentSys
-  body: ContentfulComponentBody
-}
-
-type contentfulComponentPropsJsonNode implements Node @childOf(mimeTypes: [], types: ["ContentfulComponent"]) @dontInfer {
-  target: String
-  sys: contentfulComponentPropsJsonNodeSys
-  as: String
-  className: String
-  tagName: String
-  loop: Boolean
-  speed: Int
-  autoplay: contentfulComponentPropsJsonNodeAutoplay
-  navigation: contentfulComponentPropsJsonNodeNavigation
-  breakpoints: contentfulComponentPropsJsonNodeBreakpoints
-  spaceBetween: Int
-  slidesPerView: Int
-}
-
-type contentfulComponentPropsJsonNodeSys {
-  type: String
-}
-
-type contentfulComponentPropsJsonNodeAutoplay {
-  delay: Int
-}
-
-type contentfulComponentPropsJsonNodeNavigation {
-  nextEl: String
-  prevEl: String
-}
-
-type contentfulComponentPropsJsonNodeBreakpoints {
-  _768: contentfulComponentPropsJsonNodeBreakpoints_768 @proxy(from: "768", fromNode: false)
-}
-
-type contentfulComponentPropsJsonNodeBreakpoints_768 {
-  slidesPerView: Int
-}
-
-type ContentfulComponentSys {
-  type: String
-  revision: Int
-  contentType: ContentfulComponentSysContentType
-}
-
-type ContentfulComponentSysContentType {
-  sys: ContentfulComponentSysContentTypeSys
-}
-
-type ContentfulComponentSysContentTypeSys {
-  type: String
-  linkType: String
-  id: String
-}
-
-type ContentfulComponentBody {
-  raw: String
-  references: [ContentfulComponent] @link(by: "id", from: "references___NODE")
-}
-
 type ContentfulTemplate implements ContentfulReference & ContentfulEntry & Node @dontInfer {
   contentful_id: String!
   node_locale: String!
@@ -804,8 +818,8 @@ type ContentfulPage implements ContentfulReference & ContentfulEntry & Node @don
   createdAt: Date @dateformat
   updatedAt: Date @dateformat
   sys: ContentfulPageSys
-  script: ContentfulPageScript
   context: contentfulPageContextJsonNode @link(by: "id", from: "context___NODE")
+  script: ContentfulPageScript
 }
 
 type ContentfulPageHead {
@@ -814,10 +828,10 @@ type ContentfulPageHead {
 
 type ContentfulPageBody {
   raw: String
-  references: [ContentfulElementContentfulImageUnion] @link(by: "id", from: "references___NODE")
+  references: [ContentfulComponentContentfulElementContentfulImageUnion] @link(by: "id", from: "references___NODE")
 }
 
-union ContentfulElementContentfulImageUnion = ContentfulElement | ContentfulImage
+union ContentfulComponentContentfulElementContentfulImageUnion = ContentfulComponent | ContentfulElement | ContentfulImage
 
 type ContentfulPageSys {
   type: String
@@ -835,16 +849,16 @@ type ContentfulPageSysContentTypeSys {
   id: String
 }
 
-type ContentfulPageScript {
-  raw: String
-}
-
 type contentfulPageContextJsonNode implements Node @childOf(mimeTypes: [], types: ["ContentfulPage"]) @dontInfer {
   sys: contentfulPageContextJsonNodeSys
 }
 
 type contentfulPageContextJsonNodeSys {
   type: String
+}
+
+type ContentfulPageScript {
+  raw: String
 }
 
 type MarkdownHeading {

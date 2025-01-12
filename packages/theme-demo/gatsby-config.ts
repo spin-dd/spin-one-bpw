@@ -1,4 +1,3 @@
-import path from "path";
 import type { GatsbyConfig } from "gatsby";
 import dotenv from "dotenv";
 
@@ -15,13 +14,6 @@ const config: GatsbyConfig = {
     generateOnBuild: true,
   },
   plugins: [
-    {
-      resolve: "gatsby-plugin-schema-snapshot",
-      options: {
-        update: process.env.GATSBY_UPDATE_SCHEMA_SNAPSHOT === "true",
-        path: path.resolve(__dirname, "schema.gql"),
-      },
-    },
     "gatsby-plugin-typescript",
     {
       resolve: "@spin-dd/gatsby-theme-spin-one",
@@ -33,5 +25,11 @@ const config: GatsbyConfig = {
     },
   ],
 };
+
+// theme-demoでschema.gqlを更新し、develop/buildのpost処理として
+// gatsby-theme-spin-oneのschema.gqlにコピーする
+if (process.env.GATSBY_UPDATE_SCHEMA_SNAPSHOT) {
+  config.plugins?.push("gatsby-plugin-schema-snapshot");
+}
 
 export default config;

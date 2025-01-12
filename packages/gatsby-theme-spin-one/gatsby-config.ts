@@ -1,3 +1,4 @@
+import path from 'path';
 import type { GatsbyConfig } from 'gatsby';
 import dotenv from 'dotenv';
 
@@ -19,6 +20,12 @@ if (!spaceId || !accessToken) {
 
 const config: GatsbyConfig = {
   plugins: [
+    {
+      resolve: 'gatsby-plugin-schema-snapshot',
+      options: {
+        path: path.resolve(__dirname, 'schema.gql'),
+      },
+    },
     'gatsby-plugin-typescript',
     {
       resolve: 'gatsby-source-contentful',
