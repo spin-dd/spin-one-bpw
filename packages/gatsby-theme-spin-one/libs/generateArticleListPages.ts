@@ -91,11 +91,16 @@ const generateArticleListPageWithLocale = async (
     category,
     locale,
   }: {
-    totalCount: number | undefined;
+    totalCount: Queries.ContentfulArticleConnection['totalCount'] | undefined;
     type: Queries.ContentfulArticleType;
     category?: Queries.ContentfulArticleCategory | undefined;
     locale: string;
   }) => {
+    if (!totalCount) {
+      console.info('data not found');
+      return;
+    }
+
     // locale を含まない記事ページの pagePath を生成
     const createCanonicalPath = ({
       type,
