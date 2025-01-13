@@ -2,7 +2,7 @@ import React, { ReactElement, useEffect } from 'react';
 import { useLocation } from '@reach/router';
 import { useScript } from '../hooks/useScript';
 
-export const Layout: React.FC<{ body: React.ReactElement[]; script: ReactElement[] }> = ({ body, script }) => {
+export const Layout: React.FC<{ body: React.ReactElement[]; script: ReactElement[] }> = ({ body, script = [] }) => {
   // https://paulie.dev/posts/2022/10/react-hydration-error-425-text-content-does-not-match-server-rendered-html/
   const [isHydrated, setIsHydrated] = React.useState(false);
   React.useEffect(() => setIsHydrated(true), []);
