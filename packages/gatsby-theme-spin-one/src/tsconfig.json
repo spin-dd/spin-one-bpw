@@ -4,5 +4,5 @@
     "noEmit": true,
     "allowImportingTsExtensions": true
   },
-  "include": ["**/*"]
+  "include": ["**/*", "../gatsby-types.d.ts", "../index.ts"]
 }

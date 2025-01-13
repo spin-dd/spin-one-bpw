@@ -12,6 +12,7 @@
     "directory": "packages/gatsby-theme-spin-one"
   },
   "main": "index.js",
+  "types": "index.ts",
   "bin": {
     "contentful-setup": "./dist/scripts/contentful-setup.js",
     "contentful-sync": "./dist/scripts/contentful-sync.js"
@@ -20,8 +21,7 @@
     "libs",
     "dist",
     "src",
-    "*.js",
-    "README.md"
+    "*.js"
   ],
   "scripts": {
     "lint": "run-s -c lint:*",
@@ -41,6 +41,7 @@
     "bootstrap": "5.3.3",
     "contentful-import": "9.4.70",
     "contentful-management": "11.37.0",
+    "escape-html": "1.0.3",
     "gatsby-plugin-google-tagmanager": "5.14.0",
     "gatsby-plugin-image": "3.14.0",
     "gatsby-plugin-sass": "6.14.0",
@@ -52,6 +53,7 @@
     "react-bootstrap": "2.10.5"
   },
   "devDependencies": {
+    "@types/escape-html": "1.0.4",
     "@types/mime": "3.0.4",
     "contentful-cli": "3.5.4",
     "dotenv": "16.4.5",
