@@ -1,10 +1,28 @@
 import React from 'react';
 import { prepareForParse, parseHtmlToReact } from '../../utils';
+import { ComponentProps } from '../../..';
 
-function CustomArticleList({
-  data: { pageContext, ...pageData },
+export const CustomArticleList: React.FC<
+  ComponentProps<{
+    template: Queries.ContentfulComponent;
+    customAllContentfulArticle: Queries.ContentfulArticleConnection;
+  }> & {
+    tagName: string;
+    className: string;
+    filter: {
+      type: string;
+      category: string;
+    };
+    sort: {
+      field: keyof Pick<Queries.ContentfulArticle, 'createdAt' | 'updatedAt' | 'publishDate'>;
+      order: string;
+    };
+    limit: number;
+    pageContext: object;
+  }
+> = ({
+  data: { template, ...pageData },
   // parseHtmlToReactでComponent entryがテンプレートとしてI/Fされる
-  template,
   // Contentful Component propsからの入力値
   tagName = 'ul',
   className = '',
@@ -17,16 +35,24 @@ function CustomArticleList({
     order: 'desc',
   },
   limit = 5,
-}) {
+  pageContext = {},
+}) => {
   // propsからの入力値を元に、filterFunc, sortFuncを定義
-  const filterFunc = (node) => {
+  const filterFunc = (node: Queries.ContentfulArticle) => {
     return (
-      (!filter.type || node.type.slug === filter.type) && (!filter.category || node.category.slug === filter.category)
+      (!filter.type || node.type?.slug === filter.type) && (!filter.category || node.category?.slug === filter.category)
     );
   };
-  const sortFunc = (a, b) => {
-    const dateA = new Date(a[sort.field]);
-    const dateB = new Date(b[sort.field]);
+
+  const sortFunc = (a: Queries.ContentfulArticle, b: Queries.ContentfulArticle) => {
+    const aValue = a[sort.field];
+    const bValue = b[sort.field];
+    if (aValue == null || bValue == null) {
+      return 0;
+    }
+
+    const dateA = new Date(aValue);
+    const dateB = new Date(bValue);
 
     if (sort.order?.toLocaleLowerCase() === 'asc') {
       return dateA.getTime() - dateB.getTime();
@@ -56,6 +82,4 @@ function CustomArticleList({
     });
 
   return React.createElement(tagName, { className }, itemElements);
-}
-
-export { CustomArticleList };
+};
