@@ -24,9 +24,10 @@ const createScriptElement = (node: ReactElement) => {
   return element;
 };
 
-export const useScript = (nodes: ReactElement[]) => {
+export const useScript = (nodes: ReactElement | ReactElement[]) => {
   useEffect(() => {
-    const scriptElements = nodes.map((node) => createScriptElement(node)).filter((element) => element !== null);
+    const arrayNodes = Array.isArray(nodes) ? nodes : [nodes];
+    const scriptElements = arrayNodes.map((node) => createScriptElement(node)).filter((element) => element !== null);
     scriptElements.map((element) => document.head.appendChild(element));
 
     return () => {
