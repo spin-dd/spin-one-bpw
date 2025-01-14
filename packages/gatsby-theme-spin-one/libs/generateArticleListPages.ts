@@ -26,6 +26,14 @@ export const generateArticleListPages = async ({ graphql, actions }, themeOption
     return;
   }
 
+  const { allLocales = [] } = themeOptions;
+
+  allLocales.forEach((locale) => {
+    generateArticleListPageWithLocale({ graphql, actions }, themeOptions, locale.code);
+  });
+};
+
+const generateArticleListPageWithLocale = async ({ graphql, actions }, themeOptions, locale) => {
   const { createPage } = actions;
   const { allLocales, defaultLocaleCode, articlesPerPage = 10 } = themeOptions;
 
@@ -34,7 +42,7 @@ export const generateArticleListPages = async ({ graphql, actions }, themeOption
   // その後、指定条件でArticleを取得し、ページ生成する
   const result = await graphql(`
     {
-      allContentfulArticleType(filter: { node_locale: { eq: "${defaultLocaleCode}" } }) {
+      allContentfulArticleType(filter: { node_locale: { eq: "${locale}" } }) {
         nodes {
           contentful_id
           __typename
@@ -42,8 +50,7 @@ export const generateArticleListPages = async ({ graphql, actions }, themeOption
           slug
         }
       }
-      # 多言語対応のため、categoryは全てのロケールのものを取得
-      allContentfulArticleCategory {
+      allContentfulArticleCategory(filter: { node_locale: { eq: "${locale}" } }) {
         nodes {
           contentful_id
           __typename
@@ -76,7 +83,6 @@ export const generateArticleListPages = async ({ graphql, actions }, themeOption
       })}`;
 
     const numPages = Math.ceil(articles.data.allContentfulArticle.totalCount / articlesPerPage);
-    const locale = category ? category.node_locale : type.node_locale;
     Array.from({ length: numPages }).forEach((_, i) => {
       const currentPage = i + 1;
       createPage({
@@ -102,7 +108,7 @@ export const generateArticleListPages = async ({ graphql, actions }, themeOption
           limit: articlesPerPage,
           skip: i * articlesPerPage,
           currentPage,
-          basePath: createPagePath({ locale: type.node_locale, type, category, page: 1 }),
+          basePath: createPagePath({ locale, type, category, page: 1 }),
           // customToggleButton 用
           pagePath: createCanonicalPath({ type, category, page: currentPage }),
         },
@@ -116,7 +122,7 @@ export const generateArticleListPages = async ({ graphql, actions }, themeOption
     const articles = await graphql(`
       {
         allContentfulArticle(
-          filter: { type: { slug: { eq: "${type.slug}" } }, node_locale: { eq: "${type.node_locale}" } }
+          filter: { type: { slug: { eq: "${type.slug}" } }, node_locale: { eq: "${locale}" } }
         ) {
           nodes {
             contentful_id
@@ -135,7 +141,7 @@ export const generateArticleListPages = async ({ graphql, actions }, themeOption
       const articles = await graphql(`
         {
           allContentfulArticle(
-            filter: { type: { slug: { eq: "${type.slug}" } }, category: { slug: { eq: "${category.slug}" } }, node_locale: { eq: "${category.node_locale}" } }
+            filter: { type: { slug: { eq: "${type.slug}" } }, category: { slug: { eq: "${category.slug}" } }, node_locale: { eq: "${locale}" } }
           ) {
             nodes {
               contentful_id
