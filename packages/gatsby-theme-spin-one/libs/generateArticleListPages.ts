@@ -118,6 +118,7 @@ const generateArticleListPageWithLocale = async ({ graphql, actions }, themeOpti
   };
 
   // ArticleType[]、ArticleCategory[]をループして記事一覧ページを生成する
+  // ここでは生成するページのみを定義し、実際のページ生成はcreateArticleListPages内で行う
   for (const type of types) {
     // ArticleCategoryなしの記事一覧ページを生成
     const articles = await graphql(`
@@ -125,12 +126,6 @@ const generateArticleListPageWithLocale = async ({ graphql, actions }, themeOpti
         allContentfulArticle(
           filter: { type: { slug: { eq: "${type.slug}" } }, node_locale: { eq: "${locale}" } }
         ) {
-          nodes {
-            contentful_id
-            __typename
-            node_locale
-            slug
-          }
           totalCount
         }
       }
@@ -144,12 +139,6 @@ const generateArticleListPageWithLocale = async ({ graphql, actions }, themeOpti
           allContentfulArticle(
             filter: { type: { slug: { eq: "${type.slug}" } }, category: { slug: { eq: "${category.slug}" } }, node_locale: { eq: "${locale}" } }
           ) {
-            nodes {
-              contentful_id
-              __typename
-              node_locale
-              slug
-            }
             totalCount
           }
         }
