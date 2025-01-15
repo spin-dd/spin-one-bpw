@@ -1,6 +1,7 @@
 import path from 'path';
-import type { Environment } from 'contentful-management';
+import type { Environment, RichTextCommentDocument } from 'contentful-management';
 import type { HTMLElement } from 'node-html-parser';
+import { CommentNode } from 'contentful-management/dist/typings/entities/comment';
 
 // ContentfulのPage Contentを作成する関数
 export const createContentfulPage = async (
@@ -39,8 +40,8 @@ export const createContentfulPage = async (
 
   // Page Contentの作成・更新
   if (page) {
-    page.fields.head = { ja: await convertToRichText(head) };
-    page.fields.body = { ja: await convertToRichText(body) };
+    page.fields.head = { ja: convertToRichText(head) };
+    page.fields.body = { ja: convertToRichText(body) };
     await page.update();
   } else {
     await environment.createEntry('page', {
@@ -49,10 +50,10 @@ export const createContentfulPage = async (
           ja: pagePath,
         },
         head: {
-          ja: await convertToRichText(head),
+          ja: convertToRichText(head),
         },
         body: {
-          ja: await convertToRichText(body),
+          ja: convertToRichText(body),
         },
       },
     });
@@ -73,14 +74,13 @@ const generatePagePath = (htmlFilePath: string, baseDirectory: string) => {
   return pagePath.replace(/\/index$/, '/');
 };
 
-const convertToRichText = async (html: HTMLElement) => {
-  // TODO: コンポーネント、アセット連携
-  const richText = {
-    nodeType: 'document',
+const convertToRichText = (html: HTMLElement) => {
+  const richText: RichTextCommentDocument = {
+    nodeType: CommentNode.Document,
     data: {},
     content: [
       {
-        nodeType: 'paragraph',
+        nodeType: CommentNode.Paragraph,
         content: [
           {
             nodeType: 'text',
@@ -94,5 +94,6 @@ const convertToRichText = async (html: HTMLElement) => {
       },
     ],
   };
+
   return richText;
 };

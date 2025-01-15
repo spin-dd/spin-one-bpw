@@ -1,6 +1,8 @@
 import React from 'react';
 import { prepareForParse, parseHtmlToReact } from '../../utils';
 
+// Contentful Template内で使用する記事一覧コンポーネント
+// generateArticleListPage.ts内でテンプレートに指定しているContentfulのArticleListPage Templateのbody内で使用されている
 function CustomTemplateArticleList({
   data: { pageContext, ...pageData },
   // parseHtmlToReactでComponent entryがテンプレートとしてI/Fされる

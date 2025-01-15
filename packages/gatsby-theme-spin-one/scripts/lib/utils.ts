@@ -89,16 +89,17 @@ const createImageAsset = async (environment: Environment, imageInfo: ImageInfo, 
 
   if (!upload) {
     console.error(`アップロードに失敗しました: ${relativePath}`);
-    return undefined;
+    return;
   }
 
   // アセットを作成
   const asset = await createAsset(environment, assetId, fileName, contentType, upload);
 
-  // アセットを処理（この時点では公開はしない）
+  // アセットを処理して公開
   await asset.processForAllLocales();
-
+  await asset.publish();
   console.info(`アセットを作成しました: ${relativePath} with hash: ${imageInfo.hash}`);
+
   return asset.sys.id;
 };
 
