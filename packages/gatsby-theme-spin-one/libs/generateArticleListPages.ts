@@ -29,9 +29,9 @@ export const generateArticleListPages = async ({ graphql, actions }, themeOption
   // 処理対象とするlocaleを取得
   const { allLocales = [] } = themeOptions;
 
-  allLocales.forEach((locale) => {
-    generateArticleListPageWithLocale({ graphql, actions }, themeOptions, locale.code);
-  });
+  for (const locale of allLocales) {
+    await generateArticleListPageWithLocale({ graphql, actions }, themeOptions, locale.code);
+  }
 };
 
 const generateArticleListPageWithLocale = async ({ graphql, actions }, themeOptions, locale) => {
