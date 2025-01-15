@@ -70,7 +70,7 @@ const generateArticleListPageWithLocale = async ({ graphql, actions }, themeOpti
   }
 
   // モジュール内の共通処理関数
-  const createArticleListPages = ({ articles, type, category = null }) => {
+  const createArticleListPages = ({ articles, type, category = null, locale }) => {
     // locale を含まない記事ページの pagePath を生成
     const createCanonicalPath = ({ type, category, page }) => {
       const basePath = category ? `/${type.slug}/${category.slug}/` : `/${type.slug}/`;
@@ -130,7 +130,7 @@ const generateArticleListPageWithLocale = async ({ graphql, actions }, themeOpti
         }
       }
     `);
-    createArticleListPages({ articles, type });
+    createArticleListPages({ articles, type, locale });
 
     // ArticleCategory[]をループして記事一覧ページを生成する
     for (const category of categories) {
@@ -143,7 +143,7 @@ const generateArticleListPageWithLocale = async ({ graphql, actions }, themeOpti
           }
         }
       `);
-      createArticleListPages({ articles, type, category });
+      createArticleListPages({ articles, type, category, locale });
     }
   }
 };
