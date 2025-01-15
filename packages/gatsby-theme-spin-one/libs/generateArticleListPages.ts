@@ -26,6 +26,7 @@ export const generateArticleListPages = async ({ graphql, actions }, themeOption
     return;
   }
 
+  // 処理対象とするlocaleを取得
   const { allLocales = [] } = themeOptions;
 
   allLocales.forEach((locale) => {
