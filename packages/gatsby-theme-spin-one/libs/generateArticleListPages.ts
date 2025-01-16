@@ -26,6 +26,15 @@ export const generateArticleListPages = async ({ graphql, actions }, themeOption
     return;
   }
 
+  // 処理対象とするlocaleを取得
+  const { allLocales = [] } = themeOptions;
+
+  for (const locale of allLocales) {
+    await generateArticleListPageWithLocale({ graphql, actions }, themeOptions, locale.code);
+  }
+};
+
+const generateArticleListPageWithLocale = async ({ graphql, actions }, themeOptions, locale) => {
   const { createPage } = actions;
   const { allLocales, defaultLocaleCode, articlesPerPage = 10 } = themeOptions;
 
@@ -34,7 +43,7 @@ export const generateArticleListPages = async ({ graphql, actions }, themeOption
   // その後、指定条件でArticleを取得し、ページ生成する
   const result = await graphql(`
     {
-      allContentfulArticleType(filter: { node_locale: { eq: "${defaultLocaleCode}" } }) {
+      allContentfulArticleType(filter: { node_locale: { eq: "${locale}" } }) {
         nodes {
           contentful_id
           __typename
@@ -42,8 +51,7 @@ export const generateArticleListPages = async ({ graphql, actions }, themeOption
           slug
         }
       }
-      # 多言語対応のため、categoryは全てのロケールのものを取得
-      allContentfulArticleCategory {
+      allContentfulArticleCategory(filter: { node_locale: { eq: "${locale}" } }) {
         nodes {
           contentful_id
           __typename
@@ -62,7 +70,7 @@ export const generateArticleListPages = async ({ graphql, actions }, themeOption
   }
 
   // モジュール内の共通処理関数
-  const createArticleListPages = ({ articles, type, category = null }) => {
+  const createArticleListPages = ({ articles, type, category = null, locale }) => {
     // locale を含まない記事ページの pagePath を生成
     const createCanonicalPath = ({ type, category, page }) => {
       const basePath = category ? `/${type.slug}/${category.slug}/` : `/${type.slug}/`;
@@ -76,7 +84,6 @@ export const generateArticleListPages = async ({ graphql, actions }, themeOption
       })}`;
 
     const numPages = Math.ceil(articles.data.allContentfulArticle.totalCount / articlesPerPage);
-    const locale = category ? category.node_locale : type.node_locale;
     Array.from({ length: numPages }).forEach((_, i) => {
       const currentPage = i + 1;
       createPage({
@@ -102,7 +109,7 @@ export const generateArticleListPages = async ({ graphql, actions }, themeOption
           limit: articlesPerPage,
           skip: i * articlesPerPage,
           currentPage,
-          basePath: createPagePath({ locale: type.node_locale, type, category, page: 1 }),
+          basePath: createPagePath({ locale, type, category, page: 1 }),
           // customToggleButton 用
           pagePath: createCanonicalPath({ type, category, page: currentPage }),
         },
@@ -111,43 +118,32 @@ export const generateArticleListPages = async ({ graphql, actions }, themeOption
   };
 
   // ArticleType[]、ArticleCategory[]をループして記事一覧ページを生成する
+  // ここでは生成するページのみを定義し、実際のページ生成はcreateArticleListPages内で行う
   for (const type of types) {
     // ArticleCategoryなしの記事一覧ページを生成
     const articles = await graphql(`
       {
         allContentfulArticle(
-          filter: { type: { slug: { eq: "${type.slug}" } }, node_locale: { eq: "${type.node_locale}" } }
+          filter: { type: { slug: { eq: "${type.slug}" } }, node_locale: { eq: "${locale}" } }
         ) {
-          nodes {
-            contentful_id
-            __typename
-            node_locale
-            slug
-          }
           totalCount
         }
       }
     `);
-    createArticleListPages({ articles, type });
+    createArticleListPages({ articles, type, locale });
 
     // ArticleCategory[]をループして記事一覧ページを生成する
     for (const category of categories) {
       const articles = await graphql(`
         {
           allContentfulArticle(
-            filter: { type: { slug: { eq: "${type.slug}" } }, category: { slug: { eq: "${category.slug}" } }, node_locale: { eq: "${category.node_locale}" } }
+            filter: { type: { slug: { eq: "${type.slug}" } }, category: { slug: { eq: "${category.slug}" } }, node_locale: { eq: "${locale}" } }
           ) {
-            nodes {
-              contentful_id
-              __typename
-              node_locale
-              slug
-            }
             totalCount
           }
         }
       `);
-      createArticleListPages({ articles, type, category });
+      createArticleListPages({ articles, type, category, locale });
     }
   }
 };
