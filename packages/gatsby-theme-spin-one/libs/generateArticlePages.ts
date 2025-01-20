@@ -1,10 +1,14 @@
 import path from 'path';
-import { parseJson, resolveLocalePath, resolveTemplatePath } from './common';
+import { resolveLocalePath, resolveTemplatePath } from './common';
+import type { CreatePagesArgs } from 'gatsby';
+import type { GeneratePagesOptions } from '../gatsby-node';
 
 // Contentful Article からのページ生成
-export const generateArticlePages = async ({ graphql, actions }, themeOptions) => {
+export const generateArticlePages = async ({ graphql, actions }: CreatePagesArgs, options: GeneratePagesOptions) => {
   // GraphQLエラーを防ぐため、処理実行前にContentfulArticleのentryが存在するか確認
-  const checkArticleContentEntry = await graphql(`
+  const checkArticleContentEntry = await graphql<{
+    allContentfulArticle: Queries.ContentfulArticleConnection;
+  }>(`
     {
       allContentfulArticle {
         nodes {
@@ -19,9 +23,11 @@ export const generateArticlePages = async ({ graphql, actions }, themeOptions) =
   }
 
   const { createPage } = actions;
-  const { allLocales, defaultLocaleCode } = themeOptions;
+  const { allLocales, defaultLocaleCode } = options;
 
-  const result = await graphql(`
+  const result = await graphql<{
+    allContentfulArticle: Queries.ContentfulArticleConnection;
+  }>(`
     {
       allContentfulArticle {
         nodes {
@@ -67,7 +73,6 @@ export const generateArticlePages = async ({ graphql, actions }, themeOptions) =
         console.info('No Article Content Body found');
         return;
       }
-      const context = parseJson(page.context?.internal?.content) ?? {};
       createPage({
         path: createPagePath(page),
         component: resolveTemplatePath(
@@ -83,7 +88,6 @@ export const generateArticlePages = async ({ graphql, actions }, themeOptions) =
           slug: page.slug,
           // customToggleButton 用
           pagePath: createCanonicalPathPath(page),
-          ...context,
         },
       });
     });

@@ -5,7 +5,20 @@ import { config } from 'dotenv';
 import { generatePages } from './libs/generatePages';
 import { generateArticlePages } from './libs/generateArticlePages';
 import { generateArticleListPages } from './libs/generateArticleListPages';
+import type { GatsbyNode, PluginOptions } from 'gatsby';
+
+// dotenv の設定
 config();
+
+export interface SpinOneThemeOptions extends PluginOptions {
+  overrideGatsbyNode?: boolean;
+  articlesPerPage?: number;
+}
+
+export type GeneratePagesOptions = {
+  allLocales: Omit<contentful.Locale, 'sys'>[];
+  defaultLocaleCode: string;
+};
 
 /**
  * ユーティリティ
@@ -33,7 +46,11 @@ const getContentfulDefaultLocaleCode = (locales: Omit<contentful.Locale, 'sys'>[
 /**
  * gatsby-nodeのページ生成処理
  */
-export const createPages = async ({ graphql, actions, reporter }, themeOptions) => {
+export const createPages: GatsbyNode['createPages'] = async (
+  createPagesArgs: Parameters<GatsbyNode['createPages']>[0],
+  themeOptions: SpinOneThemeOptions,
+) => {
+  const { reporter } = createPagesArgs;
   const { overrideGatsbyNode = false } = themeOptions;
   // Gatsby theme では theme の gatsby-node を上書きできないため独自実装
   // フラグの設定がある場合、テーマのgatsby-nodeを実行せず、サイト側のgatsby-nodeを実行する
@@ -47,29 +64,21 @@ export const createPages = async ({ graphql, actions, reporter }, themeOptions) 
     // Contentful のデフォルトロケールコード取得
     const defaultLocaleCode = getContentfulDefaultLocaleCode(allLocales);
 
-    await generatePages(
-      { graphql, actions },
-      {
-        allLocales,
-        defaultLocaleCode,
-        ...themeOptions,
-      },
-    );
-    await generateArticlePages(
-      { graphql, actions },
-      {
-        allLocales,
-        defaultLocaleCode,
-        ...themeOptions,
-      },
-    );
+    await generatePages(createPagesArgs, {
+      allLocales,
+      defaultLocaleCode,
+    });
+    await generateArticlePages(createPagesArgs, {
+      allLocales,
+      defaultLocaleCode,
+    });
     await generateArticleListPages(
-      { graphql, actions },
+      createPagesArgs,
       {
         allLocales,
         defaultLocaleCode,
-        ...themeOptions,
       },
+      themeOptions,
     );
   } catch (error) {
     reporter.panicOnBuild(`There was an error loading your Contentful posts`, error);
@@ -77,7 +86,7 @@ export const createPages = async ({ graphql, actions, reporter }, themeOptions) 
   }
 };
 
-export const onPreInit = async ({ reporter }) => {
+export const onPreInit: GatsbyNode['onPreInit'] = async ({ reporter }) => {
   // Contentful に entry が一つもない場合にエラーを出力し、ビルドを中断する
   const client = contentful.createClient({
     space: process.env.CONTENTFUL_SPACE_ID as string,
@@ -90,7 +99,7 @@ export const onPreInit = async ({ reporter }) => {
   }
 };
 
-export const createSchemaCustomization = ({ actions, reporter }) => {
+export const createSchemaCustomization: GatsbyNode['createSchemaCustomization'] = ({ actions, reporter }) => {
   const { createTypes, printTypeDefinitions } = actions;
 
   // テーマ内のschema.gql

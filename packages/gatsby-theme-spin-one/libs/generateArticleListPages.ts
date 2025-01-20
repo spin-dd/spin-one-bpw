@@ -1,10 +1,20 @@
 import path from 'path';
 import { resolveLocalePath, resolveTemplatePath } from './common';
+import type { GatsbyNode } from 'gatsby';
+import type { SpinOneThemeOptions, GeneratePagesOptions } from '../gatsby-node';
 
 // Contentful ArticleType と ArticleCategory でカテゴライズした Article 一覧ページ生成
-export const generateArticleListPages = async ({ graphql, actions }, themeOptions) => {
+export const generateArticleListPages = async (
+  args: Parameters<GatsbyNode['createPages']>[0],
+  options: GeneratePagesOptions,
+  themeOptions: SpinOneThemeOptions,
+) => {
+  const { graphql } = args;
   // GraphQLエラーを防ぐため、処理実行前にContentfulArticleType、ContentfulArticleCategoryのentryが存在するか確認
-  const checkEntry = await graphql(`
+  const checkEntry = await graphql<{
+    allContentfulArticleType: Queries.ContentfulArticleTypeConnection;
+    allContentfulArticleCategory: Queries.ContentfulArticleCategoryConnection;
+  }>(`
     {
       allContentfulArticleType {
         nodes {
@@ -27,21 +37,30 @@ export const generateArticleListPages = async ({ graphql, actions }, themeOption
   }
 
   // 処理対象とするlocaleを取得
-  const { allLocales = [] } = themeOptions;
+  const { allLocales = [] } = options;
 
   for (const locale of allLocales) {
-    await generateArticleListPageWithLocale({ graphql, actions }, themeOptions, locale.code);
+    await generateArticleListPageWithLocale(args, options, themeOptions, locale.code);
   }
 };
 
-const generateArticleListPageWithLocale = async ({ graphql, actions }, themeOptions, locale) => {
+const generateArticleListPageWithLocale = async (
+  { graphql, actions }: Parameters<GatsbyNode['createPages']>[0],
+  options: GeneratePagesOptions,
+  themeOptions: SpinOneThemeOptions,
+  locale: string,
+) => {
   const { createPage } = actions;
-  const { allLocales, defaultLocaleCode, articlesPerPage = 10 } = themeOptions;
+  const { allLocales, defaultLocaleCode } = options;
+  const { articlesPerPage = 10 } = themeOptions;
 
   // GraphQLでは一つのクエリでArticleTypeとArticleCategoryでGroupByできないため、処理を分割する
   // まずはデフォルトロケールでArticleType、ArticleCategoryを取得
   // その後、指定条件でArticleを取得し、ページ生成する
-  const result = await graphql(`
+  const result = await graphql<{
+    allContentfulArticleType: Queries.ContentfulArticleTypeConnection;
+    allContentfulArticleCategory: Queries.ContentfulArticleCategoryConnection;
+  }>(`
     {
       allContentfulArticleType(filter: { node_locale: { eq: "${locale}" } }) {
         nodes {
@@ -121,7 +140,9 @@ const generateArticleListPageWithLocale = async ({ graphql, actions }, themeOpti
   // ここでは生成するページのみを定義し、実際のページ生成はcreateArticleListPages内で行う
   for (const type of types) {
     // ArticleCategoryなしの記事一覧ページを生成
-    const articles = await graphql(`
+    const articles = await graphql<{
+      allContentfulArticle: Queries.ContentfulArticleConnection;
+    }>(`
       {
         allContentfulArticle(
           filter: { type: { slug: { eq: "${type.slug}" } }, node_locale: { eq: "${locale}" } }
@@ -134,7 +155,9 @@ const generateArticleListPageWithLocale = async ({ graphql, actions }, themeOpti
 
     // ArticleCategory[]をループして記事一覧ページを生成する
     for (const category of categories) {
-      const articles = await graphql(`
+      const articles = await graphql<{
+        allContentfulArticle: Queries.ContentfulArticleConnection;
+      }>(`
         {
           allContentfulArticle(
             filter: { type: { slug: { eq: "${type.slug}" } }, category: { slug: { eq: "${category.slug}" } }, node_locale: { eq: "${locale}" } }

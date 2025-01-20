@@ -1,10 +1,12 @@
 import path from 'path';
 import { parseJson, resolveLocalePath, resolveTemplatePath } from './common';
+import type { CreatePagesArgs } from 'gatsby';
+import type { GeneratePagesOptions } from '../gatsby-node';
 
 // Contentful Page からのページ生成
-export const generatePages = async ({ graphql, actions }, themeOptions) => {
+export const generatePages = async ({ graphql, actions }: CreatePagesArgs, options: GeneratePagesOptions) => {
   // GraphQLエラーを防ぐため、処理実行前にContentfulPageのentryが存在するか確認
-  const checkPageContentEntry = await graphql(`
+  const checkPageContentEntry = await graphql<{ allContentfulPage: Queries.ContentfulPageConnection }>(`
     {
       allContentfulPage {
         nodes {
@@ -19,9 +21,9 @@ export const generatePages = async ({ graphql, actions }, themeOptions) => {
   }
 
   const { createPage } = actions;
-  const { allLocales, defaultLocaleCode } = themeOptions;
+  const { allLocales, defaultLocaleCode } = options;
 
-  const result = await graphql(`
+  const result = await graphql<{ allContentfulPage: Queries.ContentfulPageConnection }>(`
     {
       allContentfulPage {
         nodes {
