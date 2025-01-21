@@ -1,11 +1,11 @@
 import path from 'path';
 import { resolveLocalePath, resolveTemplatePath } from './common';
-import type { GatsbyNode } from 'gatsby';
+import type { CreatePagesArgs } from 'gatsby';
 import type { SpinOneThemeOptions, GeneratePagesOptions } from '../gatsby-node';
 
 // Contentful ArticleType と ArticleCategory でカテゴライズした Article 一覧ページ生成
 export const generateArticleListPages = async (
-  args: Parameters<NonNullable<GatsbyNode['createPages']>>[0],
+  args: CreatePagesArgs,
   options: GeneratePagesOptions,
   themeOptions: SpinOneThemeOptions,
 ) => {
@@ -41,7 +41,7 @@ export const generateArticleListPages = async (
 };
 
 const generateArticleListPageWithLocale = async (
-  { graphql, actions }: Parameters<NonNullable<GatsbyNode['createPages']>>[0],
+  { graphql, actions }: CreatePagesArgs,
   options: GeneratePagesOptions,
   themeOptions: SpinOneThemeOptions,
   locale: string,
