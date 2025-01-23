@@ -7,6 +7,11 @@ export const CustomTemplateText = ({
   // 例：contentfulArticle.title
   target = '',
   withBr = false,
+}: {
+  data: Record<string, unknown>;
+  context: Record<string, unknown>;
+  target?: string;
+  withBr?: boolean;
 }) => {
   const text = textInline({
     data: {

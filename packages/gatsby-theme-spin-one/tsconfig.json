@@ -5,8 +5,7 @@
     "module": "CommonJS",
     "moduleResolution": "Node",
     "jsx": "react",
-    // TODO: 修正する
-    // "strict": true,
+    "strict": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,

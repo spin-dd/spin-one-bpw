@@ -1,4 +1,8 @@
-export const parseJson = (json = '{}') => {
+export const parseJson = (json: string | undefined | null = '{}') => {
+  if (typeof json !== 'string') {
+    return null;
+  }
+
   try {
     return JSON.parse(json);
   } catch (e) {

@@ -1,14 +1,21 @@
+import React from 'react';
 import { imageEntryToImage } from '../../utils';
 
-export const CustomTemplateImage = ({
+export const CustomTemplateImage: React.FC<{
+  data: Record<string, unknown>;
+  target?: string;
+}> = ({
   data: pageData,
   // component props
   // 例：contentfulArticle.thumbnail
   target = '',
 }) => {
-  const node = target.split('.').reduce((object, key) => (object == null ? undefined : object[key]), pageData);
+  const node = target
+    .split('.')
+    .reduce<
+      Record<string, unknown> | undefined
+    >((object, key) => (object == null ? undefined : (object[key] as Record<string, unknown>)), pageData);
   if (node == null) {
-    // TODO: Content modelの定義済みオプショナルフィールドが空の場合も該当するためgatsby-node.tsで型定義する
     console.info(`${target} is undefined`);
     return null;
   }

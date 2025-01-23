@@ -1,11 +1,8 @@
-import React from 'react';
 import { graphql } from 'gatsby';
 import { ArticleList } from '../components/ArticleList';
 
 export { Head } from '../components/ArticleList';
-
-export default ({ data, pageContext }) => <ArticleList data={data} pageContext={pageContext} />;
-
+export default ArticleList;
 export const query = graphql`
   query (
     $name: String
@@ -42,7 +39,7 @@ export const query = graphql`
       }
     }
     # リストページのテンプレート
-    contentfulTemplate(name: { eq: $name }, node_locale: { eq: $locale }, spaceId: { eq: $spaceId }) {
+    template: contentfulTemplate(name: { eq: $name }, node_locale: { eq: $locale }, spaceId: { eq: $spaceId }) {
       contentful_id
       __typename
       name

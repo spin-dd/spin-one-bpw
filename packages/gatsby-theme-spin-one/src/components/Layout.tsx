@@ -1,11 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { ReactElement, useEffect } from 'react';
 import { useLocation } from '@reach/router';
 import { useScript } from '../hooks/useScript';
 
-export function Layout({ body, script }) {
+export const Layout: React.FC<{ body: React.ReactElement[]; script: ReactElement[] }> = ({ body, script = [] }) => {
   // https://paulie.dev/posts/2022/10/react-hydration-error-425-text-content-does-not-match-server-rendered-html/
   const [isHydrated, setIsHydrated] = React.useState(false);
   React.useEffect(() => setIsHydrated(true), []);
+
+  // FIXME: scriptをHead Componentに移動したい
   useScript(isHydrated ? script : []);
 
   const { hash } = useLocation();
@@ -23,4 +25,4 @@ export function Layout({ body, script }) {
   }, [isHydrated, hash]);
 
   return isHydrated && <>{body}</>;
-}
+};

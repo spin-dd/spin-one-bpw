@@ -1,47 +1,62 @@
 import path from 'path';
 import { resolveLocalePath, resolveTemplatePath } from './common';
+import type { CreatePagesArgs } from 'gatsby';
+import type { SpinOneThemeOptions, GeneratePagesOptions } from '../gatsby-node';
 
 // Contentful ArticleType と ArticleCategory でカテゴライズした Article 一覧ページ生成
-export const generateArticleListPages = async ({ graphql, actions }, themeOptions) => {
+export const generateArticleListPages = async (
+  args: CreatePagesArgs,
+  options: GeneratePagesOptions,
+  themeOptions: SpinOneThemeOptions,
+) => {
+  const { graphql } = args;
   // GraphQLエラーを防ぐため、処理実行前にContentfulArticleType、ContentfulArticleCategoryのentryが存在するか確認
-  const checkEntry = await graphql(`
+  const checkEntry = await graphql<{
+    allContentfulArticleType: Pick<Queries.ContentfulArticleTypeConnection, 'totalCount'>;
+    allContentfulArticleCategory: Pick<Queries.ContentfulArticleCategoryConnection, 'totalCount'>;
+  }>(`
     {
       allContentfulArticleType {
-        nodes {
-          contentful_id
-        }
+        totalCount
       }
       allContentfulArticleCategory {
-        nodes {
-          contentful_id
-        }
+        totalCount
       }
     }
   `);
   if (
-    checkEntry.data.allContentfulArticleType.nodes.length === 0 ||
-    checkEntry.data.allContentfulArticleCategory.nodes.length === 0
+    !checkEntry.data?.allContentfulArticleType.totalCount ||
+    !checkEntry.data?.allContentfulArticleCategory.totalCount
   ) {
     console.warn('No ArticleType / ArticleCategory found');
     return;
   }
 
   // 処理対象とするlocaleを取得
-  const { allLocales = [] } = themeOptions;
+  const { allLocales = [] } = options;
 
   for (const locale of allLocales) {
-    await generateArticleListPageWithLocale({ graphql, actions }, themeOptions, locale.code);
+    await generateArticleListPageWithLocale(args, options, themeOptions, locale.code);
   }
 };
 
-const generateArticleListPageWithLocale = async ({ graphql, actions }, themeOptions, locale) => {
+const generateArticleListPageWithLocale = async (
+  { graphql, actions }: CreatePagesArgs,
+  options: GeneratePagesOptions,
+  themeOptions: SpinOneThemeOptions,
+  locale: string,
+) => {
   const { createPage } = actions;
-  const { allLocales, defaultLocaleCode, articlesPerPage = 10 } = themeOptions;
+  const { allLocales, defaultLocaleCode } = options;
+  const { articlesPerPage = 10 } = themeOptions;
 
   // GraphQLでは一つのクエリでArticleTypeとArticleCategoryでGroupByできないため、処理を分割する
   // まずはデフォルトロケールでArticleType、ArticleCategoryを取得
   // その後、指定条件でArticleを取得し、ページ生成する
-  const result = await graphql(`
+  const result = await graphql<{
+    allContentfulArticleType: Pick<Queries.ContentfulArticleTypeConnection, 'nodes'>;
+    allContentfulArticleCategory: Pick<Queries.ContentfulArticleCategoryConnection, 'nodes'>;
+  }>(`
     {
       allContentfulArticleType(filter: { node_locale: { eq: "${locale}" } }) {
         nodes {
@@ -62,28 +77,61 @@ const generateArticleListPageWithLocale = async ({ graphql, actions }, themeOpti
     }
   `);
 
-  const types = result.data.allContentfulArticleType.nodes;
-  const categories = result.data.allContentfulArticleCategory.nodes;
-  if (types.length === 0 || categories.length === 0) {
+  const types = result.data?.allContentfulArticleType.nodes;
+  const categories = result.data?.allContentfulArticleCategory.nodes;
+  if (!types || !categories) {
     console.info('No ArticleType / ArticleCategory found');
     return;
   }
 
   // モジュール内の共通処理関数
-  const createArticleListPages = ({ articles, type, category = null, locale }) => {
+  const createArticleListPages = ({
+    totalCount = 0,
+    type,
+    category,
+    locale,
+  }: {
+    totalCount: Queries.ContentfulArticleConnection['totalCount'] | undefined;
+    type: Queries.ContentfulArticleType;
+    category?: Queries.ContentfulArticleCategory | undefined;
+    locale: string;
+  }) => {
+    if (!totalCount) {
+      console.info('data not found');
+      return;
+    }
+
     // locale を含まない記事ページの pagePath を生成
-    const createCanonicalPath = ({ type, category, page }) => {
+    const createCanonicalPath = ({
+      type,
+      category,
+      page,
+    }: {
+      type: Queries.ContentfulArticleType;
+      category: Queries.ContentfulArticleCategory | undefined;
+      page: number;
+    }) => {
       const basePath = category ? `/${type.slug}/${category.slug}/` : `/${type.slug}/`;
       return page === 1 ? basePath : `${basePath}${page}/`;
     };
-    const createPagePath = ({ locale, type, category, page }) =>
+    const createPagePath = ({
+      locale,
+      type,
+      category,
+      page,
+    }: {
+      locale: string;
+      type: Queries.ContentfulArticleType;
+      category: Queries.ContentfulArticleCategory | undefined;
+      page: number;
+    }) =>
       `${resolveLocalePath(locale, defaultLocaleCode)}${createCanonicalPath({
         type,
         category,
         page,
       })}`;
 
-    const numPages = Math.ceil(articles.data.allContentfulArticle.totalCount / articlesPerPage);
+    const numPages = Math.ceil(totalCount / articlesPerPage);
     Array.from({ length: numPages }).forEach((_, i) => {
       const currentPage = i + 1;
       createPage({
@@ -121,7 +169,9 @@ const generateArticleListPageWithLocale = async ({ graphql, actions }, themeOpti
   // ここでは生成するページのみを定義し、実際のページ生成はcreateArticleListPages内で行う
   for (const type of types) {
     // ArticleCategoryなしの記事一覧ページを生成
-    const articles = await graphql(`
+    const articles = await graphql<{
+      allContentfulArticle: Pick<Queries.ContentfulArticleConnection, 'totalCount'>;
+    }>(`
       {
         allContentfulArticle(
           filter: { type: { slug: { eq: "${type.slug}" } }, node_locale: { eq: "${locale}" } }
@@ -130,11 +180,13 @@ const generateArticleListPageWithLocale = async ({ graphql, actions }, themeOpti
         }
       }
     `);
-    createArticleListPages({ articles, type, locale });
+    createArticleListPages({ totalCount: articles.data?.allContentfulArticle.totalCount, type, locale });
 
     // ArticleCategory[]をループして記事一覧ページを生成する
     for (const category of categories) {
-      const articles = await graphql(`
+      const articles = await graphql<{
+        allContentfulArticle: Pick<Queries.ContentfulArticleConnection, 'totalCount'>;
+      }>(`
         {
           allContentfulArticle(
             filter: { type: { slug: { eq: "${type.slug}" } }, category: { slug: { eq: "${category.slug}" } }, node_locale: { eq: "${locale}" } }
@@ -143,7 +195,7 @@ const generateArticleListPageWithLocale = async ({ graphql, actions }, themeOpti
           }
         }
       `);
-      createArticleListPages({ articles, type, category, locale });
+      createArticleListPages({ totalCount: articles.data?.allContentfulArticle.totalCount, type, category, locale });
     }
   }
 };

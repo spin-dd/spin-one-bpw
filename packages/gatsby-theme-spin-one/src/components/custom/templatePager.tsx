@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'gatsby';
 
 interface PagerProps {
-  tagName?: string;
+  tagName: string;
   className?: string;
   data: {
     basePath: string;
@@ -17,7 +17,11 @@ interface PagerProps {
 
 // Contentful Template内で使用する記事一覧ページャーコンポーネント
 // generateArticleListPage.ts内でテンプレートに指定しているContentfulのArticleListPage Templateのbody内で使用されている
-export const CustomTemplatePager: React.FC<PagerProps> = ({ tagName, className, data: { basePath, pageInfo } }) => {
+export const CustomTemplatePager: React.FC<PagerProps> = ({
+  tagName = 'nav',
+  className,
+  data: { basePath, pageInfo },
+}) => {
   const { currentPage, pageCount, hasPreviousPage, hasNextPage } = pageInfo;
 
   if (pageCount <= 1) return null;

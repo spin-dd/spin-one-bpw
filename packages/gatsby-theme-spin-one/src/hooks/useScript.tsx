@@ -1,6 +1,6 @@
-import { useEffect } from 'react';
+import { ReactElement, useEffect } from 'react';
 
-const createScriptElement = (node) => {
+const createScriptElement = (node: ReactElement) => {
   if (node.type !== 'script') {
     return null;
   }
@@ -24,27 +24,14 @@ const createScriptElement = (node) => {
   return element;
 };
 
-const flattenNodes = (nodes) => {
-  if (!Array.isArray(nodes)) {
-    return [nodes];
-  }
-  return nodes.reduce((acc, node) => {
-    if (Array.isArray(node)) {
-      return [...acc, ...flattenNodes(node)];
-    }
-    return [...acc, node];
-  }, []);
-};
-
-export const useScript = (nodes = []) => {
+export const useScript = (nodes: ReactElement | ReactElement[]) => {
   useEffect(() => {
-    const elements = flattenNodes(nodes)
-      .map((node) => createScriptElement(node))
-      .filter((node) => node !== null);
-    elements.map((element) => document.head.appendChild(element));
+    const arrayNodes = Array.isArray(nodes) ? nodes : [nodes];
+    const scriptElements = arrayNodes.map((node) => createScriptElement(node)).filter((element) => element !== null);
+    scriptElements.map((element) => document.head.appendChild(element));
 
     return () => {
-      elements.map((element) => document.head.removeChild(element));
+      scriptElements.map((element) => document.head.removeChild(element));
     };
   }, [nodes]);
 };

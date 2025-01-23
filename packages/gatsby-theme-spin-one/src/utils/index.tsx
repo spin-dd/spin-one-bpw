@@ -6,6 +6,7 @@ import escapeHtml from 'escape-html';
 import { parseJson } from './common';
 // カスタムコンポーネント
 import * as customComponents from '../components/CustomComponents';
+import type { ParsableContentfulEntry, ComponentProps } from '../..';
 
 export const renderText = (text = '') =>
   text.split('\n').reduce((children, textSegment, index) => {
@@ -93,9 +94,9 @@ const richTextToHtml = (richTextNodes = [], data) =>
           return node;
       }
     })
-    .join('\n');
+    .join('');
 
-export const imageEntryToImage = (entry) => {
+export const imageEntryToImage = (entry: Queries.ContentfulImage) => {
   if (entry?.body == null) {
     return null;
   }
@@ -121,16 +122,21 @@ export const parseCustomModuleName = (customModuleName = '') => {
   return { moduleName, subModuleName: subModuleNames[0] };
 };
 
-export const prepareForParse = ({ template = null, data, pageContext }) => {
+export const prepareForParse = <T, K>({
+  template,
+  data,
+  pageContext,
+}: ComponentProps<T, K> & { template: ParsableContentfulEntry }) => {
   if (template === null) {
     throw new Error('Template is not found.');
   }
 
   // Contentful raw data to json
   const body = parseJson(template.body?.raw) ?? {};
-  const head = parseJson(template.head?.raw) ?? {};
-  const script = parseJson(template.script?.raw) ?? {};
-  const templateContext = parseJson(template.context?.internal?.content) ?? {};
+  // ContentfulComponent には head/script/context が存在しない
+  const head = 'head' in template ? (parseJson(template.head?.raw) ?? {}) : {};
+  const script = 'script' in template ? (parseJson(template.script?.raw) ?? {}) : {};
+  const templateContext = 'context' in template ? (parseJson(template.context?.internal?.content) ?? {}) : {};
 
   // contentfulのデータをベースに、templateContext, pageContextをマージする
   const componentData = {
@@ -150,7 +156,7 @@ export const prepareForParse = ({ template = null, data, pageContext }) => {
   };
 };
 
-export const parseHtmlToReact = (html, data) => {
+export const parseHtmlToReact = (html: string, data: Record<string, unknown>) => {
   // node には rich text をプレ処理した text をパースしたものが格納されている
   const processingInstructions = (data) => [
     // Image
@@ -178,7 +184,7 @@ export const parseHtmlToReact = (html, data) => {
         const entryId = entryIdFromNode(node);
         const entry = entryWithId(entryId, data);
         const props = parseJson(entry.props?.internal?.content) ?? {};
-        return <CustomComponent key={entry.contentful_id} data={data} template={entry} {...props} />;
+        return <CustomComponent key={entry.contentful_id} data={{ ...data, template: entry }} {...props} />;
       },
     },
     // Contentful Content Type: Element

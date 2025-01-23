@@ -1,5 +1,6 @@
 import type { GatsbyConfig } from "gatsby";
 import dotenv from "dotenv";
+
 dotenv.config();
 
 console.info("site gatsby-config.ts loaded");
@@ -9,7 +10,9 @@ const config: GatsbyConfig = {
     title: `theme-demo`,
     siteUrl: `https://one.spin-dd.com`,
   },
-  graphqlTypegen: true,
+  graphqlTypegen: {
+    generateOnBuild: true,
+  },
   plugins: [
     "gatsby-plugin-typescript",
     {
@@ -22,5 +25,11 @@ const config: GatsbyConfig = {
     },
   ],
 };
+
+// theme-demoでschema.gqlを更新し、develop/buildのpost処理として
+// gatsby-theme-spin-oneのschema.gqlにコピーする
+if (process.env.GATSBY_UPDATE_SCHEMA_SNAPSHOT) {
+  config.plugins?.push("gatsby-plugin-schema-snapshot");
+}
 
 export default config;

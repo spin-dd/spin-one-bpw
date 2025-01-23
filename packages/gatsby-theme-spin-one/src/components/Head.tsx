@@ -1,22 +1,22 @@
 import React from 'react';
 import { prepareForParse, parseHtmlToReact } from '../utils';
+import type { HeadProps } from 'gatsby';
+import type { ParsableContentfulEntry } from '../..';
 
-export const Head = ({ data, pageContext, children }) => {
+export const Head: React.FC<
+  HeadProps<{ template: ParsableContentfulEntry } & Queries.AllContentfulEntryFragmentFragment>
+> = ({ data, pageContext }) => {
+  const { template } = data;
   // 指定したテンプレートが存在しない場合
-  if (!data.contentfulTemplate) {
+  if (!template) {
     return null;
   }
 
   const { htmlHead, componentData } = prepareForParse({
-    template: data.contentfulTemplate,
+    template,
     data,
     pageContext,
   });
 
-  return (
-    <>
-      <React.Fragment key="head_children">{children}</React.Fragment>
-      {parseHtmlToReact(htmlHead, componentData)}
-    </>
-  );
+  return <>{parseHtmlToReact(htmlHead, componentData)}</>;
 };
