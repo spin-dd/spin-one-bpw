@@ -96,8 +96,7 @@ const createImageAsset = async (environment: Environment, imageInfo: ImageInfo, 
   const asset = await createAsset(environment, assetId, fileName, contentType, upload);
 
   // アセットを処理して公開
-  await asset.processForAllLocales();
-  await asset.publish();
+  await asset.processForAllLocales().then((processedAsset) => processedAsset.publish());
   console.info(`アセットを作成しました: ${relativePath} with hash: ${imageInfo.hash}`);
 
   return asset.sys.id;
