@@ -28,9 +28,10 @@ SPIN-ONE テーマパッケージの開発を行う手順をまとめます。
 
 ### 1. デモサイトのコンテンツ登録
 
+1. リポジトリのルートディレクトリにて `npm run build:theme` を実行し、テーマパッケージをビルドします
 1. `packages/theme-demo` ディレクトリに移動します
-2. `npm run init:contentful-setup` を実行し、Contentful に SPIN-ONE 標準の Content model を登録します
-3. `npm run init:contentful-sync demo-data` を実行し、[デモサイトのデータソース（html、各種画像）](https://github.com/spin-dd/spin-one/tree/main/packages/theme-demo/demo-data)を Contentful に同期します
+1. `npm run init:contentful-setup` を実行し、Contentful に SPIN-ONE 標準の Content model を登録します
+1. `npm run init:contentful-sync` を実行し、[デモサイトのデータソース（html、各種画像）](https://github.com/spin-dd/spin-one/tree/main/packages/theme-demo/demo-data)を Contentful に同期します
    - なお、 #55 で用意される具体的なサンプルが提供されていないため、簡単なリソースを対象に動作確認しています
 
 これでデモサイトのコンテンツが Contentful に登録されました。
