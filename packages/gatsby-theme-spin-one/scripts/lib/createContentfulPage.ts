@@ -1,7 +1,6 @@
 import path from 'path';
 import type { Environment, RichTextCommentDocument } from 'contentful-management';
 import type { HTMLElement } from 'node-html-parser';
-import { CommentNode } from 'contentful-management/dist/typings/entities/comment';
 
 // ContentfulのPage Contentを作成する関数
 export const createContentfulPage = async (
@@ -75,12 +74,12 @@ const generatePagePath = (htmlFilePath: string, baseDirectory: string) => {
 };
 
 const convertToRichText = (html: HTMLElement) => {
-  const richText: RichTextCommentDocument = {
-    nodeType: CommentNode.Document,
+  const richText = {
+    nodeType: 'document',
     data: {},
     content: [
       {
-        nodeType: CommentNode.Paragraph,
+        nodeType: 'paragraph',
         content: [
           {
             nodeType: 'text',
@@ -93,7 +92,7 @@ const convertToRichText = (html: HTMLElement) => {
         data: {},
       },
     ],
-  };
+  } as RichTextCommentDocument;
 
   return richText;
 };
