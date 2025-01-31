@@ -40,7 +40,7 @@
   "dependencies": {
     "bootstrap": "5.3.3",
     "contentful-import": "9.4.70",
-    "contentful-management": "11.37.0",
+    "contentful-management": "11.44.0",
     "escape-html": "1.0.3",
     "gatsby-plugin-google-tagmanager": "5.14.0",
     "gatsby-plugin-image": "3.14.0",

@@ -1,45 +1,48 @@
 # SPIN-ONE
 
-以下の組み合わせでホームページを作成
+## 概要
 
-- [gatsby.js](https://www.gatsbyjs.com/)
-- [Contentful](https://www.contentful.com/)
-- [netlify](https://www.netlify.com/)
+このリポジトリでは、SPIN-ONE Gatsby テーマパッケージを提供します。
 
-## Quick start
+以下のパッケージが含まれます。
 
-以下のコマンドでプロジェクトをクローンしてパッケージインストールを行えます。
-`gatsby new {新規レポジトリ名} git@github.com:spin-dd/spin-one.git`
+- `packages/gatsby-theme-spin-one`：SPIN-ONE テーマパッケージ本体
+- `packages/theme-demo`：SPIN-ONE テーマパッケージ開発用のデモサイト
+  - SPIN-ONE テーマパッケージの開発、動作確認を行う
 
-## Gatsby
+## 開発方法
 
-Gatsby theme で開発
+SPIN-ONE テーマパッケージの開発を行う手順をまとめます。
+全体的な流れとして、開発環境を構築し、デモサイトのコンテンツを登録、これらを使ってテーマパッケージの開発を行えるようにします。
 
-- [Themes | Gatsby](https://www.gatsbyjs.com/docs/themes/)
-  - <https://www.gatsbyjs.com/docs/themes/what-are-gatsby-themes/#gatsby-themes>
-    - [gatsby-theme-fujimoto](https://github.com/spin-dd/fujimoto-site/tree/main/packages/gatsby-theme) のときと変わっていない（メジャーバージョンも v5 のまま）
-    - 基本的にはサイト横断で利用できる機能を共通パッケージ化して利用するイメージ
-    - 機能更新時には個別サイトが依存している gatsby-theme パッケージのバージョンを更新するだけで良い
-  - 主要な概念と機能（gatsby-theme-fujimoto でも利用している）
-    - <https://www.gatsbyjs.com/docs/how-to/plugins-and-themes/shadowing/>
-  - gatsby-theme が守るべきルール
-    - <https://www.gatsbyjs.com/docs/how-to/plugins-and-themes/theme-conventions/>
-- その他
-  - [Using Multiple Gatsby Themes | Gatsby](https://www.gatsbyjs.com/docs/themes/using-multiple-gatsby-themes/)
-    - パスをわけることで複数の theme を採用できる。こちらは gatsby-theme-fujimoto でも採用しておらず（ユースケースもなかったが）
+### 0. 開発環境構築
 
-## Contenful
+1. Contentfulのアカウントを作成し、Spaceを作成します。あわせて、Content Management API トークン、Content Delivery API トークンを発行します
+2. `packages/theme-demo/.env` ファイルを作成し、以下の環境変数を設定します
+   - `CONTENTFUL_SPACE_ID`：Contentful の Space ID
+   - `CONTENTFUL_MANAGEMENT_TOKEN`：Contentful の Content Management API トークン
+   - `CONTENTFUL_ACCESS_TOKEN`：Contentful の Content Delivery API トークン
+3. リポジトリのルートディレクトリで `npm ci` を実行します
 
-- <https://www.contentful.com/>
-ContentModel:Pageに登録したデータを表示
-URLから検索して表示
-ローカルでは<http://localhost:8000/{pagaPath}>でページ表示を指定
+これでテーマパッケージ、デモサイトの開発環境が整いました。
 
-## netlify
+### 1. デモサイトのコンテンツ登録
 
-- <https://www.netlify.com/>
+1. リポジトリのルートディレクトリにて `npm run build:theme` を実行し、テーマパッケージをビルドします
+1. `packages/theme-demo` ディレクトリに移動します
+1. `npm run init:contentful-setup` を実行し、Contentful に SPIN-ONE 標準の Content model を登録します
+1. `npm run init:contentful-sync` を実行し、[デモサイトのデータソース（html、各種画像）](https://github.com/spin-dd/spin-one/tree/main/packages/theme-demo/demo-data)を Contentful に同期します
+   - なお、 #55 で用意される具体的なサンプルが提供されていないため、簡単なリソースを対象に動作確認しています
 
-TODO
+これでデモサイトのコンテンツが Contentful に登録されました。
 
-- 各モデルの登録ルールは別ドキュメントに作成
-- APIアクセスのコマンドなどを別ドキュメントに記載
+### 2. テーマパッケージの開発（動作確認）
+
+テーマパッケージ、デモサイトそれぞれでビルドなどの処理を決められた順序で行う必要があり、それらをまとめたスクリプトを利用します。
+
+```console
+# リポジトリのルートディレクトリにて
+npm run dev:demo
+```
+
+これでデモサイトの開発環境が起動し、テーマパッケージの動作確認ができるようになりました。
