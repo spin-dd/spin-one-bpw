@@ -24,7 +24,7 @@
     "spin-one:version": "npm run @spin-dd/gatsby-theme-spin-one --version"
   },
   "dependencies": {
-    "@spin-dd/gatsby-theme-spin-one": "0.0.4",
+    "@spin-dd/gatsby-theme-spin-one": "0.0.5",
     "gatsby": "5.14.0",
     "react": "18.3.1",
     "react-dom": "18.3.1"
